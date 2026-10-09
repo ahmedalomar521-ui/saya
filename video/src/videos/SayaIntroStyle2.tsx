@@ -3,6 +3,7 @@ import {Audio, Video} from "@remotion/media";
 import {AbsoluteFill, interpolate, Sequence, Series, staticFile, useCurrentFrame} from "remotion";
 import {makeTimeline} from "../styles/style1/timeline";
 import {S2} from "../styles/style2/tokens";
+import {houseVignette} from "../styles/shared/house";
 import {buildPages, S2Captions} from "../styles/style2/GlowCaptions";
 import {GlassChip, GlowIcon, MintStage, PaperLines, PaperStage, RedArrow} from "../styles/style2/Inserts";
 
@@ -49,11 +50,11 @@ const INSERTS = {
 const inInsert = (f: number) =>
   Object.values(INSERTS).some((s) => f >= s.from && f < s.from + s.durationInFrames);
 
-// Per-clip framing: punch-in + desaturation on the "but forget that" beat.
-const FRAMING: {zoom: number; mono?: boolean}[] = [
+// Per-clip framing: punch-in on the "but forget that" beat (no colour change — house rule).
+const FRAMING: {zoom: number}[] = [
   {zoom: 1.0},
   {zoom: 1.12},
-  {zoom: 1.32, mono: true},
+  {zoom: 1.32},
   {zoom: 1.0},
   {zoom: 1.0},
   {zoom: 1.12},
@@ -74,18 +75,12 @@ const Clip: React.FC<{i: number}> = ({i}) => {
           position: "absolute",
           width: 1080,
           height: 1920,
-          filter: f.mono ? "grayscale(0.75) contrast(1.15) brightness(0.92)" : S2.grade,
+          filter: S2.grade,
           transform: `scale(${f.zoom + drift})`,
           transformOrigin: "50% 28%",
         }}
       />
-      {/* warm low glow + vignette, like the reference's lamp-lit room */}
-      <AbsoluteFill
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 30%, rgba(255,190,90,0.10) 0%, rgba(0,0,0,0) 50%), radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.45) 100%)",
-        }}
-      />
+      <AbsoluteFill style={{background: houseVignette()}} />
     </AbsoluteFill>
   );
 };

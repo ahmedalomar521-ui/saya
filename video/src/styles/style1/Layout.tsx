@@ -3,8 +3,9 @@
 import {Video} from "@remotion/media";
 import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig} from "remotion";
 import {S1} from "./tokens";
+import {houseVignette} from "../shared/house";
 
-/** Talking head, colour-graded like the reference. */
+/** Talking head with the near-neutral house grade. */
 export const S1TalkingHead: React.FC<{
   src: string;
   trimBefore: number;
@@ -38,7 +39,7 @@ export const S1TalkingHead: React.FC<{
             top: 0,
             width: S1.layout.W,
             height: S1.layout.H,
-            filter: `${S1.grade} blur(40px) brightness(0.7)`,
+            filter: `${S1.grade} blur(40px) brightness(0.92)`,
             transform: "scale(1.4)",
             transformOrigin: "50% 0%",
             opacity: shift > 0 ? 1 : 0,
@@ -66,7 +67,7 @@ export const S1TalkingHead: React.FC<{
       />
       {/* soft vignette */}
       <AbsoluteFill
-        style={{background: "radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.35) 100%)"}}
+        style={{background: houseVignette()}}
       />
     </AbsoluteFill>
   );

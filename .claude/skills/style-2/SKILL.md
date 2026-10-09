@@ -5,6 +5,10 @@ description: "ستايل 2" — caption-driven Arabic talking-head reel style (b
 
 # ستايل 2 — Style 2
 
+> **House rules first:** read `CLAUDE.md` at the repo root. They apply to this
+> style and override it. In particular, footage colour changes must be barely
+> noticeable (`HOUSE_GRADE` in `video/src/styles/shared/house.ts`).
+
 An Arabic talking-head reel where **the captions are the design**. Derived from
 a reference reel (frames in `reference/`). Remotion components live in
 `video/src/styles/style2/`; a complete worked example is
@@ -30,8 +34,8 @@ a reference reel (frames in `reference/`). Remotion components live in
 | Captions | `S2Captions` + `buildPages` | Cairo 900, ~96 px, color `#F8E08A` with a multi-layer warm glow (`glowShadow`). One phrase = one page, split into 2 balanced lines when > 3 words. Words blur in from the right (~6 frames). Sits at y ≈ 980–1060 (chest, just under the chin). A soft dark plate behind the text keeps it readable on light clothes. Hide during inserts. |
 | Kashida | `autoStretch`, `stretchWord` | Applied automatically to about every other word (≥ 3 letters): 2–4 tatweels after the last forward-joining letter. |
 | Emphasis | markup in phrase text | `*word*` → red glow (`#FF4A4A`); `[a b c]` → red bar `#E8283A` that wipes in from the right. Use at most one emphasis per page. |
-| Punch-in | per-clip framing | Mostly a calm 1.0–1.12 zoom. On a "turn" line ("but…", "forget that…"), punch in to ~1.3 **and desaturate** (`grayscale(.75)`). |
-| Grade | `S2.grade` | Warm, punchy, slight sepia, plus a lamp-like warm glow at the top and a vignette. |
+| Punch-in | per-clip framing | Mostly a calm 1.0–1.12 zoom. On a "turn" line ("but…", "forget that…"), punch in to ~1.3. No colour change (house rule). |
+| Grade | `S2.grade` | House grade only (`HOUSE_GRADE`, barely noticeable) plus a very light vignette. The reference's warm/green look is not copied. |
 | Mint insert | `MintStage` + `GlassChip` | Gradient `#F3F6F5 → #BFE6D6 → #8FD8B0` with a drifting white bloom. Chips are glossy rounded labels (orange / red / green / purple) with an icon in a circle on the right. They blur in, and an optional sub-line types underneath. Stack 2–3 chips for lists (problem / solution / timing, tools / tech / prompts). |
 | Paper insert | `PaperStage` + `PaperLines` | Radial white→grey card. Dark stretched text builds line by line; `strike: true` scribbles a red marker stroke through the key word. Can add a `VoiceNote` (WhatsApp-style dark pill with a playing waveform) for client or quote stories. |
 | Red arrow | `RedArrow` | Hand-drawn with a red glow, pointing at the caption or the speaker. |

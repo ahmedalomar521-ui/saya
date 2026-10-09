@@ -1,6 +1,7 @@
 // ستايل 2 — design tokens (measured from the reference reel, scaled to 1080×1920).
 import {loadFont} from "@remotion/fonts";
 import {staticFile} from "remotion";
+import {HOUSE_GRADE} from "../shared/house";
 
 export const style2Fonts = Promise.all([
   loadFont({family: "S2Ar", url: staticFile("fonts/cairo-arabic-800-normal.woff2"), weight: "800"}),
@@ -28,8 +29,8 @@ export const S2 = {
   },
   size: {caption: 96, captionSmall: 80},
   layout: {W: 1080, H: 1920, captionTop: 1020},
-  // warm, punchy grade with a little bloom
-  grade: "contrast(1.08) saturate(1.12) brightness(0.98) sepia(0.08)",
+  // House rule: footage colour stays almost untouched (see styles/shared/house.ts).
+  grade: HOUSE_GRADE,
 };
 
 export const glowShadow = (c = S2.color.glowDeep) =>

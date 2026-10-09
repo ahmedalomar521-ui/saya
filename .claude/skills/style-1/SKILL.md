@@ -5,6 +5,10 @@ description: "ستايل 1" — graphics-heavy talking-head reel style (split-sc
 
 # ستايل 1 — Style 1
 
+> **House rules first:** read `CLAUDE.md` at the repo root. They apply to this
+> style and override it. In particular, footage colour changes must be barely
+> noticeable (`HOUSE_GRADE` in `video/src/styles/shared/house.ts`).
+
 A talking-head reel where **the graphics carry the pacing**. Derived from a
 reference reel (frames in `reference/`). Reusable Remotion components live in
 `video/src/styles/style1/`; a complete worked example is
@@ -22,7 +26,7 @@ reference reel (frames in `reference/`). Reusable Remotion components live in
 
 | Element | Component | Rules |
 |---|---|---|
-| Colour grade | `S1TalkingHead` | cool, slightly desaturated, darker (`S1.grade`) + soft vignette |
+| Colour grade | `S1TalkingHead` | house grade only (`HOUSE_GRADE`, barely noticeable) + very light vignette |
 | Headroom | `S1TalkingHead offsetY` | if the head is near the top, push the shot down (~260 px) and fill the gap with a blurred copy so titles fit above the head |
 | **Two-tier title** | `S1Title` | small white **handwritten** line (Marhey / Permanent Marker, ~54 px) over a huge **yellow `#F8E000`** display word (Lalezar / Rubik Mono One), skewed −9°, typed on word-by-word (Arabic) or letter-by-letter (Latin). Sits just above the head. Exits by sliding sideways. Optional `squiggle` underline. Avoid `!` in Arabic titles (use `Burst` instead). |
 | Split screen | `S1TopStage` + `S1TalkingHead mode="bottom"` | exact 50/50 at y = 960. Top = light paper `#F4F4F5` stage with graphics; bottom = talking head cropped to the face (`focusY`). First beat of a split window slides in (`slideIn`), later beats **hard-cut**. Put a paper layer under the whole window so nothing flashes black. Split windows must start/end inside cut pauses. |

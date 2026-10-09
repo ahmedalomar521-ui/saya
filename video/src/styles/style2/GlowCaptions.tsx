@@ -111,7 +111,7 @@ export const S2Captions: React.FC<{pages: Page[]; top?: number; hideDuring?: (f:
           right: 40,
           top: -40,
           height: page.lines.length * 120 + 80,
-          background: "radial-gradient(ellipse at 50% 50%, rgba(10,8,6,0.55) 0%, rgba(10,8,6,0.35) 45%, rgba(10,8,6,0) 72%)",
+          background: "radial-gradient(ellipse at 50% 50%, rgba(10,8,6,0.32) 0%, rgba(10,8,6,0.18) 45%, rgba(10,8,6,0) 72%)",
           filter: "blur(10px)",
         }}
       />
