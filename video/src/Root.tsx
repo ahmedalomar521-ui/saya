@@ -10,6 +10,7 @@ import {SayaIntroStyle3, SAYA3_FPS, SAYA3_FRAMES} from "./videos/SayaIntroStyle3
 import {style3Fonts} from "./styles/style3/tokens";
 import {SayaIntroStyle4, SAYA4_FPS, SAYA4_FRAMES} from "./videos/SayaIntroStyle4";
 import {style4Fonts} from "./styles/style4/tokens";
+import {InstaShareMix, MIX_FPS, MIX_FRAMES} from "./videos/InstaShareMix";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -75,6 +76,19 @@ export const RemotionRoot: React.FC = () => {
         height={1920}
         calculateMetadata={async () => {
           await style4Fonts;
+          return {};
+        }}
+      />
+      {/* All styles combined */}
+      <Composition
+        id="InstaShareMix"
+        component={InstaShareMix}
+        durationInFrames={MIX_FRAMES}
+        fps={MIX_FPS}
+        width={1080}
+        height={1920}
+        calculateMetadata={async () => {
+          await Promise.all([fontsLoaded, style1Fonts, style2Fonts, style4Fonts]);
           return {};
         }}
       />
