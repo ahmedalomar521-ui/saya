@@ -2,6 +2,8 @@
 
 **Always talk to the user in Arabic (دائماً كلّم المستخدم بالعربي).**
 
+**Never edit or render a video unless the user explicitly asks for it (لا تمنتج شي بدون ما يطلب).** Saving a style means saving it only: analyse the reference, write the skill and the reusable components, and check them with a few stills at most. Do not produce a demo edit or re-render existing videos on your own initiative. Offer it in one line instead.
+
 Remotion project in `video/`. Editing styles are saved as skills:
 `.claude/skills/style-1` (ستايل 1), `.claude/skills/style-2` (ستايل 2),
 `.claude/skills/style-3` (ستايل 3), `.claude/skills/style-4` (ستايل 4), and any
