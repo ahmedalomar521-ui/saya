@@ -1,7 +1,8 @@
 # Saya — video editing project
 
 Remotion project in `video/`. Editing styles are saved as skills:
-`.claude/skills/style-1` (ستايل 1), `.claude/skills/style-2` (ستايل 2), and any
+`.claude/skills/style-1` (ستايل 1), `.claude/skills/style-2` (ستايل 2),
+`.claude/skills/style-3` (ستايل 3), and any
 future `style-N`.
 
 ## House rules — apply to EVERY style (past and future)

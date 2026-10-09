@@ -6,6 +6,8 @@ import {SayaIntro, SAYA_FPS, SAYA_FRAMES} from "./videos/SayaIntro";
 import {style1Fonts} from "./styles/style1/tokens";
 import {SayaIntroStyle2, SAYA2_FPS, SAYA2_FRAMES} from "./videos/SayaIntroStyle2";
 import {style2Fonts} from "./styles/style2/tokens";
+import {SayaIntroStyle3, SAYA3_FPS, SAYA3_FRAMES} from "./videos/SayaIntroStyle3";
+import {style3Fonts} from "./styles/style3/tokens";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -45,6 +47,19 @@ export const RemotionRoot: React.FC = () => {
         height={1920}
         calculateMetadata={async () => {
           await style2Fonts;
+          return {};
+        }}
+      />
+      {/* ستايل 3 */}
+      <Composition
+        id="SayaIntroStyle3"
+        component={SayaIntroStyle3}
+        durationInFrames={SAYA3_FRAMES}
+        fps={SAYA3_FPS}
+        width={1080}
+        height={1920}
+        calculateMetadata={async () => {
+          await style3Fonts;
           return {};
         }}
       />
