@@ -4,6 +4,7 @@
 // the CTAs ("THIS VIDEO / SAVE", "COMMENT / WEBSITE", "WEBSITES / MORE").
 import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig} from "remotion";
 import {S1} from "./tokens";
+import {withHouseFont} from "../shared/house";
 import {Squiggle} from "./Doodles";
 
 export type TitleProps = {
@@ -88,7 +89,7 @@ export const S1Title: React.FC<TitleProps> = ({
         ) : null}
         <div
           style={{
-            fontFamily: isArabic ? "S1DisplayAr, S1DisplayLat, sans-serif" : S1.font.display,
+            fontFamily: isArabic ? withHouseFont("S1DisplayAr, S1DisplayLat, sans-serif") : S1.font.display,
             fontSize: isArabic ? S1.size.display * 1.15 : S1.size.display * 0.72,
             color: S1.color.yellow,
             lineHeight: isArabic ? 1.15 : 1.05,

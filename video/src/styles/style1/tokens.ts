@@ -2,11 +2,12 @@
 // Measured from the reference reel (720×1280) and scaled ×1.5 for 1080×1920.
 import {loadFont} from "@remotion/fonts";
 import {staticFile} from "remotion";
-import {HOUSE_GRADE} from "../shared/house";
+import {HOUSE_GRADE, houseFontLoaded, withHouseFont} from "../shared/house";
 
 const f = (file: string) => staticFile(`fonts/style1/${file}`);
 
 export const style1Fonts = Promise.all([
+  houseFontLoaded,
   // Big yellow display word (Arabic: Lalezar, Latin: Rubik Mono One)
   loadFont({family: "S1DisplayAr", url: f("lalezar-arabic-400-normal.woff2")}),
   loadFont({family: "S1DisplayLat", url: f("rubik-mono-one-latin-400-normal.woff2")}),
@@ -20,9 +21,9 @@ export const style1Fonts = Promise.all([
 
 export const S1 = {
   font: {
-    display: "S1DisplayLat, S1DisplayAr, sans-serif",
-    hand: "S1HandLat, S1HandAr, cursive",
-    caption: "S1CapLat, S1CapAr, sans-serif",
+    display: withHouseFont("S1DisplayLat, S1DisplayAr, sans-serif"),
+    hand: withHouseFont("S1HandLat, S1HandAr, cursive"),
+    caption: withHouseFont("S1CapLat, S1CapAr, sans-serif"),
   },
   color: {
     yellow: "#F8E000", // signature colour — measured from reference

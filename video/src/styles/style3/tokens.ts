@@ -1,11 +1,12 @@
 // ستايل 3 — design tokens (reference 720×1280, scaled ×1.5).
 import {loadFont} from "@remotion/fonts";
 import {staticFile} from "remotion";
-import {HOUSE_GRADE} from "../shared/house";
+import {HOUSE_GRADE, houseFontLoaded, withHouseFont} from "../shared/house";
 
 const f = (file: string) => staticFile(`fonts/style3/${file}`);
 
 export const style3Fonts = Promise.all([
+  houseFontLoaded,
   // clean sans for the one-word captions
   loadFont({family: "S3SansAr", url: f("ibm-plex-sans-arabic-arabic-700-normal.woff2"), weight: "700"}),
   loadFont({family: "S3SansLat", url: f("ibm-plex-sans-arabic-latin-700-normal.woff2"), weight: "700"}),
@@ -16,8 +17,8 @@ export const style3Fonts = Promise.all([
 
 export const S3 = {
   font: {
-    sans: "S3SansLat, S3SansAr, sans-serif",
-    script: "S3ScriptLat, S3ScriptAr, serif",
+    sans: withHouseFont("S3SansLat, S3SansAr, sans-serif"),
+    script: withHouseFont("S3ScriptLat, S3ScriptAr, serif"),
   },
   color: {
     white: "#FFFFFF",

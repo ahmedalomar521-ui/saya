@@ -11,6 +11,7 @@
 //   !word!  CAPS bold                  ^word^  red
 import {interpolate, spring, useCurrentFrame, useVideoConfig, Easing} from "remotion";
 import {S3} from "./tokens";
+import {HOUSE_ACTIVE_WORD} from "../shared/house";
 
 export type S3Phrase = {start: number; end: number; text: string}; // output frames
 
@@ -86,7 +87,7 @@ const styleFor = (k: Kind): React.CSSProperties => {
   }
 };
 
-const Pop: React.FC<{w: W; children?: React.ReactNode}> = ({w}) => {
+const Pop: React.FC<{w: W; active?: boolean}> = ({w, active}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const s = spring({frame: frame - w.start, fps, config: {damping: 13, stiffness: 320, mass: 0.5}});
@@ -95,6 +96,7 @@ const Pop: React.FC<{w: W; children?: React.ReactNode}> = ({w}) => {
     <div
       style={{
         ...styleFor(w.kind),
+        ...(active ? {color: HOUSE_ACTIVE_WORD} : {}),
         opacity: vis ? 1 : 0,
         transform: `scale(${interpolate(s, [0, 1], [0.7, 1])})`,
         textShadow: S3.shadow,
@@ -146,6 +148,13 @@ export const S3Captions: React.FC<{beats: Beat[]; y?: number; hideDuring?: (f: n
   if (hideDuring?.(frame)) return null;
   const b = beats.find((x) => frame >= x.start && frame < x.end);
   if (!b) return null;
+  // house rule: inside a stack, the word being spoken is light blue
+  let stackActive = -1;
+  if (b.type === "stack") {
+    const last = b.words.length - 1;
+    for (let i = 0; i <= last; i++) if (frame >= b.words[i].start) stackActive = i;
+    if (stackActive === last && frame > b.words[last].start + 12) stackActive = -1;
+  }
   return (
     <div style={{position: "absolute", left: 0, right: 0, top: y, display: "flex", justifyContent: "center"}}>
       {b.type === "word" ? (
@@ -153,7 +162,7 @@ export const S3Captions: React.FC<{beats: Beat[]; y?: number; hideDuring?: (f: n
       ) : (
         <div style={{position: "relative", display: "flex", flexDirection: "column", alignItems: "center", gap: 0}}>
           {b.words.map((w, i) => (
-            <Pop key={i} w={w} />
+            <Pop key={i} w={w} active={i === stackActive} />
           ))}
           {b.deco === "o" || b.deco === "O" ? (
             <Ellipse start={b.words[b.words.length - 1].start} color={b.deco === "O" ? S3.color.red : S3.color.white} />

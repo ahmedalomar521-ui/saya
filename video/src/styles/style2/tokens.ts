@@ -1,16 +1,17 @@
 // ستايل 2 — design tokens (measured from the reference reel, scaled to 1080×1920).
 import {loadFont} from "@remotion/fonts";
 import {staticFile} from "remotion";
-import {HOUSE_GRADE} from "../shared/house";
+import {HOUSE_GRADE, houseFontLoaded, withHouseFont} from "../shared/house";
 
 export const style2Fonts = Promise.all([
+  houseFontLoaded,
   loadFont({family: "S2Ar", url: staticFile("fonts/cairo-arabic-800-normal.woff2"), weight: "800"}),
   loadFont({family: "S2Ar", url: staticFile("fonts/cairo-arabic-900-normal.woff2"), weight: "900"}),
   loadFont({family: "S2Lat", url: staticFile("fonts/cairo-latin-900-normal.woff2"), weight: "900"}),
 ]);
 
 export const S2 = {
-  font: "S2Lat, S2Ar, sans-serif",
+  font: withHouseFont("S2Lat, S2Ar, sans-serif"),
   color: {
     glow: "#F8E08A", // warm glowing caption yellow
     glowDeep: "#F0B84A",

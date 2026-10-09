@@ -4,11 +4,12 @@
 //                   [a b c] → white text on a red highlight bar (multi-word)
 import {interpolate, useCurrentFrame} from "remotion";
 import {autoStretch, glowShadow, S2} from "./tokens";
+import {HOUSE_ACTIVE_GLOW, HOUSE_ACTIVE_WORD} from "../shared/house";
 
 export type S2Phrase = {start: number; end: number; text: string}; // output frames
 
 type Token = {text: string; kind: "glow" | "red" | "bar"; start: number};
-type Page = {start: number; end: number; lines: Token[][]};
+type Page = {start: number; end: number; speechEnd: number; lines: Token[][]};
 
 const tokenize = (text: string): {text: string; kind: Token["kind"]}[] => {
   const out: {text: string; kind: Token["kind"]}[] = [];
@@ -47,10 +48,10 @@ export const buildPages = (phrases: S2Phrase[], maxPerLine = 3): Page[] =>
     }
     const next = phrases[pi + 1];
     const end = next ? Math.min(next.start, p.end + 15) : p.end + 12;
-    return {start: p.start, end: Math.max(end, p.end), lines};
+    return {start: p.start, end: Math.max(end, p.end), speechEnd: p.end, lines};
   });
 
-const Word: React.FC<{t: Token}> = ({t}) => {
+const Word: React.FC<{t: Token; active?: boolean}> = ({t, active}) => {
   const frame = useCurrentFrame();
   const age = frame - t.start;
   if (age < 0) {
@@ -86,6 +87,10 @@ const Word: React.FC<{t: Token}> = ({t}) => {
       </span>
     );
   }
+  // house rule: the word being spoken is light blue
+  if (active) {
+    return <span style={{...base, color: HOUSE_ACTIVE_WORD, textShadow: glowShadow(HOUSE_ACTIVE_GLOW)}}>{t.text}</span>;
+  }
   if (t.kind === "red") {
     return <span style={{...base, color: "#FF4A4A", textShadow: glowShadow(S2.color.redGlow)}}>{t.text}</span>;
   }
@@ -101,6 +106,8 @@ export const S2Captions: React.FC<{pages: Page[]; top?: number; hideDuring?: (f:
   if (hideDuring?.(frame)) return null;
   const page = pages.find((p) => frame >= p.start && frame < p.end);
   if (!page) return null;
+  const started = page.lines.flat().filter((t) => t.start <= frame);
+  const activeTok = frame < page.speechEnd ? started[started.length - 1] : undefined;
   return (
     <div style={{position: "absolute", left: 0, right: 0, top}}>
       {/* soft dark plate so the glow reads on light clothes */}
@@ -131,7 +138,7 @@ export const S2Captions: React.FC<{pages: Page[]; top?: number; hideDuring?: (f:
         {page.lines.map((line, li) => (
           <div key={li} style={{display: "flex", gap: 22, direction: "rtl"}}>
             {line.map((t, i) => (
-              <Word key={i} t={t} />
+              <Word key={i} t={t} active={t === activeTok} />
             ))}
           </div>
         ))}

@@ -6,8 +6,8 @@ description: "ستايل 1" — graphics-heavy talking-head reel style (split-sc
 # ستايل 1 — Style 1
 
 > **House rules first:** read `CLAUDE.md` at the repo root. They apply to this
-> style and override it. In particular, footage colour changes must be barely
-> noticeable (`HOUSE_GRADE` in `video/src/styles/shared/house.ts`).
+> style and override it. They cover the footage colour (barely changed), the
+> house font ("خط صيدلية النهدي") and the light-blue spoken word in captions.
 
 A talking-head reel where **the graphics carry the pacing**. Derived from a
 reference reel (frames in `reference/`). Reusable Remotion components live in

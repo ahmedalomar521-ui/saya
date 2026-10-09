@@ -6,8 +6,8 @@ description: "ستايل 2" — caption-driven Arabic talking-head reel style (b
 # ستايل 2 — Style 2
 
 > **House rules first:** read `CLAUDE.md` at the repo root. They apply to this
-> style and override it. In particular, footage colour changes must be barely
-> noticeable (`HOUSE_GRADE` in `video/src/styles/shared/house.ts`).
+> style and override it. They cover the footage colour (barely changed), the
+> house font ("خط صيدلية النهدي") and the light-blue spoken word in captions.
 
 An Arabic talking-head reel where **the captions are the design**. Derived from
 a reference reel (frames in `reference/`). Remotion components live in

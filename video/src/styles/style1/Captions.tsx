@@ -3,6 +3,7 @@
 // - "boxed": white text on a black box, sitting on the split-screen seam
 import {useCurrentFrame} from "remotion";
 import {S1} from "./tokens";
+import {KaraokeText} from "../shared/Karaoke";
 
 export type S1Chunk = {start: number; end: number; text: string}; // output frames
 
@@ -70,7 +71,7 @@ export const S1Captions: React.FC<{
             direction: isArabic ? "rtl" : "ltr",
           }}
         >
-          {c.text}
+          <KaraokeText text={c.text} start={c.start} end={c.end} />
         </span>
       </div>
     );
@@ -93,7 +94,7 @@ export const S1Captions: React.FC<{
         textShadow: "0 2px 10px rgba(0,0,0,0.7), 0 0 2px rgba(0,0,0,0.6)",
       }}
     >
-      {c.text}
+      <KaraokeText text={c.text} start={c.start} end={c.end} />
     </div>
   );
 };
