@@ -38,7 +38,7 @@ export const MintStage: React.FC<{children: React.ReactNode}> = ({children}) => 
   );
 };
 
-export type ChipIcon = "clock" | "alert" | "check" | "question" | "tool" | "chip" | "sparkle" | "robot";
+export type ChipIcon = "clock" | "alert" | "check" | "question" | "tool" | "chip" | "sparkle" | "robot" | "video" | "audio" | "link";
 
 const ChipGlyph: React.FC<{icon: ChipIcon; size: number}> = ({icon, size}) => {
   const st = {stroke: "#fff", strokeWidth: 2, fill: "none", strokeLinecap: "round" as const, strokeLinejoin: "round" as const};
@@ -51,6 +51,9 @@ const ChipGlyph: React.FC<{icon: ChipIcon; size: number}> = ({icon, size}) => {
     chip: <><rect x="6" y="6" width="12" height="12" rx="2" {...st} /><path d="M9 3v3 M15 3v3 M9 18v3 M15 18v3 M3 9h3 M3 15h3 M18 9h3 M18 15h3" {...st} /></>,
     sparkle: <path d="M12 3 L13.8 10.2 L21 12 L13.8 13.8 L12 21 L10.2 13.8 L3 12 L10.2 10.2 Z" {...st} />,
     robot: <><rect x="5" y="8" width="14" height="10" rx="3" {...st} /><path d="M12 4 v4 M9 13 v.5 M15 13 v.5 M3 13 h2 M19 13 h2" {...st} /></>,
+    video: <><rect x="3" y="6" width="13" height="12" rx="2.5" {...st} /><path d="M16 10.5 L21 7.5 V16.5 L16 13.5" {...st} /></>,
+    audio: <path d="M5 10 v4 M8.5 7 v10 M12 4 v16 M15.5 7 v10 M19 10 v4" {...st} />,
+    link: <path d="M10 14 a4 4 0 0 0 5.7 0 l3-3 a4 4 0 0 0-5.7-5.7 l-1 1 M14 10 a4 4 0 0 0-5.7 0 l-3 3 a4 4 0 0 0 5.7 5.7 l1-1" {...st} />,
   }[icon];
   return (
     <svg width={size} height={size} viewBox="0 0 24 24">

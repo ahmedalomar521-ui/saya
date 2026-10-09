@@ -11,6 +11,7 @@ import {style3Fonts} from "./styles/style3/tokens";
 import {SayaIntroStyle4, SAYA4_FPS, SAYA4_FRAMES} from "./videos/SayaIntroStyle4";
 import {style4Fonts} from "./styles/style4/tokens";
 import {InstaShareMix, MIX_FPS, MIX_FRAMES} from "./videos/InstaShareMix";
+import {SoundTypeMix, ST_FPS, ST_FRAMES} from "./videos/SoundTypeMix";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -89,6 +90,19 @@ export const RemotionRoot: React.FC = () => {
         height={1920}
         calculateMetadata={async () => {
           await Promise.all([fontsLoaded, style1Fonts, style2Fonts, style4Fonts]);
+          return {};
+        }}
+      />
+      {/* ستايل 0 — SoundType */}
+      <Composition
+        id="SoundTypeMix"
+        component={SoundTypeMix}
+        durationInFrames={ST_FRAMES}
+        fps={ST_FPS}
+        width={1080}
+        height={1920}
+        calculateMetadata={async () => {
+          await Promise.all([style1Fonts, style2Fonts, style4Fonts]);
           return {};
         }}
       />

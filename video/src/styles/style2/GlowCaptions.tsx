@@ -97,11 +97,13 @@ const Word: React.FC<{t: Token; active?: boolean}> = ({t, active}) => {
   return <span style={{...base, color: S2.color.glow, textShadow: glowShadow()}}>{t.text}</span>;
 };
 
-export const S2Captions: React.FC<{pages: Page[]; top?: number; hideDuring?: (f: number) => boolean}> = ({
-  pages,
-  top = S2.layout.captionTop,
-  hideDuring,
-}) => {
+export const S2Captions: React.FC<{
+  pages: Page[];
+  top?: number;
+  hideDuring?: (f: number) => boolean;
+  /** darkness of the soft plate behind the text (raise for light clothes) */
+  plate?: number;
+}> = ({pages, top = S2.layout.captionTop, hideDuring, plate = 0.32}) => {
   const frame = useCurrentFrame();
   if (hideDuring?.(frame)) return null;
   const page = pages.find((p) => frame >= p.start && frame < p.end);
@@ -118,7 +120,7 @@ export const S2Captions: React.FC<{pages: Page[]; top?: number; hideDuring?: (f:
           right: 40,
           top: -40,
           height: page.lines.length * 120 + 80,
-          background: "radial-gradient(ellipse at 50% 50%, rgba(10,8,6,0.32) 0%, rgba(10,8,6,0.18) 45%, rgba(10,8,6,0) 72%)",
+          background: `radial-gradient(ellipse at 50% 50%, rgba(10,8,6,${plate}) 0%, rgba(10,8,6,${plate * 0.56}) 45%, rgba(10,8,6,0) 72%)`,
           filter: "blur(10px)",
         }}
       />
