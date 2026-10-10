@@ -1,6 +1,6 @@
 # Saya sound library — when to use each sound
 
-Files: `video/public/sfx/saya/*.wav` (35 sounds, peak-normalised to -1 dBFS).
+Files: `video/public/sfx/saya/*.wav` (63 sounds, peak-normalised to -1 dBFS).
 Code: `video/src/styles/saya/sfx.ts` (`sayaSfx(name)`, `SAYA_SFX_VOLUME`, and
 `SAYA_SFX_FOR`, which maps each event to its sounds).
 
@@ -64,6 +64,34 @@ synced to **every movement** (power-up, ticks, swipes).
 | `glitchy-counter` | beeping counter | numbers counting up (stats) | S3 |
 | `ticks-fast`, `ticks-slow` | ratchet ticks | scrolling a list, counting, timer | S4 |
 
+### Pack 2 — labelled SFX videos (LSK "Sound Effect" parts 1, 3, 4, 5, 7)
+
+Each sound plays alone, with its name on screen, so these labels are certain.
+
+| File | Use for |
+|---|---|
+| `small-swoosh` | small element slides in, a light zoom |
+| `whoosh-pack-1` (one), `whoosh-pack-2` / `-3` (two each) | zooms and slides; the pairs suit zoom-in then zoom-out |
+| `robot-zoom` | mechanical / tech zoom on a device or screen |
+| `rewind` | "let's go back", rewinding a step |
+| `old-projector` | flashback, "in the old days" (rare) |
+| `slow-motion`, `slow-motion-2` | a slow-motion moment, a dramatic pause |
+| `riser-2` | suspense (variant of `riser`) |
+| `boom`, `cinematic-boom` | a big statement, a title card, the hook |
+| `epic-baam` | the biggest reveal or punchline (at most once per video) |
+| `stamp` | "approved", a verdict, a label stamped on screen |
+| `badum-tss` | after a joke |
+| `idea-ding` | "here's the trick", an idea or a tip |
+| `blink-bell` | a small sparkle or highlight on an element |
+| `shining` | a shine on a logo or product, "a result appears" (stands in for Magic Reveal) |
+| `confetti` | celebration, success, a milestone |
+| `money`, `cash-register-2` | money, price, free vs paid (variants of `cash-register`) |
+| `keyboard`, `typewriter` | longer typing beds: writing a prompt, a search, a message |
+| `timer-ticks`, `alarm-clock` | deadline, "time is running out", a countdown |
+| `boring` | a dull or slow thing (comedic) |
+| `crickets` | awkward silence, no answer (comedic) |
+| `airplane` | travel, flying (rare) |
+
 ## Mixing rules
 
 - SFX sit **10–14 dB under the voice** (defaults in `SAYA_SFX_VOLUME`). Never
@@ -81,8 +109,11 @@ synced to **every movement** (power-up, ticks, swipes).
 ## Gaps
 
 - **Magic Reveal** (S2) was not extracted: the speaker talks over it the whole
-  time. Use `whoosh-shine` or `power-up` for "a result appears" until the user
-  provides a clean file.
+  time (≈1.4 s at 10.1–11.5 s of a 12.7 s video). Use `shining`,
+  `whoosh-shine` or `power-up` for "a result appears" until the user provides a
+  clean file.
+- Pack 2: in the Part-7 video the end of "Message" and the start of "Money" run
+  together, so `money.wav` may start with the tail of the message sound.
 - **Meme sounds** in S3 (vine boom, bruh, huh?…) were skipped: they do not fit
   Saya's tech tone, and their order on screen was hard to match.
 - S1 and S2 play their sounds under speech, so their versions were not cut.

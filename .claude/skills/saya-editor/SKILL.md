@@ -52,7 +52,7 @@ video with this skill: say so in Arabic and offer to build them.
 ## What Saya takes from each reference (user's picks)
 
 Read `fundamentals.md` first: it covers silence cutting, SFX and VFX with
-measured numbers. Then read `sfx.md`: the sound library (35 sounds) and when to use each one. Element IDs refer to `reference/ANALYSIS.md`.
+measured numbers. Then read `sfx.md`: the sound library (63 sounds) and when to use each one. Element IDs refer to `reference/ANALYSIS.md`.
 
 | Ref | What we take | IDs |
 |---|---|---|
