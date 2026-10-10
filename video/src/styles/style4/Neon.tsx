@@ -17,7 +17,7 @@ const Stage: React.FC<{children: React.ReactNode; duration: number}> = ({childre
 
 // ------------------------------------------------------------------ icons
 
-export type NeonIconName = "bulb" | "bookmark" | "user" | "plane" | "search" | "clock" | "check" | "sparkle" | "play";
+export type NeonIconName = "bulb" | "bookmark" | "user" | "plane" | "search" | "clock" | "check" | "sparkle" | "play" | "download" | "folder" | "chat";
 
 const ICONS: Record<NeonIconName, string> = {
   bulb: "M9 17h6 M10 20.5h4 M12 3a6 6 0 0 1 4 10.5c-.8.8-1 1.6-1 3.5H9c0-1.9-.2-2.7-1-3.5A6 6 0 0 1 12 3Z",
@@ -29,6 +29,9 @@ const ICONS: Record<NeonIconName, string> = {
   check: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z M8 12.5l3 3 5-6",
   sparkle: "M12 2.5 14 10l7.5 2-7.5 2-2 7.5-2-7.5L2.5 12 10 10Z",
   play: "M4 5h16v14H4Z M10 9v6l5-3Z",
+  download: "M12 3v12 M7 10l5 5 5-5 M4 19h16",
+  folder: "M3 6h6l2 2h10v11H3Z",
+  chat: "M4 5h16v11H9l-5 4Z M8 10h8 M8 13h5",
 };
 
 export const NeonIcon: React.FC<{name: NeonIconName; size?: number; color?: string; delay?: number}> = ({

@@ -12,6 +12,7 @@ import {SayaIntroStyle4, SAYA4_FPS, SAYA4_FRAMES} from "./videos/SayaIntroStyle4
 import {style4Fonts} from "./styles/style4/tokens";
 import {InstaShareMix, MIX_FPS, MIX_FRAMES} from "./videos/InstaShareMix";
 import {SoundTypeMix, ST_FPS, ST_FRAMES} from "./videos/SoundTypeMix";
+import {RecoverChatsMix, RC_FPS, RC_FRAMES} from "./videos/RecoverChatsMix";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -103,6 +104,19 @@ export const RemotionRoot: React.FC = () => {
         height={1920}
         calculateMetadata={async () => {
           await Promise.all([style1Fonts, style2Fonts, style4Fonts]);
+          return {};
+        }}
+      />
+      {/* ستايل 0 — recover deleted chats */}
+      <Composition
+        id="RecoverChatsMix"
+        component={RecoverChatsMix}
+        durationInFrames={RC_FRAMES}
+        fps={RC_FPS}
+        width={1080}
+        height={1920}
+        calculateMetadata={async () => {
+          await Promise.all([fontsLoaded, style1Fonts, style2Fonts, style4Fonts]);
           return {};
         }}
       />
