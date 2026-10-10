@@ -109,6 +109,23 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
 | `sfx.ts`, `SfxTrack.tsx` | the sound library map and a cue track (sounds land 2 frames early) | — |
 | `SayaEdit.tsx` | renders a whole edit from one timeline object (`SayaEditProps`) | — |
 
+## Working agreement with the user (always)
+
+1. **Before editing: ask for the video's script.** Read it and list everything
+   the edit will need that is not already in the project. For example:
+   screenshots or screen recordings of each app or site mentioned, logos
+   missing from `simple-icons`, images, numbers to show, and the SRT. Send that
+   list in **one** message and wait until the user sends the files. Do not
+   start editing with gaps.
+2. **While editing: if something is missing, pause and ask.** Say exactly what
+   is needed and where it goes (timestamp + purpose). Never fill the gap with a
+   placeholder or a guess, and never render a version that has gaps. Resume
+   when it arrives.
+3. **Render once.** Check with stills only, and render the final video a single
+   time, when everything is in place, to avoid wasted renders.
+4. **After editing: deliver an editable timeline** as well as the video, so the
+   user can fix small things by hand (see "Timeline handoff" below).
+
 ## Workflow for a new video
 
 1. Footage → `video/public/footage/<name>.mp4` (git-ignored). The SRT comes from
