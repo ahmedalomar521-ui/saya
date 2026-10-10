@@ -35,7 +35,9 @@ silent.
 - **Music drop (from R2):** cut the music for about 1 s right before the key
   reveal or the screen demo (R2 does it at 9.9–11 s), then bring it back.
 
-**Every graphic that enters gets a sound (R2's rule).** Mapping:
+**Every graphic that enters gets a sound (R2's rule).** The sound files and
+the full "when to use which" guide (taught by the user's SFX videos) are in
+`sfx.md` and `video/src/styles/saya/sfx.ts`. Quick mapping:
 
 | Event | Sound | Seen in |
 |---|---|---|
