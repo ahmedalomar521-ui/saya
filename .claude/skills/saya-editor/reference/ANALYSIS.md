@@ -53,4 +53,4 @@ always on. A graphic always sits on top of a **blurred copy of the footage**.
 A change every 2–4 s.
 
 ## User's picks
-_(to be recorded)_
+Recorded in `../SKILL.md` → "What Saya takes from each reference".
