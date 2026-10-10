@@ -44,6 +44,11 @@ export type SayaEditProps = {
   hide?: Range[];
   graphics?: SayaGraphic[];
   sfx?: SfxCue[];
+  /** Which layer to draw. "all" = the finished edit. The others are for the
+   *  editable-timeline handoff (scripts/saya-handoff.mjs): "base" = footage
+   *  with its moves and the voice; "captions" / a graphic index = that layer
+   *  alone on a transparent background, with no sound. */
+  layer?: "all" | "base" | "captions" | number;
 };
 
 /** Graphics that stand in the caption's place hide the caption meanwhile. */
@@ -86,20 +91,28 @@ const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
   }
 };
 
+export const sayaChunks = (p: SayaEditProps) => srtToChunks(p.srt, SAYA_FPS, SAYA.caption.maxWords, SAYA.caption.maxChars);
+
 export const SayaEdit: React.FC<SayaEditProps> = (p) => {
-  const chunks = srtToChunks(p.srt, SAYA_FPS, SAYA.caption.maxWords, SAYA.caption.maxChars);
+  const layer = p.layer ?? "all";
+  const chunks = sayaChunks(p);
   const graphics = p.graphics ?? [];
   const hide: Range[] = [...(p.hide ?? []), ...graphics.filter(replacesCaption).map((g) => [g.at, g.at + g.dur] as Range)];
+  const show = (l: "base" | "captions" | number) => layer === "all" || layer === l;
   return (
-    <AbsoluteFill style={{background: "#000"}}>
-      <SayaFootage src={staticFile(p.footage)} isImage={p.isImage} face={p.face} zooms={p.zooms} blur={p.blur} pip={p.pip} pipPlace={p.pipPlace} whips={p.whips} />
-      {graphics.map((g, i) => (
-        <Sequence key={i} from={g.at} durationInFrames={g.dur} name={`${g.type} ${i}`}>
-          <Graphic g={g} />
-        </Sequence>
-      ))}
-      <SayaCaptions chunks={chunks} hide={hide} places={p.places} notes={p.notes} onLight={p.onLight} />
-      <SfxTrack cues={p.sfx ?? []} />
+    <AbsoluteFill style={{background: layer === "all" || layer === "base" ? "#000" : "transparent"}}>
+      {show("base") ? (
+        <SayaFootage src={staticFile(p.footage)} isImage={p.isImage} face={p.face} zooms={p.zooms} blur={p.blur} pip={p.pip} pipPlace={p.pipPlace} whips={p.whips} />
+      ) : null}
+      {graphics.map((g, i) =>
+        show(i) ? (
+          <Sequence key={i} from={g.at} durationInFrames={g.dur} name={`${g.type} ${i}`}>
+            <Graphic g={g} />
+          </Sequence>
+        ) : null,
+      )}
+      {show("captions") ? <SayaCaptions chunks={chunks} hide={hide} places={p.places} notes={p.notes} onLight={p.onLight} /> : null}
+      {layer === "all" ? <SfxTrack cues={p.sfx ?? []} /> : null}
     </AbsoluteFill>
   );
 };

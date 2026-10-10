@@ -152,6 +152,41 @@ Stills render with
 `npx remotion still <Comp> out.png --frame=N --browser-executable=/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell`
 (the default Chrome download is blocked in this environment).
 
+## Timeline handoff (Premiere Pro / DaVinci Resolve)
+
+The user fixes small things by hand in their editor, so every edit ships as
+layers plus an FCP7 XML timeline:
+
+```
+cd video
+npm run saya:handoff -- <CompositionId> --final [--root=<folder on the user's computer>]
+```
+
+Output: `video/out/handoff/<Id>/` (git-ignored):
+
+| Item | Track | What it is |
+|---|---|---|
+| `media/base.mp4` | V1 + A1 | footage with its zooms, blur, PiP and whips, plus the voice |
+| `media/captions.mov` | V2 | all captions, transparent (ProRes 4444) |
+| `media/gNN-<type>.mov` | V3+ | each graphic, cut to its own range, transparent |
+| `media/sfx-NN-<name>.wav` | A2+ | each sound at its place, level preset |
+| `timeline.xml` | | Premiere: File › Import. Resolve: File › Import › Timeline |
+| `timeline.md` | | the same timeline as a table |
+| `captions.srt` | | the caption chunks as shown |
+| `final.mp4` | | the finished video (`--final`) |
+
+- This is the **single render** of the agreement: the final video and the
+  layers come out of the same run. Use `--xml-only` to check the timeline
+  without rendering anything.
+- Ask the user once for the folder where they will keep the handoff and pass
+  it with `--root=` so the editor finds the media. Without it, the editor asks
+  to relink once: point it at `media/`.
+- Zooms, blur and PiP are baked into `base.mp4`. To change them, ask Claude.
+  Moving, trimming or deleting a graphic or a sound, changing a level, or
+  fixing caption text (re-run from the fixed SRT) can all be done by hand.
+- Backdrop blur (the glass effect) does not survive in a transparent layer,
+  so the plates look slightly more solid in the editor than in `final.mp4`.
+
 ## Feedback log (rules learned from the user's notes)
 
 The first edit is a **trial**. After each edit, turn every note the user gives
