@@ -16,6 +16,21 @@ description: "saya_editor" — مونتاج فيديوهات سايا (صانع�
 Until the sections below are filled in, do not edit a video with this skill;
 tell the user (in Arabic) that the style is still being built.
 
+## What we know about Saya
+
+- **Niche:** tech content (التقنية). Every video is **talking-head**, speaking
+  to the camera, **vertical 9:16** (1080×1920).
+- **Brand colours** (for graphics and text only, never the footage). The hex
+  values are proposals and are not approved yet:
+  - neon blue (أزرق نيون): `#1E90FF`, with a glow
+  - navy (كحلي): `#0B1B3F`, for plates, backgrounds and full-screen inserts
+  - sky blue (سماوي): `#8FD3FF`, the same as `HOUSE_ACTIVE_WORD`, so the
+    spoken word already matches the brand
+- **Built from scratch.** Do NOT reuse or mix the saved styles (style-0 … style-N)
+  or their components. Saya's components live only in `video/src/styles/saya/`.
+  The shared house helpers (`house.ts`, `Karaoke.tsx`) are still used, because
+  the house rules apply to every style.
+
 ## How the style gets built (from the reference videos)
 
 1. Put each reference in `reference/` (keep only stills, not full videos):
@@ -25,8 +40,10 @@ tell the user (in Arabic) that the style is still being built.
 2. For every reference, note: caption layout (position, size, words per
    screen, animation, emphasis), typography, colour of graphics, B-roll /
    inserts / icons, zooms and transitions, pacing, sound design, intro/outro.
-3. Keep what the references **share** — that is Saya's style. Where they
-   differ, pick one and record why. Never copy a reference's footage grade.
+3. Present the analysis of each reference to the user, element by element.
+   **The user picks** what they like. Only the chosen elements go into Saya's
+   style, re-coloured to the brand palette above. Never copy a reference's
+   footage grade.
 4. Fill in **Principles**, **Tokens** and **Workflow** below, build reusable
    components in `video/src/styles/saya/` (tokens take `grade` from
    `HOUSE_GRADE`, fonts via `withHouseFont()`), and check them with a few
