@@ -35,11 +35,13 @@ export const activeWordIndex = (frame: number, start: number, end: number, words
 };
 
 // ---------------------------------------------------------------------------
-// Rule 3: every montage uses the house font ("خط صيدلية النهدي") for ALL text,
+// Rule 3: every montage uses the house font (Tahrir Bold) for ALL Arabic text,
 // whatever the style. Put the font file in public/fonts/house/ and set the
 // file name here; until then each style falls back to its own fonts.
 export const HOUSE_FONT_FILES: {file: string; weight?: string}[] = [
-  // e.g. {file: "nahdi-regular.ttf", weight: "400"}, {file: "nahdi-bold.ttf", weight: "700"}
+  // Tahrir Bold (HJ Fonts) — Arabic glyphs only; Latin letters and Western
+  // digits fall through to each style's own Latin font in the stack.
+  {file: "tahrir-bold.ttf"},
 ];
 export const HOUSE_FONT_FAMILY = "HouseFont";
 

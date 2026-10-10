@@ -7,7 +7,7 @@ description: "ستايل 4" — dark-studio talking-head reel with neon/holograp
 
 > **House rules first:** read `CLAUDE.md` at the repo root. They apply to this
 > style and override it. They cover the footage colour (barely changed), the
-> house font ("خط صيدلية النهدي") and the light-blue spoken word in captions.
+> house font (Tahrir Bold) and the light-blue spoken word in captions.
 
 A medium-shot talking head on a **dark studio** background. **Neon motion
 graphics** play in the dark space above the head and glow additively. It

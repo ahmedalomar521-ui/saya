@@ -7,7 +7,7 @@ description: "ستايل 3" — minimal talking-head reel style: ONE small clean
 
 > **House rules first:** read `CLAUDE.md` at the repo root. They apply to this
 > style and override it. They cover the footage colour (barely changed), the
-> house font ("خط صيدلية النهدي") and the light-blue spoken word in captions.
+> house font (Tahrir Bold) and the light-blue spoken word in captions.
 
 A **minimal** talking-head reel: the face and the words, nothing else. It comes
 from a reference reel (frames in `reference/`). The components live in
