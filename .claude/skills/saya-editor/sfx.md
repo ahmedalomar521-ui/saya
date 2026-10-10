@@ -1,6 +1,6 @@
 # Saya sound library — when to use each sound
 
-Files: `video/public/sfx/saya/*.wav` (63 sounds, peak-normalised to -1 dBFS).
+Files: `video/public/sfx/saya/*.wav` (56 sounds, peak-normalised to -1 dBFS).
 Code: `video/src/styles/saya/sfx.ts` (`sayaSfx(name)`, `SAYA_SFX_VOLUME`, and
 `SAYA_SFX_FOR`, which maps each event to its sounds).
 
@@ -33,7 +33,6 @@ synced to **every movement** (power-up, ticks, swipes).
 |---|---|---|---|
 | `whoosh-zoom` | whoosh in + out | zoom in / zoom out (main) | S5 |
 | `whoosh-1`, `whoosh-2` | short / longer whoosh | zoom variants, quick slides | S3 |
-| `whoosh-deep` | deep heavy whoosh | big section change | S3 |
 | `swish-whoosh` | large swish | fast slide-in of a card or phone | S6 |
 | `cinematic-whoosh` | cinematic whoosh | opening, big transition | S6 |
 | `whoosh-shine` | whoosh with a bright tail | logo or product reveal | S4 |
@@ -42,8 +41,6 @@ synced to **every movement** (power-up, ticks, swipes).
 | `camera-shutter` | shutter | scene transition (main) | S5 |
 | `camera-shutter-2`, `shutter-click` | short shutters | quick transitions, screenshot card | S6 |
 | `camera-flash` | flash + shutter | screenshot or "photo" moment | S6 |
-| `film-burn` | film burn | retro / flashback transition (rare) | S3 |
-| `reverse` | reverse swell | zoom-out, rewind ("rewind" moment) | S3 |
 | `fuhh` | breathy swoosh-hit | surprise, hook line | S5 |
 | `click` | double click | important info (with impact) / pop-up | S5 |
 | `impact` | soft boom | important info, keyword slam | S5 |
@@ -55,10 +52,7 @@ synced to **every movement** (power-up, ticks, swipes).
 | `ding` | ding | correct answer, success, ✓ | S5 |
 | `cash-register` | register | price, money, free vs paid | S5 |
 | `notification` | phone notification | notification banner, message | S3 |
-| `mouse-click` | mouse double click | click in a screen recording | S3 |
 | `ui-select` | UI select | tap or select in a phone demo, pill pops | S6 |
-| `toggle` | toggle | switching a setting on or off | S3 |
-| `keyboard-typing` | typing | typing a prompt or search | S3 |
 | `glitch` | digital glitch | error, hack, "something is wrong" | S3 |
 | `digital-loading` | rising digital beeps | loading, processing, download | S3 |
 | `glitchy-counter` | beeping counter | numbers counting up (stats) | S3 |
@@ -85,7 +79,7 @@ Each sound plays alone, with its name on screen, so these labels are certain.
 | `blink-bell` | a small sparkle or highlight on an element |
 | `shining` | a shine on a logo or product, "a result appears" (stands in for Magic Reveal) |
 | `confetti` | celebration, success, a milestone |
-| `money`, `cash-register-2` | money, price, free vs paid (variants of `cash-register`) |
+| `cash-register-2` | money, price, free vs paid (variants of `cash-register`) |
 | `keyboard`, `typewriter` | longer typing beds: writing a prompt, a search, a message |
 | `timer-ticks`, `alarm-clock` | deadline, "time is running out", a countdown |
 | `boring` | a dull or slow thing (comedic) |
@@ -112,12 +106,17 @@ Each sound plays alone, with its name on screen, so these labels are certain.
   time (≈1.4 s at 10.1–11.5 s of a 12.7 s video). Use `shining`,
   `whoosh-shine` or `power-up` for "a result appears" until the user provides a
   clean file.
-- Pack 2: in the Part-7 video the end of "Message" and the start of "Money" run
-  together, so `money.wav` may start with the tail of the message sound.
 - **Meme sounds** in S3 (vine boom, bruh, huh?…) were skipped: they do not fit
   Saya's tech tone, and their order on screen was hard to match.
 - S1 and S2 play their sounds under speech, so their versions were not cut.
   The same sounds come from the clean videos (S5, S6).
-- The S3 labels for the transition set (camera shutter / film burning /
-  reverse) were matched by order and by the shape of the sound, so they are
-  less certain than S5 and S6 (which are clean and labelled one by one).
+
+## Removed (doubtful)
+
+The user asked to delete every sound whose label or cut was in doubt:
+`money` (it ran into the end of "Message"), `whoosh-deep`, `film-burn` and
+`reverse` (S3: matched only by order), and `mouse-click`, `keyboard-typing`
+and `toggle` (S3: the split between them was a guess). For typing use
+`keyboard` / `typewriter`; for taps use `ui-select` / `shutter-click`. Never
+add a sound to the library unless its name is certain and it plays alone,
+with no speech or other sound over it.
