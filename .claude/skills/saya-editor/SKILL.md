@@ -134,3 +134,12 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
 Stills render with
 `npx remotion still <Comp> out.png --frame=N --browser-executable=/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell`
 (the default Chrome download is blocked in this environment).
+
+## Feedback log (rules learned from the user's notes)
+
+The first edit is a **trial**. After each edit, turn every note the user gives
+into a short rule here (what to do, and in which situation), so the next edit
+starts from it. Newer rules override older ones and the principles above
+(house rules still come first).
+
+_(empty — waiting for the trial edit)_
