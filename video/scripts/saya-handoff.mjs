@@ -1,3 +1,4 @@
+/* global process, console */
 // Saya handoff: turn a finished Saya edit into an editable timeline for
 // Premiere Pro / DaVinci Resolve (FCP7 XML "xmeml").
 //
