@@ -1,6 +1,6 @@
 ---
 name: saya-editor
-description: "saya_editor" — مونتاج فيديوهات سايا (صانعة المحتوى) بستايلها الخاص. Saya's own editing style, built by analysing several reference videos the user provides. Use when the user asks to edit/montage a video "بستايل سايا" / "saya_editor" / "saya editor" / "مونتاج سايا". STATUS: style specified, components not built yet.
+description: "saya_editor" — مونتاج فيديوهات سايا (صانعة المحتوى) بستايلها الخاص. Saya's own editing style, built by analysing several reference videos the user provides. Use when the user asks to edit/montage a video "بستايل سايا" / "saya_editor" / "saya editor" / "مونتاج سايا". STATUS: ready — components in video/src/styles/saya, template videos/SayaKitPreview.tsx.
 ---
 
 # saya_editor — ستايل سايا
@@ -12,9 +12,9 @@ description: "saya_editor" — مونتاج فيديوهات سايا (صانع�
 
 ## Status
 
-The style is **specified** (below) from the user's picks. The components in
-`video/src/styles/saya/` are **not built yet**. Until they exist, do not edit a
-video with this skill: say so in Arabic and offer to build them.
+Ready. The components live in `video/src/styles/saya/`. Every piece is shown
+on one timeline in `video/src/videos/SayaKitPreview.tsx` (composition
+`SayaKitPreview`, a gallery for checking stills, not a montage).
 
 ## What we know about Saya
 
@@ -70,7 +70,7 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
 2. **Captions: always on, never repeated (R3), R4 look.** 2–3 words per chunk,
    white Tahrir Bold, with the spoken word in sky blue (`HOUSE_ACTIVE_WORD`).
    Default position is the chest (about y 1150 at 1080×1920). It moves up (to
-   about y 420) when a graphic takes the middle, always inside the safe zone.
+   about y 330) when a graphic takes the middle, always inside the safe zone.
 3. **Important moment = the caption becomes a graphic (R4).** For a feature
    name, a key number or the punchline, the caption chunk is replaced by a
    pill, a big glowing word or a logo in the same spot. Then the normal caption
@@ -83,7 +83,7 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
 6. **Sound on every graphic** (fundamentals §2), music bed underneath with one
    drop before the main reveal.
 
-## Tokens (initial; tune when building)
+## Tokens (source of truth: `video/src/styles/saya/tokens.ts`)
 
 - Canvas 1080×1920, 30 fps.
 - Caption: Tahrir Bold (Arabic) and the brand Latin font, about 64 px, white,
@@ -95,22 +95,42 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
 - Punch-in scale 1.12–1.18; slow zoom 1.00 → 1.06; background blur 18–24 px.
 - Springs: pop `damping 12, stiffness 180`; phone rise `damping 14, stiffness 120`.
 
-## Components to build (`video/src/styles/saya/`)
+## Components (`video/src/styles/saya/`)
 
-`tokens.ts`, `SayaCaptions` (always-on, chunked, repositioning, never
-repeats), `LogoPop` and `LogoStack`, `PhoneMock` and `PipBubble`,
-`ScreenshotCard`, `GlassCard` and `InfoChip`, `FeaturePill` (the caption-replacing
-graphic), `StepPill`, `SaveCta`, `PunchZoom` and `BgBlur` helpers, `Whip`
-transition, `SayaSfx` (event → sound mapping from fundamentals §2), and a
-template `video/src/videos/SayaTemplate.tsx`.
+| File | What it does | From |
+|---|---|---|
+| `tokens.ts` | colours (neon / navy / sky), fonts, safe zone, springs, `navyGlass()`, `neonGlow()` | — |
+| `srt.ts` | `srtToChunks(srt, fps)`: SRT → word times → 2–3-word chunks (never across cues); `findWord()` returns the frame where a name is spoken | R3 |
+| `Captions.tsx` | `SayaCaptions`: always on, never repeated, white with the sky active word; `places` move it (chest 1150 ↔ top ~330), `hide` skips the chunks a graphic says, `notes` adds a grey context line, `onLight` adds a navy outline | R3 + R4 |
+| `Footage.tsx` | `SayaFootage`: `zooms` (cut / slow / fast), `blur` ranges, `pip` ranges (the shot shrinks into a glowing circle top-left over a blurred copy), `whips` | R5 + R4 |
+| `Logos.tsx` | `LogoPop` (in the caption's place with its name, or beside the head with a neon glow), `LogoStack` (logos named in a row; `focus` zooms one to the centre). Icons come from `simple-icons` (`import {siInstagram} from "simple-icons"`) or an image | R5 + R4 |
+| `Inserts.tsx` | `PhoneMock` (rises from below), `TapPulse`, `ScreenshotCard` (slides up with motion blur), `GlassCard`, `InfoChip`, `SourceTag` | R3 R4 R5 |
+| `Pills.tsx` | `FeaturePill` (✦ name in the caption's place), `BigWord`, `StepPill`, `SaveCta` | R4 + R2 |
+| `sfx.ts`, `SfxTrack.tsx` | the sound library map and a cue track (sounds land 2 frames early) | — |
+| `SayaEdit.tsx` | renders a whole edit from one timeline object (`SayaEditProps`) | — |
 
 ## Workflow for a new video
 
-1. Footage → `video/public/footage/<name>.mp4`. Cut the silences
-   (fundamentals §1). Get word timings for the captions.
-2. Go through the script and mark every **name** (logo, screenshot or phone),
-   every **important moment** (caption → graphic) and the **main reveal**
-   (music drop).
-3. Build the timeline from the template. Add SFX from the event table.
-4. Check stills: captions inside the safe zone, not covering the mouth, never
-   repeated. Then render. If the file is over 30 MB, send a compressed copy.
+1. Footage → `video/public/footage/<name>.mp4` (git-ignored). The SRT comes from
+   the user. Cut silences **only if the user asks** (fundamentals §1).
+2. Copy `videos/SayaKitPreview.tsx` to `videos/<Name>.tsx`. Set `footage`,
+   paste the SRT, and set `face` (face centre and width in pixels, read from a
+   still).
+3. Go through the script:
+   - every **app or brand name** → `logo` on that word (`findWord`), with a
+     chime or click;
+   - every **app demo** → `phone` + `pip` + caption `places` to the top;
+   - every **site or article** → `screenshot` + `blur`;
+   - every **important moment** → `feature` or `bigWord` (the caption gives
+     way automatically);
+   - a **cut or a new idea** → a `zooms` punch-in with a whoosh;
+   - **steps** → `step`; the end → `save` (+ ding).
+
+   Pick sounds from `sfx.md`.
+4. Register the composition in `Root.tsx` with `sayaFonts`. Check a few stills
+   (captions inside the safe zone, never covering the mouth, no phrase twice).
+   Render only when the user asks.
+
+Stills render with
+`npx remotion still <Comp> out.png --frame=N --browser-executable=/opt/pw-browsers/chromium_headless_shell-1194/chrome-linux/headless_shell`
+(the default Chrome download is blocked in this environment).

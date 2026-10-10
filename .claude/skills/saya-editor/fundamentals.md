@@ -3,23 +3,17 @@
 These are the basics every Saya edit follows. The numbers come from measuring the
 reference videos (audio analysis plus 4 fps frame sheets), not from guesses.
 
-## 1. Cutting the silences (قص السكتات)
+## 1. Cutting the silences (قص السكتات) — manual only
 
-Measured: after editing, the references keep **no pause longer than 0.1–0.22 s**
-(R1 max 0.16 s, R2 0.22 s, R3 0.11 s, R4 0.19 s, R5 0.10 s). Speech runs
-back-to-back.
+Saya is AI-generated, so her takes usually have no silences. **Do not cut
+silences unless the user asks** ("قص السكتات"). When they ask:
 
-- Detect pauses with `silencedetect=n=-32dB:d=0.12` on the voice track. Re-check
-  the threshold on each recording: a noisy room needs about -28 dB.
-- Remove every pause longer than **0.15 s**. Keep **0.04 s before** a word and
-  **0.06 s after** it, so consonants are not clipped.
-- Remove breaths, "إممم", false starts and repeated takes. When a sentence was
-  said twice, keep the **last** take.
-- A jump cut inside the same shot must change something: either a punch-in
-  (see §3) or a graphic covering the cut. Never leave two near-identical frames
-  back to back.
-- Do not cut inside a word. Snap every cut to a zero-crossing, or add a 2-frame
-  audio crossfade to avoid clicks.
+- The references keep **no pause longer than 0.1–0.22 s** after editing.
+- Detect pauses with `silencedetect=n=-32dB:d=0.12`. Remove pauses > 0.15 s,
+  keeping 0.04 s before and 0.06 s after each word.
+- Shift the SRT times by the removed spans, so the captions stay in sync.
+- Snap cuts to zero-crossings, or use a 2-frame audio crossfade. Cover a jump
+  cut with a punch-in or a graphic.
 
 ## 2. Sound design (المؤثرات الصوتية) — base: R2, accents: R4
 
