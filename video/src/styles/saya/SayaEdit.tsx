@@ -4,9 +4,9 @@
 import {AbsoluteFill, Sequence, staticFile} from "remotion";
 import {SayaCaptions, type CaptionNote, type CaptionPlace, type Range} from "./Captions";
 import {SayaFootage, type PipPlace, type Zoom} from "./Footage";
-import {GlassCard, InfoChip, PhoneMock, ScreenshotCard, SourceTag, TapPulse} from "./Inserts";
+import {FloatingWindow, GlassCard, InfoChip, PhoneMock, ScreenshotCard, SourceTag, TapPulse} from "./Inserts";
 import {LogoPop, LogoStack, type Logo} from "./Logos";
-import {BigWord, FeaturePill, SaveCta, StepPill} from "./Pills";
+import {BigWord, FeaturePill, FollowCta, SaveCta, StepPill} from "./Pills";
 import {SfxTrack, type SfxCue} from "./SfxTrack";
 import {srtToChunks} from "./srt";
 import {SAYA, SAYA_FPS} from "./tokens";
@@ -16,15 +16,17 @@ export type SayaGraphic = Timed &
   (
     | {type: "logo"; logo: Logo; place?: "caption" | {x: number; y: number}; size?: number}
     | {type: "logoStack"; items: {logo: Logo; at: number}[]; focus?: {index: number; at: number}}
-    | {type: "phone"; src?: string; isVideo?: boolean; taps?: {at: number; x: number; y: number}[]}
-    | {type: "screenshot"; src: string; aspect?: number}
+    | {type: "phone"; src?: string; isVideo?: boolean; trimBefore?: number; playbackRate?: number; taps?: {at: number; x: number; y: number}[]}
+    | {type: "screenshot"; src: string; aspect?: number; centerY?: number}
+    | {type: "floating"; src: string; aspect?: number; width?: number; top?: number; x?: number; label?: string}
+    | {type: "follow"; avatar: string; handle: string; text?: string; y?: number; pressAt?: number}
     | {type: "glass"; title: string; sub?: string}
-    | {type: "chip"; title: string; label?: string; icon?: string}
-    | {type: "feature"; text: string}
+    | {type: "chip"; title: string; label?: string; icon?: string; y?: number}
+    | {type: "feature"; text: string; y?: number}
     | {type: "bigWord"; text: string}
     | {type: "step"; text: string}
     | {type: "save"; text?: string}
-    | {type: "source"; text: string}
+    | {type: "source"; text: string; y?: number}
   );
 
 export type SayaEditProps = {
@@ -64,7 +66,7 @@ const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
     case "phone":
       return (
         <>
-          <PhoneMock duration={g.dur} src={g.src ? staticFile(g.src) : undefined} isVideo={g.isVideo} />
+          <PhoneMock duration={g.dur} src={g.src ? staticFile(g.src) : undefined} isVideo={g.isVideo} trimBefore={g.trimBefore} playbackRate={g.playbackRate} />
           {(g.taps ?? []).map((t, i) => (
             <Sequence key={i} from={t.at} durationInFrames={16} layout="none">
               <TapPulse x={t.x} y={t.y} />
@@ -73,13 +75,17 @@ const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
         </>
       );
     case "screenshot":
-      return <ScreenshotCard src={staticFile(g.src)} duration={g.dur} aspect={g.aspect} />;
+      return <ScreenshotCard src={staticFile(g.src)} duration={g.dur} aspect={g.aspect} centerY={g.centerY} />;
+    case "floating":
+      return <FloatingWindow src={staticFile(g.src)} duration={g.dur} aspect={g.aspect} width={g.width} top={g.top} x={g.x} label={g.label} />;
+    case "follow":
+      return <FollowCta avatar={staticFile(g.avatar)} handle={g.handle} text={g.text} duration={g.dur} y={g.y} pressAt={g.pressAt} />;
     case "glass":
       return <GlassCard title={g.title} sub={g.sub} duration={g.dur} />;
     case "chip":
-      return <InfoChip title={g.title} label={g.label} icon={g.icon} duration={g.dur} />;
+      return <InfoChip title={g.title} label={g.label} icon={g.icon} duration={g.dur} y={g.y} />;
     case "feature":
-      return <FeaturePill text={g.text} duration={g.dur} />;
+      return <FeaturePill text={g.text} duration={g.dur} y={g.y} />;
     case "bigWord":
       return <BigWord text={g.text} duration={g.dur} />;
     case "step":
@@ -87,7 +93,7 @@ const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
     case "save":
       return <SaveCta text={g.text} duration={g.dur} />;
     case "source":
-      return <SourceTag text={g.text} />;
+      return <SourceTag text={g.text} y={g.y} />;
   }
 };
 

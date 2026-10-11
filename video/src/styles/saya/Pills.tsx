@@ -2,7 +2,7 @@
 // (R4): FeaturePill (✦ feature name), BigWord (one huge glowing word). Plus
 // StepPill (R2-d) and SaveCta (R2-f). Add the range to SayaCaptions `hide`
 // when one of them sits where the caption is.
-import {interpolate, spring, useCurrentFrame, useVideoConfig} from "remotion";
+import {Img, interpolate, spring, useCurrentFrame, useVideoConfig} from "remotion";
 import {clamp, navyGlass, neonGlow, SAYA} from "./tokens";
 
 const usePop = (duration: number) => {
@@ -103,6 +103,23 @@ export const SaveCta: React.FC<{text?: string; duration: number; fillAt?: number
         <path d="M6 3h12v18l-6-4.5L6 21Z" fill={fill > 0 ? SAYA.color.sky : "none"} fillOpacity={fill} stroke={SAYA.color.white} strokeWidth={1.8} strokeLinejoin="round" />
       </svg>
       <span style={{fontFamily: SAYA.font, fontWeight: 900, fontSize: 46, color: SAYA.color.white}}>{text}</span>
+    </div>
+  );
+};
+
+/** Follow CTA (end card): Saya's avatar with a glowing ring, her handle and a
+ *  "تابعني" button that gets pressed. */
+export const FollowCta: React.FC<{avatar: string; handle: string; text?: string; duration: number; y?: number; pressAt?: number}> = ({avatar, handle, text = "تابعني", duration, y = 1320, pressAt = 14}) => {
+  const {frame, p, out} = usePop(duration);
+  const press = interpolate(frame, [pressAt, pressAt + 4, pressAt + 9], [1, 0.9, 1], clamp);
+  const done = frame >= pressAt + 4;
+  return (
+    <div style={{position: "absolute", left: 540, top: y, transform: `translate(-50%, -50%) scale(${interpolate(p, [0, 1], [0.6, 1])})`, opacity: Math.min(p, out), display: "flex", alignItems: "center", gap: 22, direction: "rtl", padding: "16px 18px 16px 30px", borderRadius: 99, ...navyGlass(0.88)}}>
+      <Img src={avatar} style={{width: 92, height: 92, borderRadius: 99, objectFit: "cover", boxShadow: `0 0 0 4px ${SAYA.color.neon}, 0 0 22px ${SAYA.color.neon}`}} />
+      <span style={{fontFamily: "SayaLat, sans-serif", fontWeight: 900, fontSize: 42, color: SAYA.color.white, direction: "ltr"}}>@{handle}</span>
+      <div style={{transform: `scale(${press})`, padding: "14px 30px", borderRadius: 99, background: done ? "transparent" : SAYA.color.neon, border: `3px solid ${SAYA.color.neon}`, fontFamily: SAYA.font, fontWeight: 900, fontSize: 38, color: SAYA.color.white, boxShadow: done ? undefined : `0 0 24px ${SAYA.color.neon}`}}>
+        {done ? "✓" : text}
+      </div>
     </div>
   );
 };

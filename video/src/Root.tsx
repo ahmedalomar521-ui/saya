@@ -11,6 +11,7 @@ import {style3Fonts} from "./styles/style3/tokens";
 import {SayaIntroStyle4, SAYA4_FPS, SAYA4_FRAMES} from "./videos/SayaIntroStyle4";
 import {style4Fonts} from "./styles/style4/tokens";
 import {SayaKitPreview, SAYA_KIT_FRAMES, sayaKitProps} from "./videos/SayaKitPreview";
+import {SayaDuckAi, SAYA_DUCK_FRAMES, sayaDuckProps} from "./videos/SayaDuckAi";
 import {sayaFonts, SAYA_FPS as SAYA_STYLE_FPS} from "./styles/saya/tokens";
 import {InstaShareMix, MIX_FPS, MIX_FRAMES} from "./videos/InstaShareMix";
 import {SoundTypeMix, ST_FPS, ST_FRAMES} from "./videos/SoundTypeMix";
@@ -131,6 +132,20 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={sayaKitProps}
+        calculateMetadata={async () => {
+          await sayaFonts;
+          return {};
+        }}
+      />
+      {/* سايا — duck.ai (trial edit) */}
+      <Composition
+        id="SayaDuckAi"
+        component={SayaDuckAi}
+        durationInFrames={SAYA_DUCK_FRAMES}
+        fps={SAYA_STYLE_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={sayaDuckProps}
         calculateMetadata={async () => {
           await sayaFonts;
           return {};

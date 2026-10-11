@@ -167,7 +167,7 @@ Output: `video/out/handoff/<Id>/` (git-ignored):
 | Item | Track | What it is |
 |---|---|---|
 | `media/base.mp4` | V1 + A1 | footage with its zooms, blur, PiP and whips, plus the voice |
-| `media/captions.mov` | V2 | all captions, transparent (ProRes 4444) |
+| `media/captions.mov` | V2 | all captions, transparent (QuickTime Animation + alpha) |
 | `media/gNN-<type>.mov` | V3+ | each graphic, cut to its own range, transparent |
 | `media/sfx-NN-<name>.wav` | A2+ | each sound at its place, level preset |
 | `timeline.xml` | | Premiere: File › Import. Resolve: File › Import › Timeline |

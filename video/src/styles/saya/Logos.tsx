@@ -2,11 +2,15 @@
 // pops in on that word. It goes in the caption's place (with its name under it)
 // or beside the head with a neon glow. Several names in a row → LogoStack.
 // Icons: `simple-icons` (import {siInstagram} from "simple-icons"), or any image.
-import {Img, interpolate, spring, useCurrentFrame, useVideoConfig} from "remotion";
+import {Img, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig} from "remotion";
 import type {SimpleIcon} from "simple-icons";
 import {clamp, neonGlow, SAYA} from "./tokens";
 
+/** `src` + `color`: a white mark (PNG) drawn on a brand-colour tile. `src` alone: a full app icon. */
 export type Logo = {icon?: SimpleIcon; src?: string; name?: string; color?: string};
+
+/** Paths inside public/ ("footage/x.png") go through staticFile(); URLs pass as is. */
+const resolveSrc = (src: string) => (/^(https?:|data:|blob:|\/)/.test(src) ? src : staticFile(src));
 
 const brandColor = (l: Logo) => l.color ?? (l.icon ? `#${l.icon.hex}` : SAYA.color.neon);
 
@@ -19,7 +23,7 @@ export const LogoTile: React.FC<{logo: Logo; size: number}> = ({logo, size}) => 
         width: size,
         height: size,
         borderRadius: size * 0.24,
-        background: logo.src ? "transparent" : c,
+        background: logo.src && !logo.color ? "transparent" : c,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -28,7 +32,7 @@ export const LogoTile: React.FC<{logo: Logo; size: number}> = ({logo, size}) => 
       }}
     >
       {logo.src ? (
-        <Img src={logo.src} style={{width: size, height: size, objectFit: "cover"}} />
+        <Img src={resolveSrc(logo.src)} style={logo.color ? {width: size * 0.62, height: size * 0.62, objectFit: "contain"} : {width: size, height: size, objectFit: "cover"}} />
       ) : logo.icon ? (
         <svg viewBox="0 0 24 24" width={size * 0.58} height={size * 0.58}>
           <path d={logo.icon.path} fill="#fff" />

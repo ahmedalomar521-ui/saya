@@ -17,10 +17,13 @@ export const PhoneMock: React.FC<{
   duration: number;
   src?: string;
   isVideo?: boolean;
+  /** Screen recordings: skip the start (frames of the recording) and speed up. */
+  trimBefore?: number;
+  playbackRate?: number;
   children?: React.ReactNode;
   width?: number;
   top?: number;
-}> = ({duration, src, isVideo, children, width = 500, top = 420}) => {
+}> = ({duration, src, isVideo, trimBefore, playbackRate, children, width = 500, top = 420}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const {inP, outP} = enter(frame, fps, duration);
@@ -44,7 +47,7 @@ export const PhoneMock: React.FC<{
       <div style={{position: "relative", width: "100%", height: "100%", borderRadius: width * 0.11, overflow: "hidden", background: "#fff"}}>
         {src ? (
           isVideo ? (
-            <Video src={src} muted objectFit="cover" style={{width: "100%", height: "100%"}} />
+            <Video src={src} muted trimBefore={trimBefore} playbackRate={playbackRate} objectFit="cover" style={{width: "100%", height: "100%"}} />
           ) : (
             <Img src={src} style={{width: "100%", height: "100%", objectFit: "cover"}} />
           )
@@ -180,8 +183,40 @@ export const InfoChip: React.FC<{title: string; label?: string; icon?: React.Rea
 export const SourceTag: React.FC<{text: string; y?: number}> = ({text, y = 1500}) => {
   const frame = useCurrentFrame();
   return (
-    <div style={{position: "absolute", left: 0, right: 0, top: y, textAlign: "center", fontFamily: SAYA.font, fontWeight: 700, fontSize: 28, color: SAYA.color.grey, opacity: interpolate(frame, [0, 8], [0, 0.9], clamp), textShadow: SAYA.textShadow}}>
+    <div style={{position: "absolute", left: 540, top: y, transform: "translate(-50%, -50%)", padding: "10px 24px", borderRadius: 99, whiteSpace: "nowrap", fontFamily: SAYA.font, fontWeight: 700, fontSize: 28, color: "#D6E2F5", opacity: interpolate(frame, [0, 8], [0, 1], clamp), ...navyGlass(0.7)}}>
       {text}
+    </div>
+  );
+};
+
+/** Floating window above the head (R2-b): a rounded image that drops in with a
+ *  glowing frame and floats — e.g. the result of an AI image prompt. */
+export const FloatingWindow: React.FC<{src: string; duration: number; width?: number; aspect?: number; top?: number; x?: number; label?: string}> = ({src, duration, width = 470, aspect = 1.05, top = 300, x = 540, label}) => {
+  const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
+  const {inP, outP} = enter(frame, fps, duration, SAYA.spring.pop);
+  const h = width / aspect;
+  const float = Math.sin(frame / 16) * 8;
+  const reveal = interpolate(frame, [4, 16], [0, 100], clamp); // image wipes in
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: x - width / 2,
+        top: top + float + interpolate(inP, [0, 1], [-60, 0]),
+        width,
+        transform: `scale(${interpolate(inP, [0, 1], [0.7, 1]) * (1 - 0.15 * outP)}) rotate(${interpolate(inP, [0, 1], [-4, -1.5])}deg)`,
+        opacity: Math.min(inP, 1 - outP),
+      }}
+    >
+      <div style={{width, height: h, borderRadius: 30, overflow: "hidden", border: `5px solid ${SAYA.color.sky}`, boxShadow: `0 0 0 2px ${SAYA.color.neon}, 0 0 40px ${SAYA.color.neon}, 0 20px 50px rgba(0,0,0,0.5)`, background: SAYA.color.navy}}>
+        <Img src={src} style={{width: "100%", height: "100%", objectFit: "cover", clipPath: `inset(0 0 ${100 - reveal}% 0)`}} />
+      </div>
+      {label ? (
+        <div style={{position: "absolute", left: "50%", bottom: -26, transform: "translateX(-50%)", padding: "8px 22px", borderRadius: 99, fontFamily: SAYA.font, fontWeight: 900, fontSize: 30, color: SAYA.color.white, whiteSpace: "nowrap", ...navyGlass(0.9)}}>
+          {label}
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -13,9 +13,10 @@
 //   timeline.xml           import in Premiere (File > Import) or Resolve (File > Import > Timeline)
 //   timeline.md            the same timeline as a readable table
 //   final.mp4              (--final) the finished video in one file
-// Transparent clips are ProRes 4444 with alpha.
+// Transparent clips are QuickTime Animation (qtrle) with alpha.
 import {bundle} from "@remotion/bundler";
 import {renderMedia, selectComposition} from "@remotion/renderer";
+import {execFileSync} from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
@@ -44,20 +45,29 @@ const graphics = props.graphics ?? [];
 const sfx = props.sfx ?? [];
 const pad = (n) => String(n).padStart(2, "0");
 
+// Transparent layers: rendered as ProRes 4444, then stored as QuickTime
+// Animation (qtrle, alpha). Mostly-empty frames compress to almost nothing,
+// and Premiere / Resolve both read it.
 const render = async (file, layer, frameRange, alpha) => {
   if (xmlOnly) return;
   console.log(`render ${file}`);
+  const target = path.join(out, file);
+  const tmp = alpha ? target.replace(/\.mov$/, ".prores.mov") : target;
   await renderMedia({
     serveUrl,
     composition: comp,
     browserExecutable,
     inputProps: {...props, layer},
-    outputLocation: path.join(out, file),
+    outputLocation: tmp,
     frameRange,
     ...(alpha
       ? {codec: "prores", proResProfile: "4444", pixelFormat: "yuva444p10le", imageFormat: "png"}
       : {codec: "h264", crf: 16, imageFormat: "jpeg"}),
   });
+  if (alpha) {
+    execFileSync("ffmpeg", ["-v", "error", "-y", "-i", tmp, "-c:v", "qtrle", "-pix_fmt", "argb", target]);
+    fs.rmSync(tmp);
+  }
 };
 
 // ---- media
