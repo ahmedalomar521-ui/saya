@@ -55,7 +55,8 @@ const render = async (file, layer, frameRange, alpha) => {
   const tmp = alpha ? target.replace(/\.mov$/, ".prores.mov") : target;
   await renderMedia({
     serveUrl,
-    composition: comp,
+    // the component receives composition.props, so the layer goes there too
+    composition: {...comp, props: {...props, layer}},
     browserExecutable,
     inputProps: {...props, layer},
     outputLocation: tmp,
