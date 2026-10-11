@@ -194,4 +194,9 @@ into a short rule here (what to do, and in which situation), so the next edit
 starts from it. Newer rules override older ones and the principles above
 (house rules still come first).
 
-_(empty — waiting for the trial edit)_
+1. **No repeats inside one video.** Each transition and each visual effect
+   (logo stack, phone + PiP, screenshot card, floating window, big word,
+   whip, punch-in, slow zoom, fast zoom…) is used **at most once per video**.
+   When two beats would need the same graphic, give one of them a different
+   treatment. Plan the whole video as a list of beats → treatments and check
+   that no treatment appears twice before building.
