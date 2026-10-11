@@ -200,6 +200,11 @@ Output: `video/out/handoff/<Id>/` (git-ignored):
   under 30 MB each that all unpack into the same `<Id>/` folder (timeline +
   sounds + small graphics / base / captions / big graphics). Re-encode
   `base.mp4` with CRF 19–20 if it is too big.
+- **Quality:** render a master (`--crf=12 --x264-preset=slow`, ~17 Mb/s) and
+  send a two-pass copy at ~7.5 Mb/s that fits under 30 MB for a 30 s video. If
+  the user wants the master, split it into raw 24 MB parts
+  (`split -b 24M -d -a 3 --numeric-suffixes=1 master.mp4 Saya-master.mp4.`);
+  the user rejoins them with 7-Zip (right-click `.001` → 7-Zip → Extract here).
 - Normalise the final mix to **-14 LUFS** (Instagram):
   `ffmpeg -i final.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 …`.
 - Backdrop blur (the glass effect) does not survive in a transparent layer,
