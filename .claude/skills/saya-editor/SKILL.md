@@ -184,6 +184,13 @@ Output: `video/out/handoff/<Id>/` (git-ignored):
 - Zooms, blur and PiP are baked into `base.mp4`. To change them, ask Claude.
   Moving, trimming or deleting a graphic or a sound, changing a level, or
   fixing caption text (re-run from the fixed SRT) can all be done by hand.
+- Sending to the user: each file must be **under 30 MB**. Send `final.mp4`
+  (re-encode with a higher CRF if it is over), then the handoff as several zips
+  under 30 MB each that all unpack into the same `<Id>/` folder (timeline +
+  sounds + small graphics / base / captions / big graphics). Re-encode
+  `base.mp4` with CRF 19–20 if it is too big.
+- Normalise the final mix to **-14 LUFS** (Instagram):
+  `ffmpeg -i final.mp4 -c:v copy -af loudnorm=I=-14:TP=-1.5:LRA=11 …`.
 - Backdrop blur (the glass effect) does not survive in a transparent layer,
   so the plates look slightly more solid in the editor than in `final.mp4`.
 
