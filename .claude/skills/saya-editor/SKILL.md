@@ -178,6 +178,13 @@ Output: `video/out/handoff/<Id>/` (git-ignored):
 - This is the **single render** of the agreement: the final video and the
   layers come out of the same run. Use `--xml-only` to check the timeline
   without rendering anything.
+- The user edits in **DaVinci Resolve 20 (free) on Windows**. Their handoff
+  folder is `C:/Users/ROYAL TECH/Desktop/saya/<Id>` — always pass
+  `--root="C:/Users/ROYAL TECH/Desktop/saya/<Id>"` so Resolve finds the media
+  without asking. Import tested and working (2026-10-11): File › Import ›
+  Timeline, keep "Automatically set project settings" + "Automatically import
+  source clips" + "Use sizing information"; if clips are not found, answer
+  **Yes** and pick the `media` folder.
 - Ask the user once for the folder where they will keep the handoff and pass
   it with `--root=` so the editor finds the media. Without it, the editor asks
   to relink once: point it at `media/`.
