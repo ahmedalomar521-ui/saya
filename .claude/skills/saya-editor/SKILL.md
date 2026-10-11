@@ -123,8 +123,12 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
    when it arrives.
 3. **Render once.** Check with stills only, and render the final video a single
    time, when everything is in place, to avoid wasted renders.
-4. **After editing: deliver an editable timeline** as well as the video, so the
-   user can fix small things by hand (see "Timeline handoff" below).
+4. **After editing: deliver the final video only.** The user reviews it and
+   sends notes by timestamp ("الثانية 6: …"); Claude applies them. The
+   editable timeline (see "Timeline handoff" below) is **on request only**:
+   when the user has free time and asks for it, export it and teach them
+   DaVinci Resolve one small step at a time (move a graphic → delete a sound →
+   change a level → export), checking each step from their screenshot.
 
 ## Workflow for a new video
 
