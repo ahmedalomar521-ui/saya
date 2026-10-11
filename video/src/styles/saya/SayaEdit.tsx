@@ -20,12 +20,12 @@ export type SayaGraphic = Timed &
     | {type: "screenshot"; src: string; aspect?: number; centerY?: number}
     | {type: "floating"; src: string; aspect?: number; width?: number; top?: number; x?: number; label?: string}
     | {type: "follow"; avatar: string; handle: string; text?: string; y?: number; pressAt?: number}
-    | {type: "glass"; title: string; sub?: string}
+    | {type: "glass"; title: string; sub?: string; centerY?: number}
     | {type: "chip"; title: string; label?: string; icon?: string; y?: number}
     | {type: "feature"; text: string; y?: number}
     | {type: "bigWord"; text: string}
     | {type: "step"; text: string}
-    | {type: "save"; text?: string}
+    | {type: "save"; text?: string; kind?: "save" | "share"; y?: number}
     | {type: "source"; text: string; y?: number}
   );
 
@@ -81,7 +81,7 @@ const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
     case "follow":
       return <FollowCta avatar={staticFile(g.avatar)} handle={g.handle} text={g.text} duration={g.dur} y={g.y} pressAt={g.pressAt} />;
     case "glass":
-      return <GlassCard title={g.title} sub={g.sub} duration={g.dur} />;
+      return <GlassCard title={g.title} sub={g.sub} duration={g.dur} centerY={g.centerY} />;
     case "chip":
       return <InfoChip title={g.title} label={g.label} icon={g.icon} duration={g.dur} y={g.y} />;
     case "feature":
@@ -91,7 +91,7 @@ const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
     case "step":
       return <StepPill text={g.text} duration={g.dur} />;
     case "save":
-      return <SaveCta text={g.text} duration={g.dur} />;
+      return <SaveCta text={g.text} duration={g.dur} kind={g.kind} y={g.y} />;
     case "source":
       return <SourceTag text={g.text} y={g.y} />;
   }
