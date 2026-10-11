@@ -229,3 +229,7 @@ starts from it. Newer rules override older ones and the principles above
    Tahrir ("هاد الخط سيء"), so Saya does **not** use the house font. Graphics
    that share the screen with the caption (chips, follow card, source tag) go
    **above** it (y ≈ 1110–1140).
+3. **Check the order of multi-part footage before editing.** File names do not
+   prove the order. Join the parts, run `silencedetect=n=-35dB:d=0.25` and
+   check that the pauses fall in the gaps between SRT cues. Try the other
+   order if they do not. (The Chrome video was first joined backwards.)
