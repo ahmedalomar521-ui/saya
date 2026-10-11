@@ -1,6 +1,6 @@
 // ستايل سايا — design tokens (canvas 1080×1920, 30 fps).
-// House rules (CLAUDE.md) apply: HOUSE_GRADE on footage, Tahrir via
-// withHouseFont() is NOT used: Saya uses Cairo (feedback rule 2). Spoken word in HOUSE_ACTIVE_WORD.
+// House rules (CLAUDE.md) apply: HOUSE_GRADE on footage. The house font
+// (Tahrir) is NOT used: Saya uses Cairo (feedback rule 2). Spoken word in HOUSE_ACTIVE_WORD.
 import {loadFont} from "@remotion/fonts";
 import {staticFile} from "remotion";
 import {HOUSE_ACTIVE_GLOW, HOUSE_ACTIVE_WORD, HOUSE_GRADE} from "../shared/house";
