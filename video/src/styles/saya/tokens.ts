@@ -1,14 +1,15 @@
 // ستايل سايا — design tokens (canvas 1080×1920, 30 fps).
 // House rules (CLAUDE.md) apply: HOUSE_GRADE on footage, Tahrir via
-// withHouseFont(), the spoken word in HOUSE_ACTIVE_WORD.
+// withHouseFont() is NOT used: Saya uses Cairo (feedback rule 2). Spoken word in HOUSE_ACTIVE_WORD.
 import {loadFont} from "@remotion/fonts";
 import {staticFile} from "remotion";
-import {HOUSE_ACTIVE_GLOW, HOUSE_ACTIVE_WORD, HOUSE_GRADE, houseFontLoaded, withHouseFont} from "../shared/house";
+import {HOUSE_ACTIVE_GLOW, HOUSE_ACTIVE_WORD, HOUSE_GRADE} from "../shared/house";
 
 export const SAYA_FPS = 30;
 
+// Font: Cairo (Arabic + Latin). The user asked to drop the house font (Tahrir)
+// for Saya — "هاد الخط سيء" — and go back to the earlier font (feedback rule 2).
 export const sayaFonts = Promise.all([
-  houseFontLoaded,
   loadFont({family: "SayaLat", url: staticFile("fonts/cairo-latin-700-normal.woff2"), weight: "700"}),
   loadFont({family: "SayaLat", url: staticFile("fonts/cairo-latin-900-normal.woff2"), weight: "900"}),
   loadFont({family: "SayaAr", url: staticFile("fonts/cairo-arabic-700-normal.woff2"), weight: "700"}),
@@ -16,7 +17,7 @@ export const sayaFonts = Promise.all([
 ]);
 
 export const SAYA = {
-  font: withHouseFont("SayaLat, SayaAr, sans-serif"),
+  font: "SayaLat, SayaAr, sans-serif",
   grade: HOUSE_GRADE,
   color: {
     neon: "#1E90FF", // أزرق نيون — glows, rings, accents
@@ -28,7 +29,9 @@ export const SAYA = {
   },
   /** Instagram Reels safe zone: keep captions and key graphics inside. */
   safe: {left: 80, right: 940, top: 280, bottom: 1400},
-  caption: {size: 64, chestY: 1150, topY: 330, maxWords: 3, maxChars: 18},
+  /** Caption: centred on the frame width (540) inside the safe zone, low on the
+   *  chest, bigger text (feedback rule 2). */
+  caption: {size: 76, chestY: 1270, topY: 340, left: 140, width: 800, maxWords: 3, maxChars: 18},
   textShadow: "0 3px 12px rgba(0,0,0,0.55)",
   /** Spring configs. */
   spring: {

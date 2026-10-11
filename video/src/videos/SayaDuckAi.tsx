@@ -127,11 +127,11 @@ export const sayaDuckProps: SayaEditProps = {
   blur: [[402, 500]],
   whips: [629],
   places: [
-    {at: 0, y: 1150},
-    {at: 252, y: 330}, // phone in the middle → caption up
-    {at: 356, y: 1150},
-    {at: 402, y: 330}, // screenshot card → caption up
-    {at: 500, y: 1150},
+    {at: 0, y: 1270},
+    {at: 252, y: 340}, // phone in the middle → caption up
+    {at: 356, y: 1270},
+    {at: 402, y: 340}, // screenshot card → caption up
+    {at: 500, y: 1270},
   ],
   graphics: [
     // Hook — the AI models on duck.ai stack above the head (logo stack: once)
@@ -157,11 +157,11 @@ export const sayaDuckProps: SayaEditProps = {
     // "تنشئ صور" — the generated image in a floating window above the head (once)
     {type: "floating", at: 545, dur: 45, src: "footage/duck/donkey.jpg", aspect: 1.05, width: 330, top: 330, x: 230, label: "GPT Image 2"},
     // "اي بي ادرس" — info chip (once)
-    {type: "chip", at: 704, dur: 50, title: "IP address", label: "مخفي عن صاحب المودل", icon: "🔒", y: 1330},
+    {type: "chip", at: 704, dur: 50, title: "IP address", label: "مخفي عن صاحب المودل", icon: "🔒", y: 1110},
     // "امن" — the site's own privacy line as a source tag (once)
-    {type: "source", at: 765, dur: 60, text: "Privacy protected and anonymized by DuckDuckGo", y: 1290},
+    {type: "source", at: 765, dur: 60, text: "Privacy protected and anonymized by DuckDuckGo", y: 1140},
     // "تابعني" — follow card (once)
-    {type: "follow", at: 831, dur: 81, avatar: "footage/duck/avatar.jpg", handle: "saya_.tech", y: 1330, pressAt: 32},
+    {type: "follow", at: 831, dur: 81, avatar: "footage/duck/avatar.jpg", handle: "saya_.tech", y: 1110, pressAt: 32},
   ],
   sfx: [
     {at: 21, sfx: "click"},

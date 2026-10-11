@@ -39,6 +39,8 @@ These override anything a style's own guide or reference video suggests.
    so it applies to all styles at once. Tahrir has Arabic glyphs only: Latin
    letters and Western digits fall through to the style's own Latin font. (It
    replaces the earlier request for "خط صيدلية النهدي".)
+   **Exception: ستايل سايا (`saya-editor`) uses Cairo, not Tahrir** — the
+   user rejected Tahrir for Saya's videos.
 
 When saving a new style, its tokens must take `grade` from `HOUSE_GRADE`, wrap
 font stacks in `withHouseFont()`, include `houseFontLoaded`, use the house

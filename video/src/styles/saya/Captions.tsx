@@ -59,8 +59,8 @@ export const SayaCaptions: React.FC<{
     <div
       style={{
         position: "absolute",
-        left: SAYA.safe.left,
-        width: SAYA.safe.right - SAYA.safe.left,
+        left: SAYA.caption.left,
+        width: SAYA.caption.width,
         top: y,
         transform: `translateY(-50%) scale(${scale})`,
         opacity,

@@ -207,3 +207,9 @@ starts from it. Newer rules override older ones and the principles above
    When two beats would need the same graphic, give one of them a different
    treatment. Plan the whole video as a list of beats → treatments and check
    that no treatment appears twice before building.
+2. **Caption: centred, lower, bigger, Cairo.** The caption is centred on the
+   frame width (x 540, box 140–940) and sits low on the chest (y ≈ 1270),
+   always inside the safe zone. Size 76. Font **Cairo 900**: the user rejected
+   Tahrir ("هاد الخط سيء"), so Saya does **not** use the house font. Graphics
+   that share the screen with the caption (chips, follow card, source tag) go
+   **above** it (y ≈ 1110–1140).
