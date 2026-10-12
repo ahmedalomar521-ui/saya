@@ -131,9 +131,10 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
    Then run the importer: `node video/tools/assets.mjs scan <file.srt>` finds
    every app or brand (Arabic or Latin) and resolves its logo (simple-icons →
    `logo.icon`, or a full-colour SVG saved to `public/assets/icons/`);
-   `assets.mjs search <words>` / `save <set:name>` pull line icons (lucide,
-   saved white for stickers) and colourful emoji illustrations for ideas,
-   objects and feelings. Import these yourself; do not ask the user for them.
+   `assets.mjs search <words>` / `save <set:name>` pull icons for ideas,
+   objects and feelings: **white line icons first** (lucide, saved white,
+   `sticker` with `glow: true`, or a `sketch` glyph; the user prefers this
+   look), colourful emoji only when no line icon fits. Import these yourself; do not ask the user for them.
    Ask the user, in **one** message, only for what cannot be imported: screen
    recordings and screenshots of the apps (never mock them), personal photos,
    numbers you must not guess, and the SRT. Illustrations that no library has

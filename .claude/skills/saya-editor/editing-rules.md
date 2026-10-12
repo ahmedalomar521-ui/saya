@@ -31,10 +31,16 @@ user's own words).
   | follow / share / save | `follow`, `save` (`kind: "share"`) |
   | an idea in the headroom | `neonLabel`, or `sketch` `bulb` |
   | a question to the viewer ("شو يعني…؟") | `sketch` `question` (a cloud of "?" around the head) |
-  | an object / feeling / idea (battery, rocket, money, time…) | `sticker` with an imported icon (`assets.mjs search`) |
+  | an object / feeling / idea (battery, rocket, money, time…) | `sticker` with a **white line icon + glow** (`assets.mjs search … --set lucide`, `glow: true`) |
   | a desktop site or app | `desktop` + `pip` (scroll a long page) |
   | asking an AI and its answer | `chat` + `pip` (or `prompt` for the question alone) |
   | behind the scenes / "this is how I filmed it" | `rec` with `timecode` |
+
+- **Icon style: white line icons first (user preference, 2026-10-12).** For
+  ideas, objects and feelings use the white hand-drawn look: `sketch` glyphs,
+  or a lucide icon saved white and shown as a `sticker` with `glow: true`.
+  Use a colourful emoji (`--set emoji`) only when no line icon fits the idea.
+  Brand logos keep their own colours.
 
 - **Each item in a list gets its own shape.** Identical bars or identical chips
   for four different things read as "nobody thought about it".
