@@ -173,7 +173,9 @@ export const PromptBox: React.FC<{text: string; duration: number; placeholder?: 
 
 // ---------------------------------------------------------------- rec frame
 
-export const RecFrame: React.FC<{duration: number}> = ({duration}) => {
+/** `timecode`: a running camera timecode bottom-right (the "behind the scenes"
+ *  viewfinder from reference R6). The footage stays in colour (house rule 1). */
+export const RecFrame: React.FC<{duration: number; timecode?: boolean; startSeconds?: number}> = ({duration, timecode, startSeconds = 0}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const s = spring({frame, fps, config: {damping: 14, stiffness: 160}});
@@ -187,6 +189,17 @@ export const RecFrame: React.FC<{duration: number}> = ({duration}) => {
       <div style={{...corner, top: inset, right: inset, borderTopWidth: 10, borderRightWidth: 10}} />
       <div style={{...corner, bottom: inset, left: inset, borderBottomWidth: 10, borderLeftWidth: 10}} />
       <div style={{...corner, bottom: inset, right: inset, borderBottomWidth: 10, borderRightWidth: 10}} />
+      {timecode ? (
+        <div style={{position: "absolute", right: 110, bottom: 420, fontFamily: "SayaLat, sans-serif", fontWeight: 700, fontSize: 46, color: "#fff", direction: "ltr", textShadow: "0 2px 10px rgba(0,0,0,0.6)", letterSpacing: 1}}>
+          {(() => {
+            const total = Math.floor(startSeconds * 30) + frame;
+            const ff = total % 30;
+            const sec = Math.floor(total / 30);
+            const p2 = (n: number) => String(n).padStart(2, "0");
+            return `${p2(Math.floor(sec / 3600))}:${p2(Math.floor(sec / 60) % 60)}:${p2(sec % 60)}:${p2(ff)}`;
+          })()}
+        </div>
+      ) : null}
       <div style={{position: "absolute", top: 220, left: 0, right: 0, display: "flex", justifyContent: "center"}}>
         <div style={{display: "flex", alignItems: "center", gap: 16, padding: "10px 34px", borderRadius: 99, background: "rgba(0,0,0,0.65)", fontFamily: "SayaLat, sans-serif", fontWeight: 900, fontSize: 46, color: "#fff", direction: "ltr", transform: `scale(${s})`}}>
           <span style={{width: 34, height: 34, borderRadius: 34, background: "#FF3B30", opacity: blink}} />

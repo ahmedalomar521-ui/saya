@@ -10,7 +10,7 @@ import {SayaIntroStyle3, SAYA3_FPS, SAYA3_FRAMES} from "./videos/SayaIntroStyle3
 import {style3Fonts} from "./styles/style3/tokens";
 import {SayaIntroStyle4, SAYA4_FPS, SAYA4_FRAMES} from "./videos/SayaIntroStyle4";
 import {style4Fonts} from "./styles/style4/tokens";
-import {SayaKitMore, SAYA_KIT_MORE_FRAMES, SayaKitPreview, SAYA_KIT_FRAMES, sayaKitMoreProps, sayaKitProps} from "./videos/SayaKitPreview";
+import {SayaKitMore, SAYA_KIT_MORE_FRAMES, SayaKitPreview, SayaKitR6, SAYA_KIT_FRAMES, SAYA_KIT_R6_FRAMES, sayaKitMoreProps, sayaKitProps, sayaKitR6Props} from "./videos/SayaKitPreview";
 import {SayaDuckAi, SAYA_DUCK_FRAMES, sayaDuckProps} from "./videos/SayaDuckAi";
 import {SayaChrome, SAYA_CHROME_FRAMES, sayaChromeProps} from "./videos/SayaChrome";
 import {sayaFonts, SAYA_FPS as SAYA_STYLE_FPS} from "./styles/saya/tokens";
@@ -147,6 +147,20 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={sayaKitMoreProps}
+        calculateMetadata={async () => {
+          await sayaFonts;
+          return {};
+        }}
+      />
+      {/* ستايل سايا — pieces learned from reference R6 + the cinema grade */}
+      <Composition
+        id="SayaKitR6"
+        component={SayaKitR6}
+        durationInFrames={SAYA_KIT_R6_FRAMES}
+        fps={SAYA_STYLE_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={sayaKitR6Props}
         calculateMetadata={async () => {
           await sayaFonts;
           return {};

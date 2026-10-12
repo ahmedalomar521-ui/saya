@@ -29,7 +29,12 @@ user's own words).
   | a section ("أولاً…") | `section` |
   | the hook (first 3 s) | `title` above the head (+ a `doodle`) |
   | follow / share / save | `follow`, `save` (`kind: "share"`) |
-  | an idea in the headroom | `neonLabel` |
+  | an idea in the headroom | `neonLabel`, or `sketch` `bulb` |
+  | a question to the viewer ("شو يعني…؟") | `sketch` `question` (a cloud of "?" around the head) |
+  | an object / feeling / idea (battery, rocket, money, time…) | `sticker` with an imported icon (`assets.mjs search`) |
+  | a desktop site or app | `desktop` + `pip` (scroll a long page) |
+  | asking an AI and its answer | `chat` + `pip` (or `prompt` for the question alone) |
+  | behind the scenes / "this is how I filmed it" | `rec` with `timecode` |
 
 - **Each item in a list gets its own shape.** Identical bars or identical chips
   for four different things read as "nobody thought about it".

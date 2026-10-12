@@ -11,6 +11,8 @@ import {NeonIconLabel, NeonIconPath, type NeonIconName} from "./Neon";
 import {BigWord, FeaturePill, FollowCta, SaveCta, StepPill} from "./Pills";
 import {SfxTrack, type SfxCue} from "./SfxTrack";
 import {srtToChunks} from "./srt";
+import {ChatExchange, DesktopCard} from "./Screens";
+import {SketchIcons, Sticker, type SketchKind} from "./Stickers";
 import {ListStage, NotificationBanner, PromptBox, RecFrame, StatCard, StrikeStage, type ListItem, type StrikeLine} from "./Stages";
 import {SayaFlash, SayaHookTitle, SectionNumber} from "./Titles";
 import {SAYA, SAYA_FPS} from "./tokens";
@@ -41,8 +43,13 @@ export type SayaGraphic = Timed &
     | {type: "strike"; lines: StrikeLine[]; top?: number}
     | {type: "stat"; value: number; suffix?: string; label?: string; centerY?: number}
     | {type: "prompt"; text: string; placeholder?: string; sendAt?: number; centerY?: number}
-    | {type: "rec"}
+    | {type: "rec"; timecode?: boolean; startSeconds?: number}
     | {type: "notification"; app: string; title: string; body: string; top?: number}
+    // --- learned from reference R6 (Stickers / Screens) ---
+    | {type: "sketch"; kind: SketchKind; x?: number; y?: number; spread?: number}
+    | {type: "sticker"; src: string; x: number; y: number; size?: number; glow?: boolean; rot?: number}
+    | {type: "desktop"; src: string; isVideo?: boolean; trimBefore?: number; playbackRate?: number; aspect?: number; scroll?: boolean; height?: number; top?: number; width?: number}
+    | {type: "chat"; prompt: string; answer: string[]; side?: "left" | "right" | "center"; answerAt?: number}
     | {type: "doodle"; kind: "curlyArrow" | "circle" | "burst" | "squiggle" | "scribble" | "redArrow"; x: number; y: number; size?: number; w?: number; h?: number; flip?: boolean; color?: string; delay?: number}
   );
 
@@ -51,6 +58,10 @@ export type SayaEditProps = {
   footage: string;
   isImage?: boolean;
   face?: {x: number; y: number; w: number};
+  /** Footage grade: "house" (default) or "cinema" (gentle cinematic look; only
+   *  after the user approves it for this video). */
+  grade?: "house" | "cinema";
+  gradeIntensity?: number;
   srt: string;
   zooms?: Zoom[];
   blur?: Range[];
@@ -152,7 +163,15 @@ const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
     case "prompt":
       return <PromptBox text={g.text} placeholder={g.placeholder} sendAt={g.sendAt} duration={g.dur} centerY={g.centerY} />;
     case "rec":
-      return <RecFrame duration={g.dur} />;
+      return <RecFrame duration={g.dur} timecode={g.timecode} startSeconds={g.startSeconds} />;
+    case "sketch":
+      return <SketchIcons kind={g.kind} duration={g.dur} x={g.x} y={g.y} spread={g.spread} />;
+    case "sticker":
+      return <Sticker src={g.src} duration={g.dur} x={g.x} y={g.y} size={g.size} glow={g.glow} rot={g.rot} />;
+    case "desktop":
+      return <DesktopCard src={g.src} duration={g.dur} isVideo={g.isVideo} trimBefore={g.trimBefore} playbackRate={g.playbackRate} aspect={g.aspect} scroll={g.scroll} height={g.height} top={g.top} width={g.width} />;
+    case "chat":
+      return <ChatExchange prompt={g.prompt} answer={g.answer} duration={g.dur} side={g.side} answerAt={g.answerAt} />;
     case "notification":
       return <NotificationBanner app={g.app} title={g.title} body={g.body} duration={g.dur} top={g.top} />;
     case "doodle":
@@ -171,7 +190,7 @@ export const SayaEdit: React.FC<SayaEditProps> = (p) => {
   return (
     <AbsoluteFill style={{background: layer === "all" || layer === "base" ? "#000" : "transparent"}}>
       {show("base") ? (
-        <SayaFootage src={staticFile(p.footage)} isImage={p.isImage} face={p.face} zooms={p.zooms} blur={p.blur} pip={p.pip} pipPlace={p.pipPlace} whips={p.whips} />
+        <SayaFootage src={staticFile(p.footage)} isImage={p.isImage} face={p.face} zooms={p.zooms} blur={p.blur} pip={p.pip} pipPlace={p.pipPlace} whips={p.whips} grade={p.grade} gradeIntensity={p.gradeIntensity} />
       ) : null}
       {graphics.map((g, i) =>
         show(i) ? (

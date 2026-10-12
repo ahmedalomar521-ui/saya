@@ -159,3 +159,51 @@ export const sayaKitMoreProps: SayaEditProps = {
 };
 
 export const SayaKitMore: React.FC<SayaEditProps> = (props) => <SayaEdit {...props} />;
+
+// ---------------------------------------------------------------------------
+// Third gallery: pieces learned from reference R6 (sketch icons, imported
+// stickers, desktop card + PiP, chat exchange, viewfinder timecode) and the
+// optional cinema grade. kit-desktop.jpg = any landscape screenshot.
+export const SAYA_KIT_R6_FRAMES = 450;
+
+export const sayaKitR6Props: SayaEditProps = {
+  ...sayaKitProps,
+  srt: `1
+00:00:00,000 --> 00:00:03,000
+شو يعني مهارة أصلاً؟
+
+2
+00:00:03,000 --> 00:00:06,000
+خطرتلي فكرة حلوة
+
+3
+00:00:06,000 --> 00:00:10,000
+افتحوا محادثة جديدة
+
+4
+00:00:10,000 --> 00:00:13,000
+اكتبلي سكريبت فيديو
+
+5
+00:00:13,000 --> 00:00:15,000
+وهيك صوّرتها`,
+  grade: "cinema",
+  gradeIntensity: 0.5,
+  zooms: [{at: 0, scale: 1}],
+  pip: [[180, 300], [320, 405]],
+  pipPlace: {x: 70, y: 250, d: 230},
+  blur: [],
+  whips: [],
+  places: [],
+  graphics: [
+    {type: "sketch", at: 0, dur: 90, kind: "question", x: 540, y: 330, spread: 330},
+    {type: "sketch", at: 90, dur: 90, kind: "bulb", x: 300, y: 330},
+    {type: "sticker", at: 100, dur: 80, src: "assets/icons/emoji-light-bulb.svg", x: 820, y: 360, size: 170},
+    {type: "desktop", at: 180, dur: 120, src: "footage/kit-desktop.jpg", aspect: 1264 / 843, top: 380},
+    {type: "chat", at: 300, dur: 105, prompt: "اكتبلي سكريبت فيديو للانستغرام", answer: ["الهوك:", "يومك بيضيع بسرعة؟", "المحاور:", "أولاً: قاعدة الدقيقتين", "ثانياً: بلوكات الوقت", "ثالثاً: الموبايل بعيد", "الخاتمة:", "احفظ الفيديو"], answerAt: 20},
+    {type: "rec", at: 405, dur: 45, timecode: true, startSeconds: 81},
+  ],
+  sfx: [],
+};
+
+export const SayaKitR6: React.FC<SayaEditProps> = (props) => <SayaEdit {...props} />;

@@ -27,6 +27,14 @@ These override anything a style's own guide or reference video suggests.
      layout, typography, graphics and rhythm instead.
    - Graphics, text and full-screen inserts keep their own colours. This rule
      is about the footage only.
+   - **Exception (user decision, 2026-10-12): an optional gentle cinematic
+     grade** (`video/src/styles/shared/CinemaGrade.tsx`, `grade: "cinema"` in
+     `SayaEditProps`, intensity 0–1, default 0.5). It imitates the colour of
+     the user's reference reel (the man in the dark studio): lifted slightly
+     cool shadows, warm skin and highlights, a mild S-curve. Use it only when
+     the footage looks flat and needs it, and **always ask the user before
+     the edit** ("بدي أعطيه تلوين سينمائي خفيف، موافق؟"). Still no B&W, tints,
+     hue shifts or heavy looks.
 
 2. **The spoken word in captions is light blue.** Whatever the style, the
    caption word that colours along with the speech (the word being spoken) uses

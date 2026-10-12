@@ -69,6 +69,7 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
 | **R3** | **Caption behaviour and visual effects.** The caption is **always on screen** and a phrase is **never shown twice**. It moves up or down to dodge graphics, but stays inside the Instagram safe zone. When it moves to the top it can carry a small grey context line. Also: blurred background with a floating phone, glass cards, info chip, source tag. | R3-a, R3-b, R3-c, R3-d, R3-e |
 | **R4** | **Closest to Saya.** Caption *look*: small, white, 2–3 words at a time. Neon logo pop beside the head; phone rising from the bottom with a PiP bubble; **a graphic that takes the caption's place when something important is said** (a pill with a sparkle for a feature name, a big glowing word). Sound accents: chime on logos, sub swell under the phone. | R4-a…R4-f |
 | **R5** | **Base of the visual effects.** Punch-in/out on cuts, slow and fast zooms, background blur. **The app logo pops in the moment its name is spoken**, and several logos stack. Screenshot cards slide in with motion blur. | R5-b, R5-c (+ zooms) |
+| **R6** | **Graphics** (the "Claude Skills" reel, purple room, 2026-10-12): white hand-drawn icons around the head ("?" cloud, bulb with rays, sparkle), a desktop screen in a glowing white card with the speaker in a PiP bubble at its corner, a prompt bubble + an answer panel that types and scrolls, whip-blur transitions, a camera viewfinder with timecode. Its black-and-white ending is not copied (house rule 1). | `sketch`, `sticker`, `desktop`, `chat`, `rec` timecode |
 
 ## Principles
 
@@ -119,16 +120,27 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
 | `Doodles.tsx` | hand-drawn `SayaCurlyArrow`, `SayaMarkerCircle`, `SayaBurst`, `SayaSquiggle`, `SayaScribbleOut`, `SayaRedArrow` | ستايل 1 / 2 |
 | `Neon.tsx` | `NeonIconLabel`, `NeonIconPath` (icons joined by a drawn curve), 12 neon line icons, placed in the headroom with `top` | ستايل 4 |
 | `Stages.tsx` | `ListStage` (glossy chips, each item its own icon and tone), `StrikeStage` (paper card, red marker strike), `StatCard` (counting number), `PromptBox` (typed prompt), `RecFrame`, `NotificationBanner` | ستايل 2 / 1 / shared |
-| `SayaEdit.tsx` | renders a whole edit from one timeline object (`SayaEditProps`); graphic types: logo, logoStack, phone, screenshot, floating, follow, glass, chip, feature, bigWord, step, save, source, **title, section, flash, neonLabel, neonPath, list, strike, stat, prompt, rec, notification, doodle** | — |
+| `Stickers.tsx` | `SketchIcons` (white hand-drawn "?" cloud, bulb with rays, sparkle, "!" around the head), `Sticker` (any imported icon or image popping and floating) | R6 |
+| `Screens.tsx` | `DesktopCard` (desktop screenshot / screen recording in a glowing white card, optional scroll; pair with `pip` so Saya sits in the bubble at its corner), `ChatExchange` (prompt types into a frosted bubble, the answer builds and scrolls in a frosted panel; pair with `pip`) | R6 |
+| `../shared/CinemaGrade.tsx` | optional gentle cinematic grade (`grade: "cinema"`, `gradeIntensity` 0–1) — **ask the user first** | colour ref (man) |
+| `SayaEdit.tsx` | renders a whole edit from one timeline object (`SayaEditProps`); graphic types: logo, logoStack, phone, screenshot, floating, follow, glass, chip, feature, bigWord, step, save, source, **title, section, flash, neonLabel, neonPath, list, strike, stat, prompt, rec (+ timecode), notification, doodle, sketch, sticker, desktop, chat**; footage `grade` | — |
 
 ## Working agreement with the user (always)
 
-1. **Before editing: ask for the video's script.** Read it and list everything
-   the edit will need that is not already in the project. For example:
-   screenshots or screen recordings of each app or site mentioned, logos
-   missing from `simple-icons`, images, numbers to show, and the SRT. Send that
-   list in **one** message and wait until the user sends the files. Do not
-   start editing with gaps.
+1. **Before editing: analyse the script and import what can be imported.**
+   Read the script / SRT and plan a graphic for each beat (`editing-rules.md`).
+   Then run the importer: `node video/tools/assets.mjs scan <file.srt>` finds
+   every app or brand (Arabic or Latin) and resolves its logo (simple-icons →
+   `logo.icon`, or a full-colour SVG saved to `public/assets/icons/`);
+   `assets.mjs search <words>` / `save <set:name>` pull line icons (lucide,
+   saved white for stickers) and colourful emoji illustrations for ideas,
+   objects and feelings. Import these yourself; do not ask the user for them.
+   Ask the user, in **one** message, only for what cannot be imported: screen
+   recordings and screenshots of the apps (never mock them), personal photos,
+   numbers you must not guess, and the SRT. Illustrations that no library has
+   can be generated with `tools/gemini_image.py` only after the user approves
+   the cost. Also ask here whether the footage should get the cinematic grade.
+   Do not start editing with gaps.
 2. **While editing: if something is missing, pause and ask.** Say exactly what
    is needed and where it goes (timestamp + purpose). Never fill the gap with a
    placeholder or a guess, and never render a version that has gaps. Resume
