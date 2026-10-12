@@ -1,6 +1,6 @@
 ---
 name: style-4
-description: "ستايل 4" — dark-studio talking-head reel with neon/holographic motion graphics above the head (phone dashboard + particle stream, neon search bar + video grid + counter, waves with magnifier, linked neon icons, neon swirls), big white key terms on the chest, huge section numbers (أولاً / ثانياً), small captions, fade to black. Use when the user asks to edit/montage a video "بستايل 4" / "ستايل 4" / "style 4".
+description: description: "RETIRED — do not use; ستايل سايا (saya-editor) is the only active editing style. \"ستايل 4\" — dark-studio talking-head reel with neon/holographic motion graphics above the head (phone dashboard + particle stream, neon search bar + video grid + counter, waves with magnifier, linked neon icons, neon swirls), big white key terms on the chest, huge section numbers (أولاً / ثانياً), small captions, fade to black. Use when the user asks to edit/montage a video \"بستايل 4\" / \"ستايل 4\" / \"style 4\"."
 ---
 
 # ستايل 4 — Style 4

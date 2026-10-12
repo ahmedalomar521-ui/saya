@@ -1,6 +1,6 @@
 ---
 name: style-0
-description: "ستايل 0" — the combined style: use ALL saved styles (ستايل 1، 2، 3، 4 and any later style-N) together, picking the best tool for each beat of the script to get the most professional result. Use when the user asks to edit/montage a video "بستايل 0" / "ستايل صفر" / "style 0" / "كل الستايلات".
+description: description: "RETIRED — do not use; ستايل سايا (saya-editor) is the only active editing style. \"ستايل 0\" — the combined style: use ALL saved styles (ستايل 1، 2، 3، 4 and any later style-N) together, picking the best tool for each beat of the script to get the most professional result. Use when the user asks to edit/montage a video \"بستايل 0\" / \"ستايل صفر\" / \"style 0\" / \"كل الستايلات\"."
 ---
 
 # ستايل 0 — all styles combined

@@ -4,11 +4,13 @@
 
 **Never edit or render a video unless the user explicitly asks for it (لا تمنتج شي بدون ما يطلب).** Saving a style means saving it only: analyse the reference, write the skill and the reusable components, and check them with a few stills at most. Do not produce a demo edit or re-render existing videos on your own initiative. Offer it in one line instead.
 
-Remotion project in `video/`. Editing styles are saved as skills:
-`.claude/skills/style-1` (ستايل 1), `.claude/skills/style-2` (ستايل 2),
-`.claude/skills/style-3` (ستايل 3), `.claude/skills/style-4` (ستايل 4), and any
-future `style-N`. **ستايل 0** (`.claude/skills/style-0`) means: combine ALL saved
-styles for the best possible result (template: `video/src/videos/InstaShareMix.tsx`).
+Remotion project in `video/`. **The only active editing style is ستايل سايا**
+(`.claude/skills/saya-editor`, components in `video/src/styles/saya/`, rules in
+`.claude/skills/saya-editor/editing-rules.md`). The old styles
+(`style-0` … `style-4`, ستايل 0–4) are RETIRED: the user decided to ignore them,
+and their useful pieces were ported into the Saya style. They are kept in the
+repo only as history. Do not use or suggest them; edit every video in the Saya
+style unless the user names another style.
 
 ## House rules — apply to EVERY style (past and future)
 

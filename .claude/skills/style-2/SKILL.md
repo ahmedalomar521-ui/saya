@@ -1,6 +1,6 @@
 ---
 name: style-2
-description: "ستايل 2" — caption-driven Arabic talking-head reel style (big glowing yellow captions with stretched kashida letters, red emphasis / red highlight bar, hand-drawn red arrows, full-screen mint glass-chip and paper-card inserts). Use when the user asks to edit/montage a video "بستايل 2" / "ستايل 2" / "style 2".
+description: description: "RETIRED — do not use; ستايل سايا (saya-editor) is the only active editing style. \"ستايل 2\" — caption-driven Arabic talking-head reel style (big glowing yellow captions with stretched kashida letters, red emphasis / red highlight bar, hand-drawn red arrows, full-screen mint glass-chip and paper-card inserts). Use when the user asks to edit/montage a video \"بستايل 2\" / \"ستايل 2\" / \"style 2\"."
 ---
 
 # ستايل 2 — Style 2

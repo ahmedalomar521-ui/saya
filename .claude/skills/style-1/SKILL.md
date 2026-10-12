@@ -1,6 +1,6 @@
 ---
 name: style-1
-description: "ستايل 1" — graphics-heavy talking-head reel style (split-screen B-roll, two-tier yellow titles, hand-drawn doodles, small captions). Use when the user asks to edit/montage a video "بستايل 1" / "ستايل 1" / "style 1", or to reuse this editing style.
+description: description: "RETIRED — do not use; ستايل سايا (saya-editor) is the only active editing style. \"ستايل 1\" — graphics-heavy talking-head reel style (split-screen B-roll, two-tier yellow titles, hand-drawn doodles, small captions). Use when the user asks to edit/montage a video \"بستايل 1\" / \"ستايل 1\" / \"style 1\", or to reuse this editing style."
 ---
 
 # ستايل 1 — Style 1
