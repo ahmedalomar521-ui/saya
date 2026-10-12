@@ -49,6 +49,7 @@ export type SayaGraphic = Timed &
     | {type: "sketch"; kind: SketchKind; x?: number; y?: number; spread?: number; color?: string}
     | {type: "sticker"; src: string; x: number; y: number; size?: number; glow?: boolean; rot?: number}
     | {type: "desktop"; src: string; isVideo?: boolean; trimBefore?: number; playbackRate?: number; aspect?: number; scroll?: boolean; height?: number; top?: number; width?: number}
+    | {type: "tap"; x: number; y: number}
     | {type: "chat"; prompt: string; answer: string[]; side?: "left" | "right" | "center"; answerAt?: number}
     | {type: "doodle"; kind: "curlyArrow" | "circle" | "burst" | "squiggle" | "scribble" | "redArrow"; x: number; y: number; size?: number; w?: number; h?: number; flip?: boolean; color?: string; delay?: number}
   );
@@ -166,6 +167,8 @@ const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
       return <Sticker src={g.src} duration={g.dur} x={g.x} y={g.y} size={g.size} glow={g.glow} rot={g.rot} />;
     case "desktop":
       return <DesktopCard src={g.src} duration={g.dur} isVideo={g.isVideo} trimBefore={g.trimBefore} playbackRate={g.playbackRate} aspect={g.aspect} scroll={g.scroll} height={g.height} top={g.top} width={g.width} />;
+    case "tap":
+      return <TapPulse x={g.x} y={g.y} />;
     case "chat":
       return <ChatExchange prompt={g.prompt} answer={g.answer} duration={g.dur} side={g.side} answerAt={g.answerAt} />;
     case "notification":

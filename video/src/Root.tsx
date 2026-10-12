@@ -13,6 +13,7 @@ import {style4Fonts} from "./styles/style4/tokens";
 import {SayaKitMore, SAYA_KIT_MORE_FRAMES, SayaKitPreview, SayaKitR6, SAYA_KIT_FRAMES, SAYA_KIT_R6_FRAMES, sayaKitMoreProps, sayaKitProps, sayaKitR6Props} from "./videos/SayaKitPreview";
 import {SayaDuckAi, SAYA_DUCK_FRAMES, sayaDuckProps} from "./videos/SayaDuckAi";
 import {SayaChrome, SAYA_CHROME_FRAMES, sayaChromeProps} from "./videos/SayaChrome";
+import {SayaPassword, SAYA_PASSWORD_FRAMES, sayaPasswordProps} from "./videos/SayaPassword";
 import {sayaFonts, SAYA_FPS as SAYA_STYLE_FPS} from "./styles/saya/tokens";
 import {InstaShareMix, MIX_FPS, MIX_FRAMES} from "./videos/InstaShareMix";
 import {SoundTypeMix, ST_FPS, ST_FRAMES} from "./videos/SoundTypeMix";
@@ -189,6 +190,20 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={sayaChromeProps}
+        calculateMetadata={async () => {
+          await sayaFonts;
+          return {};
+        }}
+      />
+      {/* سايا — forgot your password? Chrome password manager */}
+      <Composition
+        id="SayaPassword"
+        component={SayaPassword}
+        durationInFrames={SAYA_PASSWORD_FRAMES}
+        fps={SAYA_STYLE_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={sayaPasswordProps}
         calculateMetadata={async () => {
           await sayaFonts;
           return {};
