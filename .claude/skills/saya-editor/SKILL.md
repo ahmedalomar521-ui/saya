@@ -264,9 +264,10 @@ starts from it. Newer rules override older ones and the principles above
    prove the order. Join the parts, run `silencedetect=n=-35dB:d=0.25` and
    check that the pauses fall in the gaps between SRT cues. Try the other
    order if they do not. (The Chrome video was first joined backwards.)
-4. **No sound effect at the start of the video.** The first sound effect
-   comes only after the opening line, never on frame 0 or under the first
-   words (the user: a sound at the very start feels like a jump scare). The
-   video opens on her voice alone; the hook's motion (title, zoom) stays
-   silent. (SayaPassword had `fuhh` at frame 0; the user chose to leave that
+4. **Pick the opening sound with care.** A sound on frame 0 is not banned,
+   but it must fit the hook. Most of the time none is needed: the video can
+   open on her voice alone. Never open with a startling hit (`fuhh`,
+   `impact`, `boom`…) that feels like a jump scare. If a sound helps the
+   hook, keep it soft and tied to the visual (e.g. a light whoosh under the
+   title). (SayaPassword had `fuhh` at frame 0; the user chose to leave that
    video as is.)

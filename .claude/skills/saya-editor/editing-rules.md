@@ -163,8 +163,9 @@ The project has `public/sfx/`: `whoosh`, `pop`, `click`, `ding`, `boom`.
 ## 7. Retention checks (run on the beat mapping, and again on the stills)
 
 - **First frame:** the hook title and the speech both start on frame 0. No
-  silence and no slow fade-in in the first second. **No sound effect at the
-  start** (feedback rule 4 in `SKILL.md`): the video opens on her voice alone. The first frame should look
+  silence and no slow fade-in in the first second. **Pick the opening
+  sound with care** (feedback rule 4 in `SKILL.md`): often none is needed, and
+  never a startling hit on the first frame. The first frame should look
   different from the body (punch-in, title, or flash).
 - **3–7 s promise:** by second 7 the viewer has heard what they get for
   staying. If the script delays it, flag it to the user rather than re-cutting.
