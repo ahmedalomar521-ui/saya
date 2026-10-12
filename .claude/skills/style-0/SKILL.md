@@ -55,7 +55,7 @@ component that tells it best. The worked example and template is
 
 ## Editing rules (from video-editor-bassam)
 
-Read `references/editing-rules.md` once before mapping beats. In short:
+Read `../saya-editor/editing-rules.md` (moved there; ستايل 0 is being folded into the Saya style) once before mapping beats. In short:
 
 - The graphic's shape tells what she says (a metaphor, not decoration), and
   each list item gets its own shape.
@@ -104,7 +104,7 @@ Run these on the beat mapping before writing code, and again on the stills.
    Fix the SRT text first (wrong words, HeyGen mispronunciations shown with the right spelling).
 2. Read `video/MECHANISMS.md`, then map each SRT phrase to a beat type from the
    table above, and write that mapping out first, with the SFX for each beat.
-   Check it against `references/editing-rules.md` (density, face time, SFX budget).
+   Check it against `../saya-editor/editing-rules.md` (moved there; ستايل 0 is being folded into the Saya style) (density, face time, SFX budget).
 3. Copy `InstaShareMix.tsx`, then fill in the phrases, windows, punches/flashes,
    inserts and SFX. Register it in `Root.tsx`, awaiting every style's fonts that
    it uses (plus `fontsLoaded` if it uses `src/Overlays.tsx`).

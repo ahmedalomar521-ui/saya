@@ -1,9 +1,11 @@
-# Style 0 editing rules (ported from video-editor-bassam)
+# Saya editing rules (from video-editor-bassam, plus the retention checks)
 
 Rules from the `video-editor-bassam` skill, each one learned from a real
 correction, adapted to this Remotion project and Saya's HeyGen footage. The
 house rules in `CLAUDE.md` still win where they differ (for example the house
-allows `HOUSE_GRADE`, where bassam allows no grade at all).
+allows `HOUSE_GRADE`, where bassam allows no grade at all). Where a rule here
+and the feedback log in `SKILL.md` disagree, the feedback log wins (it is the
+user's own words).
 
 ## 1. Every graphic carries meaning
 
@@ -12,17 +14,22 @@ allows `HOUSE_GRADE`, where bassam allows no grade at all).
   loop" = a triangle that completes one side per word, not three chips.
 - **Pick the mechanism from the kind of sentence:**
 
-  | She says | Use | From |
-  |---|---|---|
-  | a number or price | counter that rolls and lands with a hit | Style 4 counter / `KeyTerm` |
-  | a comparison of two things | two items, the spoken one glows and grows, the other dims | `GlassChip` pair / Style 2 |
-  | a list of 2–4 things | each item as its own shape or icon, entering on its word | `GlassChip`, `NeonIconPath`, `GlowIcon` |
-  | steps in an app | phone walkthrough, one tap per step on its word | `PhoneFlow`, `PhoneSettings`, `S1TopStage` |
-  | a warning or a mistake | flash + punch-in + red bar, or a marker strike | `S3Flash`, `PaperLines strike` |
-  | "it fixes it" / a result | check marks landing one by one | chips with check icons |
-  | a notification or message | `NotificationBanner` | src/Overlays.tsx |
-  | an app by name | the app icon floating near her | `OrbitIcon` |
-  | follow / share | `FollowCTA`, `NeonIconPath` | Overlays / Style 4 |
+  | She says | Use (`SayaGraphic` type) |
+  |---|---|
+  | a number or price | `stat` (counts up and lands with a hit) or `bigWord` |
+  | a comparison / problem and fix | `list` with two chips (tones `red` and `green`), or `strike` for a correction |
+  | a list of 2–4 things | `list` (each item its own icon and tone), `logoStack` for apps, `neonPath` for a chain |
+  | steps in an app | `phone` with a screen recording and `taps`, plus `step` pills |
+  | a warning or a mistake | `flash` + a punch-in zoom, or `strike`, or `doodle` `scribble` / `redArrow` |
+  | "it fixes it" / a result | `list` with check icons landing one by one |
+  | a notification or message | `notification` |
+  | a typed prompt to an AI | `prompt` |
+  | an app by name | `logo` on the word (`findWord`) |
+  | a screen recording | `rec` frame |
+  | a section ("أولاً…") | `section` |
+  | the hook (first 3 s) | `title` above the head (+ a `doodle`) |
+  | follow / share / save | `follow`, `save` (`kind: "share"`) |
+  | an idea in the headroom | `neonLabel` |
 
 - **Each item in a list gets its own shape.** Identical bars or identical chips
   for four different things read as "nobody thought about it".
@@ -65,8 +72,8 @@ allows `HOUSE_GRADE`, where bassam allows no grade at all).
 - **Direction: text RTL, pure graphics LTR.** Any element with text: text on the
   right, number or icon on the left, right-aligned. Progress bars, timelines,
   connectors and charts run left → right. Do not mix both in one element.
-- **One font family inside a graphic; weight is the hierarchy.** House font
-  (Tahrir Bold) for Arabic. Do not request a weight the font does not have; the
+- **One font family inside a graphic; weight is the hierarchy.** Saya's
+  font (Cairo) for Arabic. Do not request a weight the font does not have; the
   browser silently falls back to a system font.
 - **The @handle is Latin text:** give it an explicit Latin font and a plate
   behind it, or `@` and `.` fall back to random fonts.
@@ -90,8 +97,8 @@ allows `HOUSE_GRADE`, where bassam allows no grade at all).
 - **Safe zone (1080×1920):** no text in the top 150 px or the bottom 300 px
   (caution band from y 1500), and keep the right 180 px clear between
   y 1100 and 1750 (like, comment, share buttons).
-- **Full-screen white flashes** are allowed only at real section changes (Style 3
-  budget: 3–4 per minute).
+- **Full-screen white flashes** are allowed only at real section changes
+  (budget: 3–4 per minute).
 
 ## 5. Sound effects
 
@@ -139,3 +146,28 @@ The project has `public/sfx/`: `whoosh`, `pop`, `click`, `ding`, `boom`.
   and don't delete working files until the user approves.
 - **"The render finished" is not "it is correct".** Say it is correct only
   after the checks above pass.
+
+## 7. Retention checks (run on the beat mapping, and again on the stills)
+
+- **First frame:** the hook title and the speech both start on frame 0. No
+  silence and no slow fade-in in the first second. The first frame should look
+  different from the body (punch-in, title, or flash).
+- **3–7 s promise:** by second 7 the viewer has heard what they get for
+  staying. If the script delays it, flag it to the user rather than re-cutting.
+- **Nothing static for more than ~5 s.** A talking-head stretch can hold up to
+  ~7 s if the delivery is lively. Otherwise add a punch-in, a key word or a
+  small icon.
+- **Cut rhythm by length:** 15 s reels cut every ~2–3 s, 30 s every ~3–5 s,
+  45–60 s every ~4–7 s (jump cuts included).
+- **Text follows the voice.** On-screen titles and key words appear 0.1–0.3 s
+  after the word starts, never before it.
+- **Transitions:** hard cuts, punch-ins, whip pans and the `flash` graphic. No
+  cross-dissolves or fades to black between beats. The only fade is the ending
+  after the follow CTA. At most 3–4 flashes a minute, only at real section changes.
+- **Safe zone:** Saya's zone is x 80–940, y 280–1400 (`SAYA.safe`); it already
+  respects Instagram's top bar, bottom caption area and right-hand buttons.
+- **Cover frame:** pick a frame with Saya's face and the hook title, both
+  inside the centre 1080×1080 square, because the profile grid crops the rest.
+  Tell the user the timestamp so they can set it as the reel cover.
+- **Ending:** hold the CTA until the end. A last line that leads back into the
+  hook makes the reel loop cleanly.

@@ -7,7 +7,8 @@ description: "saya_editor" — مونتاج فيديوهات سايا (صانع�
 
 > **House rules first:** read `CLAUDE.md` at the repo root. They apply to this
 > style and override it: footage colour barely changed (`HOUSE_GRADE`), house
-> font Tahrir Bold for Arabic (`withHouseFont()` + `houseFontLoaded`), and the
+> font Tahrir Bold for Arabic everywhere else (Saya is the exception: Cairo,
+> see feedback rule 2), and the
 > spoken caption word in light blue (`HOUSE_ACTIVE_WORD` via `KaraokeText`).
 
 ## Status
@@ -26,10 +27,17 @@ on one timeline in `video/src/videos/SayaKitPreview.tsx` (composition
   - navy (كحلي): `#0B1B3F`, for plates, backgrounds and full-screen inserts
   - sky blue (سماوي): `#8FD3FF`, the same as `HOUSE_ACTIVE_WORD`, so the
     spoken word already matches the brand
-- **Built from scratch.** Do NOT reuse or mix the saved styles (style-0 … style-N)
-  or their components. Saya's components live only in `video/src/styles/saya/`.
-  The shared house helpers (`house.ts`, `Karaoke.tsx`) are still used, because
-  the house rules apply to every style.
+- **The only editing style.** ستايل 0–4 were folded into it: their useful
+  pieces were ported into `video/src/styles/saya/` (titles, doodles, neon
+  icons, list / strike stages, stat, prompt, REC, notification, flash) and
+  re-skinned in Cairo and Saya's palette, and the old style skills were
+  removed (they stay in git history). Saya's components live only in
+  `video/src/styles/saya/`. The shared house helpers (`house.ts`,
+  `Karaoke.tsx`) are still used, because the house rules apply to every style.
+- **Read `editing-rules.md` before mapping a script:** graphics as visual
+  metaphors, word-tied timing, face time, SFX budget, render and delivery
+  checks, and the retention checks (first frame, 3–7 s promise, pacing, cover
+  frame). Check `video/MECHANISMS.md` so a graphic is not repeated.
 
 ## How the style gets built (from the reference videos)
 
@@ -68,7 +76,7 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
    2–4 s: a punch-in, a logo, a phone, a card. No stretch of more than ~4 s
    with the same plain frame.
 2. **Captions: always on, never repeated (R3), R4 look.** 2–3 words per chunk,
-   white Tahrir Bold, with the spoken word in sky blue (`HOUSE_ACTIVE_WORD`).
+   white Cairo, with the spoken word in sky blue (`HOUSE_ACTIVE_WORD`).
    Default position is the chest (about y 1150 at 1080×1920). It moves up (to
    about y 330) when a graphic takes the middle, always inside the safe zone.
 3. **Important moment = the caption becomes a graphic (R4).** For a feature
@@ -86,7 +94,7 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
 ## Tokens (source of truth: `video/src/styles/saya/tokens.ts`)
 
 - Canvas 1080×1920, 30 fps.
-- Caption: Tahrir Bold (Arabic) and the brand Latin font, about 64 px, white,
+- Caption: Cairo (Arabic + Latin), about 64–76 px, white,
   shadow `0 3px 12px rgba(0,0,0,.55)`. On light UI it gets a 3 px navy stroke.
   Active word `#8FD3FF` + `HOUSE_ACTIVE_GLOW`.
 - Neon blue `#1E90FF` (glow `0 0 24px #1E90FFAA`), navy `#0B1B3F` (glass
@@ -107,7 +115,11 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
 | `Inserts.tsx` | `PhoneMock` (rises from below), `TapPulse`, `ScreenshotCard` (slides up with motion blur), `GlassCard`, `InfoChip`, `SourceTag` | R3 R4 R5 |
 | `Pills.tsx` | `FeaturePill` (✦ name in the caption's place), `BigWord`, `StepPill`, `SaveCta` | R4 + R2 |
 | `sfx.ts`, `SfxTrack.tsx` | the sound library map and a cue track (sounds land 2 frames early) | — |
-| `SayaEdit.tsx` | renders a whole edit from one timeline object (`SayaEditProps`) | — |
+| `Titles.tsx` | `SayaHookTitle` (small line + one big skewed word above her head), `SectionNumber` ("أولاً"), `SayaFlash` (white flash for a section change) | ستايل 1 / 4 / 3 |
+| `Doodles.tsx` | hand-drawn `SayaCurlyArrow`, `SayaMarkerCircle`, `SayaBurst`, `SayaSquiggle`, `SayaScribbleOut`, `SayaRedArrow` | ستايل 1 / 2 |
+| `Neon.tsx` | `NeonIconLabel`, `NeonIconPath` (icons joined by a drawn curve), 12 neon line icons, placed in the headroom with `top` | ستايل 4 |
+| `Stages.tsx` | `ListStage` (glossy chips, each item its own icon and tone), `StrikeStage` (paper card, red marker strike), `StatCard` (counting number), `PromptBox` (typed prompt), `RecFrame`, `NotificationBanner` | ستايل 2 / 1 / shared |
+| `SayaEdit.tsx` | renders a whole edit from one timeline object (`SayaEditProps`); graphic types: logo, logoStack, phone, screenshot, floating, follow, glass, chip, feature, bigWord, step, save, source, **title, section, flash, neonLabel, neonPath, list, strike, stat, prompt, rec, notification, doodle** | — |
 
 ## Working agreement with the user (always)
 
@@ -134,7 +146,7 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
 
 1. Footage → `video/public/footage/<name>.mp4` (git-ignored). The SRT comes from
    the user. Cut silences **only if the user asks** (fundamentals §1).
-2. Copy `videos/SayaKitPreview.tsx` to `videos/<Name>.tsx`. Set `footage`,
+2. Copy `videos/SayaKitPreview.tsx` (or `SayaKitMore` for the ported pieces) to `videos/<Name>.tsx`. Set `footage`,
    paste the SRT, and set `face` (face centre and width in pixels, read from a
    still).
 3. Go through the script:
@@ -144,6 +156,11 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
    - every **site or article** → `screenshot` + `blur`;
    - every **important moment** → `feature` or `bigWord` (the caption gives
      way automatically);
+   - the **hook** → `title` above the head (and maybe a `doodle`); a **list**
+     → `list`; a **correction** → `strike`; a **number** → `stat`; a typed
+     **prompt** → `prompt`; a **section** → `section`; a **notification** →
+     `notification`; a **screen recording** → `rec` (see `editing-rules.md` for
+     the full table). Gallery of every piece: composition `SayaKitMore`;
    - a **cut or a new idea** → a `zooms` punch-in with a whoosh;
    - **steps** → `step`; the end → `save` (+ ding).
 
