@@ -23,7 +23,7 @@ description: مخرج تصوير وكاميرا وإضاءة لاستوديو س
 ## الصور المرجعية (محفوظة بالمهارة)
 - `assets/studio-reference.jpg`: لوحة الاستوديو الرئيسي (المرجع لكل المشاهد).
 - `assets/character-sheet.jpg`: ورقة شخصية سايا (الوجه، العيون العسلية، النظارة، الحجاب البيج، التعبيرات).
-- `assets/base-medium-01.jpg`: صورة أساسية متوسطة على المكتب (الزاوية 01).
+- `assets/face-reference-01.jpg`: **مرجع شكل سايا المعتمد** (الوجه، العيون، النظارة، التعبير). **الشكل بس معتمد. اللبس اللي فيها (السترة البيضا والحجاب الأزرق) مش معتمد**: لا تنسخه، واكتب الإطلالة بالأمر دايماً.
 إذا المستخدم ما رفعهم بالمحادثة، ذكّره يرفعهم مع أي أمر لـGemini، لأن الأداة لازم تشوفهم.
 
 ## الوضع المباشر (بجلسة Claude Code على مستودع `saya`)
@@ -31,7 +31,7 @@ description: مخرج تصوير وكاميرا وإضاءة لاستوديو س
 ```bash
 python3 tools/gemini_image.py --list-models                      # أي موديلات صور متاحة
 python3 tools/gemini_image.py -o out/saya-08.png \
-  -i refs/saya/base-medium-01.png -i refs/saya/character-sheet.png -i refs/saya/studio-reference.jpg \
+  -i refs/saya/face-reference-01.png -i refs/saya/character-sheet.png -i refs/saya/studio-reference.jpg \
   -p "<أمر تعديل من prompt-templates.md>"
 ```
 - نفس القواعد: تغيير واحد بكل أمر، والصورة الأم أول صورة.

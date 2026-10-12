@@ -8,7 +8,7 @@ Reads the API key from the GEMINI_API_KEY environment variable.
 
   # edit: reference images first, then the instruction
   python3 tools/gemini_image.py -o out/saya-08.png \
-      -i refs/saya/base-medium-01.png -i refs/saya/character-sheet.png \
+      -i refs/saya/face-reference-01.png -i refs/saya/character-sheet.png \
       -p "Using the first image, show the same moment from a three-quarter angle..."
 
 Options: --model (default gemini-2.5-flash-image or $GEMINI_IMAGE_MODEL),
