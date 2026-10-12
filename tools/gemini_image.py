@@ -13,7 +13,7 @@ not set, the request goes out without a key and the environment's network secret
       -i refs/saya/face-reference-01.png -i refs/saya/character-sheet.png \
       -p "Using the first image, show the same moment from a three-quarter angle..."
 
-Options: --model (default gemini-2.5-flash-image or $GEMINI_IMAGE_MODEL),
+Options: --model (default gemini-3.1-flash-image or $GEMINI_IMAGE_MODEL),
 --aspect (default 9:16). Every image part returned is saved; extra ones get
 -2, -3 suffixes. Any text the model returns is printed.
 """
@@ -27,7 +27,7 @@ import urllib.error
 import urllib.request
 
 API = "https://generativelanguage.googleapis.com/v1beta"
-DEFAULT_MODEL = os.environ.get("GEMINI_IMAGE_MODEL", "gemini-2.5-flash-image")
+DEFAULT_MODEL = os.environ.get("GEMINI_IMAGE_MODEL", "gemini-3.1-flash-image")
 
 
 def call(url, key, body=None):
