@@ -1,6 +1,6 @@
 ---
 name: style-3
-description: description: "RETIRED — do not use; ستايل سايا (saya-editor) is the only active editing style. \"ستايل 3\" — minimal talking-head reel style: ONE small clean word at a time under the chin, with occasional stacked emphasis (script/italic word in green, bold word, red word, hand-drawn ellipse or underline) and white flashes on section changes. Use when the user asks to edit/montage a video \"بستايل 3\" / \"ستايل 3\" / \"style 3\"."
+description: "RETIRED — do not use; ستايل سايا (saya-editor) is the only active editing style. \"ستايل 3\" — minimal talking-head reel style: ONE small clean word at a time under the chin, with occasional stacked emphasis (script/italic word in green, bold word, red word, hand-drawn ellipse or underline) and white flashes on section changes. Use when the user asks to edit/montage a video \"بستايل 3\" / \"ستايل 3\" / \"style 3\"."
 ---
 
 # ستايل 3 — Style 3
