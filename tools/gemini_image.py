@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Generate or edit a Saya image with the Gemini API (no extra packages).
 
-Reads the API key from the GEMINI_API_KEY environment variable.
+Auth: if GEMINI_API_KEY is set it is sent as the x-goog-api-key header. If it is
+not set, the request goes out without a key and the environment's network secret
+(a custom header on generativelanguage.googleapis.com) supplies it.
 
   # list image-capable models available to the key
   python3 tools/gemini_image.py --list-models
@@ -29,10 +31,13 @@ DEFAULT_MODEL = os.environ.get("GEMINI_IMAGE_MODEL", "gemini-2.5-flash-image")
 
 
 def call(url, key, body=None):
+    headers = {"Content-Type": "application/json"}
+    if key:
+        headers["x-goog-api-key"] = key
     req = urllib.request.Request(
         url,
         data=json.dumps(body).encode() if body is not None else None,
-        headers={"x-goog-api-key": key, "Content-Type": "application/json"},
+        headers=headers,
         method="POST" if body is not None else "GET",
     )
     try:
@@ -58,9 +63,7 @@ def main():
     ap.add_argument("--list-models", action="store_true")
     a = ap.parse_args()
 
-    key = os.environ.get("GEMINI_API_KEY")
-    if not key:
-        sys.exit("GEMINI_API_KEY is not set.")
+    key = os.environ.get("GEMINI_API_KEY")  # optional: a network secret can inject it
 
     if a.list_models:
         for m in call(f"{API}/models?pageSize=1000", key).get("models", []):
