@@ -120,7 +120,7 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
 | `Doodles.tsx` | hand-drawn `SayaCurlyArrow`, `SayaMarkerCircle`, `SayaBurst`, `SayaSquiggle`, `SayaScribbleOut`, `SayaRedArrow` | ستايل 1 / 2 |
 | `Neon.tsx` | `NeonIconLabel`, `NeonIconPath` (icons joined by a drawn curve), 12 neon line icons, placed in the headroom with `top` | ستايل 4 |
 | `Stages.tsx` | `ListStage` (glossy chips, each item its own icon and tone), `StrikeStage` (paper card, red marker strike), `StatCard` (counting number), `PromptBox` (typed prompt), `RecFrame`, `NotificationBanner` | ستايل 2 / 1 / shared |
-| `Stickers.tsx` | `SketchIcons` (white hand-drawn "?" cloud, bulb with rays, sparkle, "!" around the head), `Sticker` (any imported icon or image popping and floating) | R6 |
+| `Stickers.tsx` | `SketchIcons` (hand-drawn, white or any `color`, "?" cloud, bulb with rays, sparkle, "!" around the head), `Sticker` (any imported icon or image popping and floating) | R6 |
 | `Screens.tsx` | `DesktopCard` (desktop screenshot / screen recording in a glowing white card, optional scroll; pair with `pip` so Saya sits in the bubble at its corner), `ChatExchange` (prompt types into a frosted bubble, the answer builds and scrolls in a frosted panel; pair with `pip`) | R6 |
 | `SayaEdit.tsx` | renders a whole edit from one timeline object (`SayaEditProps`); graphic types: logo, logoStack, phone, screenshot, floating, follow, glass, chip, feature, bigWord, step, save, source, **title, section, flash, neonLabel, neonPath, list, strike, stat, prompt, rec (+ timecode), notification, doodle, sketch, sticker, desktop, chat** | — |
 
@@ -132,9 +132,10 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
    every app or brand (Arabic or Latin) and resolves its logo (simple-icons →
    `logo.icon`, or a full-colour SVG saved to `public/assets/icons/`);
    `assets.mjs search <words>` / `save <set:name>` pull icons for ideas,
-   objects and feelings: **white line icons first** (lucide, saved white,
-   `sticker` with `glow: true`, or a `sketch` glyph; the user prefers this
-   look), colourful emoji only when no line icon fits. Import these yourself; do not ask the user for them.
+   objects and feelings: **line-drawn icons first**, any colour (lucide
+   saved with `--color`, `sticker` with `glow: true`, or a `sketch` glyph with
+   `color`; the user prefers this look), filled emoji only when no line icon
+   fits. Import these yourself; do not ask the user for them.
    Ask the user, in **one** message, only for what cannot be imported: screen
    recordings and screenshots of the apps (never mock them), personal photos,
    numbers you must not guess, and the SRT. Illustrations that no library has

@@ -46,7 +46,7 @@ export type SayaGraphic = Timed &
     | {type: "rec"; timecode?: boolean; startSeconds?: number}
     | {type: "notification"; app: string; title: string; body: string; top?: number}
     // --- learned from reference R6 (Stickers / Screens) ---
-    | {type: "sketch"; kind: SketchKind; x?: number; y?: number; spread?: number}
+    | {type: "sketch"; kind: SketchKind; x?: number; y?: number; spread?: number; color?: string}
     | {type: "sticker"; src: string; x: number; y: number; size?: number; glow?: boolean; rot?: number}
     | {type: "desktop"; src: string; isVideo?: boolean; trimBefore?: number; playbackRate?: number; aspect?: number; scroll?: boolean; height?: number; top?: number; width?: number}
     | {type: "chat"; prompt: string; answer: string[]; side?: "left" | "right" | "center"; answerAt?: number}
@@ -161,7 +161,7 @@ const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
     case "rec":
       return <RecFrame duration={g.dur} timecode={g.timecode} startSeconds={g.startSeconds} />;
     case "sketch":
-      return <SketchIcons kind={g.kind} duration={g.dur} x={g.x} y={g.y} spread={g.spread} />;
+      return <SketchIcons kind={g.kind} duration={g.dur} x={g.x} y={g.y} spread={g.spread} color={g.color} />;
     case "sticker":
       return <Sticker src={g.src} duration={g.dur} x={g.x} y={g.y} size={g.size} glow={g.glow} rot={g.rot} />;
     case "desktop":
