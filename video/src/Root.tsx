@@ -10,6 +10,10 @@ import {SayaIntroStyle3, SAYA3_FPS, SAYA3_FRAMES} from "./videos/SayaIntroStyle3
 import {style3Fonts} from "./styles/style3/tokens";
 import {SayaIntroStyle4, SAYA4_FPS, SAYA4_FRAMES} from "./videos/SayaIntroStyle4";
 import {style4Fonts} from "./styles/style4/tokens";
+import {SayaKitPreview, SAYA_KIT_FRAMES, sayaKitProps} from "./videos/SayaKitPreview";
+import {SayaDuckAi, SAYA_DUCK_FRAMES, sayaDuckProps} from "./videos/SayaDuckAi";
+import {SayaChrome, SAYA_CHROME_FRAMES, sayaChromeProps} from "./videos/SayaChrome";
+import {sayaFonts, SAYA_FPS as SAYA_STYLE_FPS} from "./styles/saya/tokens";
 import {InstaShareMix, MIX_FPS, MIX_FRAMES} from "./videos/InstaShareMix";
 import {SoundTypeMix, ST_FPS, ST_FRAMES} from "./videos/SoundTypeMix";
 import {RecoverChatsMix, RC_FPS, RC_FRAMES} from "./videos/RecoverChatsMix";
@@ -117,6 +121,48 @@ export const RemotionRoot: React.FC = () => {
         height={1920}
         calculateMetadata={async () => {
           await Promise.all([fontsLoaded, style1Fonts, style2Fonts, style4Fonts]);
+          return {};
+        }}
+      />
+      {/* ستايل سايا (saya_editor) — component gallery */}
+      <Composition
+        id="SayaKitPreview"
+        component={SayaKitPreview}
+        durationInFrames={SAYA_KIT_FRAMES}
+        fps={SAYA_STYLE_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={sayaKitProps}
+        calculateMetadata={async () => {
+          await sayaFonts;
+          return {};
+        }}
+      />
+      {/* سايا — duck.ai (trial edit) */}
+      <Composition
+        id="SayaDuckAi"
+        component={SayaDuckAi}
+        durationInFrames={SAYA_DUCK_FRAMES}
+        fps={SAYA_STYLE_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={sayaDuckProps}
+        calculateMetadata={async () => {
+          await sayaFonts;
+          return {};
+        }}
+      />
+      {/* سايا — Chrome permissions */}
+      <Composition
+        id="SayaChrome"
+        component={SayaChrome}
+        durationInFrames={SAYA_CHROME_FRAMES}
+        fps={SAYA_STYLE_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={sayaChromeProps}
+        calculateMetadata={async () => {
+          await sayaFonts;
           return {};
         }}
       />
