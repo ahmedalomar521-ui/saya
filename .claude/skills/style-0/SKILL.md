@@ -53,6 +53,34 @@ component that tells it best. The worked example and template is
 - Mention every mock UI (for example a phone settings screen) to the user, and
   offer to swap in a real screen recording.
 
+## Retention checks
+
+Run these on the beat mapping before writing code, and again on the stills.
+
+- **First frame:** the hook title and the speech both start on frame 0. No
+  silence and no slow fade-in in the first second. The first frame should look
+  different from the body (punch-in, title, or flash).
+- **3–7 s promise:** by second 7 the viewer has heard what they get for
+  staying. If the script delays it, flag it to the user rather than re-cutting.
+- **Nothing static for more than ~5 s.** A talking-head stretch can hold up to
+  ~7 s if the delivery is lively. Otherwise add a punch-in, a key word or a
+  small icon. This complements "change the visual beat every ~2–4 s" above.
+- **Cut rhythm by length:** 15 s reels cut every ~2–3 s, 30 s every ~3–5 s,
+  45–60 s every ~4–7 s (jump cuts included).
+- **Text follows the voice.** On-screen titles and key words appear 0.1–0.3 s
+  after the word starts, never before it.
+- **Transitions:** hard cuts, punch-ins, whip pans and the Style 3 flash. No
+  cross-dissolves or fades to black between beats. The only fade is the
+  ending after the Follow CTA.
+- **Safe zone (1080×1920):** keep titles, captions and graphics inside
+  x 70–1010, y 150–1570. Instagram's buttons cover the right edge and its
+  caption area covers the bottom ~350 px.
+- **Cover frame:** pick a frame with Saya's face and the hook title, both
+  inside the centre 1080×1080 square, because the profile grid crops the rest.
+  Tell the user the timestamp so they can set it as the reel cover.
+- **Ending:** hold the CTA text until the end. A last line that leads back into
+  the hook makes the reel loop cleanly.
+
 ## Workflow
 
 1. Join and convert the footage, find the pauses, and read the SRT (snap SRT times to the pauses).
