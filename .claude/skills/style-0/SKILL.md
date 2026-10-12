@@ -53,6 +53,23 @@ component that tells it best. The worked example and template is
 - Mention every mock UI (for example a phone settings screen) to the user, and
   offer to swap in a real screen recording.
 
+## Editing rules (from video-editor-bassam)
+
+Read `references/editing-rules.md` once before mapping beats. In short:
+
+- The graphic's shape tells what she says (a metaphor, not decoration), and
+  each list item gets its own shape.
+- No mechanism twice in a video, nor from the last two videos: check
+  `video/MECHANISMS.md`, and add a line after the user approves the video.
+- Graphics follow the word: on its word, gone with its sentence, hard cuts for
+  images. Give the face at least 2.5 s between two graphics.
+- No words she did not say; labels don't repeat the caption. Text RTL,
+  bars and charts LTR, Western digits.
+- SFX budget: about 10 transition sounds and 20 effects per minute at most,
+  1 s apart, the same sound at most 3 times, semantic sounds on the word.
+- Render with PNG frames and BT.709, then check colour, bitrate and a frame of
+  the delivered file. A finished render is not proof that it is correct.
+
 ## Retention checks
 
 Run these on the beat mapping before writing code, and again on the stills.
@@ -72,9 +89,9 @@ Run these on the beat mapping before writing code, and again on the stills.
 - **Transitions:** hard cuts, punch-ins, whip pans and the Style 3 flash. No
   cross-dissolves or fades to black between beats. The only fade is the
   ending after the Follow CTA.
-- **Safe zone (1080×1920):** keep titles, captions and graphics inside
-  x 70–1010, y 150–1570. Instagram's buttons cover the right edge and its
-  caption area covers the bottom ~350 px.
+- **Safe zone (1080×1920):** no text in the top 150 px or the bottom 300 px
+  (caution band from y 1500), and keep the right 180 px clear between
+  y 1100 and 1750, where Instagram's like, comment and share buttons sit.
 - **Cover frame:** pick a frame with Saya's face and the hook title, both
   inside the centre 1080×1080 square, because the profile grid crops the rest.
   Tell the user the timestamp so they can set it as the reel cover.
@@ -84,9 +101,15 @@ Run these on the beat mapping before writing code, and again on the stills.
 ## Workflow
 
 1. Join and convert the footage, find the pauses, and read the SRT (snap SRT times to the pauses).
-2. Map each SRT phrase to a beat type from the table above, and write that mapping out first.
+   Fix the SRT text first (wrong words, HeyGen mispronunciations shown with the right spelling).
+2. Read `video/MECHANISMS.md`, then map each SRT phrase to a beat type from the
+   table above, and write that mapping out first, with the SFX for each beat.
+   Check it against `references/editing-rules.md` (density, face time, SFX budget).
 3. Copy `InstaShareMix.tsx`, then fill in the phrases, windows, punches/flashes,
    inserts and SFX. Register it in `Root.tsx`, awaiting every style's fonts that
    it uses (plus `fontsLoaded` if it uses `src/Overlays.tsx`).
-4. Check stills, then render. If the file is over 30 MB, send a compressed copy
-   and offer the original split into parts.
+4. Check a contact sheet of the beats, then render with
+   `--image-format=png --color-space=bt709`. Run the delivery checks
+   (colour, bitrate, a frame of the delivered file). If the file is over 30 MB,
+   send a compressed copy and offer the original split into parts.
+5. After the user approves, add the video's line to `video/MECHANISMS.md`.
