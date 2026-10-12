@@ -264,3 +264,9 @@ starts from it. Newer rules override older ones and the principles above
    prove the order. Join the parts, run `silencedetect=n=-35dB:d=0.25` and
    check that the pauses fall in the gaps between SRT cues. Try the other
    order if they do not. (The Chrome video was first joined backwards.)
+4. **No sound effect at the start of the video.** The first sound effect
+   comes only after the opening line, never on frame 0 or under the first
+   words (the user: a sound at the very start feels like a jump scare). The
+   video opens on her voice alone; the hook's motion (title, zoom) stays
+   silent. (SayaPassword had `fuhh` at frame 0; the user chose to leave that
+   video as is.)
