@@ -87,3 +87,75 @@ export const sayaKitProps: SayaEditProps = {
 };
 
 export const SayaKitPreview: React.FC<SayaEditProps> = (props) => <SayaEdit {...props} />;
+
+// ---------------------------------------------------------------------------
+// Second gallery: the pieces ported from ستايل 1–4 (titles, doodles, neon
+// icons, list / strike stages, stat, prompt, REC, notification, flash). Each
+// piece gets its own 3-second window so stills can be checked one by one.
+export const SAYA_KIT_MORE_FRAMES = 630;
+
+const SRT_MORE = `1
+00:00:00,000 --> 00:00:03,000
+أغلب الناس بتشحن جوالها غلط
+
+2
+00:00:03,000 --> 00:00:06,000
+ثلاث إعدادات بتغيّر كل شي
+
+3
+00:00:06,000 --> 00:00:09,000
+هاد غلط وهاد الصح
+
+4
+00:00:09,000 --> 00:00:12,000
+ووفّرت تسعين بالمية من الوقت
+
+5
+00:00:12,000 --> 00:00:15,000
+أولاً افتح الإعدادات
+
+6
+00:00:15,000 --> 00:00:18,000
+وصلتني رسالة جديدة
+
+7
+00:00:18,000 --> 00:00:21,000
+احفظ الفيديو وابعته`;
+
+export const sayaKitMoreProps: SayaEditProps = {
+  ...sayaKitProps,
+  srt: SRT_MORE,
+  zooms: [{at: 0, scale: 1}, {at: 270, scale: 1.12}],
+  pip: [],
+  blur: [[270, 360], [585, 630]],
+  whips: [],
+  places: [],
+  graphics: [
+    // 0–90: hook title above the head + doodles
+    {type: "title", at: 0, dur: 90, small: "عادة غلط", big: "جوالك بيتعب", squiggle: true},
+    {type: "doodle", at: 20, dur: 70, kind: "curlyArrow", x: 900, y: 900, size: 190},
+    {type: "doodle", at: 30, dur: 60, kind: "circle", x: 540, y: 1250, w: 380, h: 170},
+    {type: "doodle", at: 40, dur: 50, kind: "burst", x: 880, y: 560, size: 120},
+    // 90–180: list stage
+    {type: "list", at: 90, dur: 90, items: [{label: "المشكلة", icon: "alert", tone: "red", sub: "البطارية بتخلص"}, {label: "الحل", icon: "check", tone: "green", sub: "الشحن المحسّن"}]},
+    // 180–270: strike stage
+    {type: "strike", at: 180, dur: 90, lines: [{text: "اشحن لحد 100", at: 4, strike: true}, {text: "اشحن لحد 80", at: 30}]},
+    // 270–360: stat + red scribble
+    {type: "stat", at: 270, dur: 90, value: 90, suffix: "%", label: "وقت أقل"},
+    {type: "doodle", at: 290, dur: 70, kind: "redArrow", x: 820, y: 700, size: 170, flip: true},
+    // 360–450: section number + neon label
+    {type: "section", at: 360, dur: 45, text: "أولاً", y: 150},
+    {type: "neonLabel", at: 405, dur: 45, icon: "bulb", label: "فكرة", top: 150},
+    // 450–540: neon path + REC
+    {type: "neonPath", at: 450, dur: 90, icons: ["bookmark", "user", "plane"], top: 60},
+    {type: "rec", at: 470, dur: 70},
+    // 540–600: notification + prompt
+    {type: "notification", at: 540, dur: 45, app: "Instagram", title: "رسالة جديدة", body: "سارة: شفتي الريل؟", top: 300},
+    {type: "prompt", at: 585, dur: 45, text: "لخّصلي هالفيديو بثلاث نقاط", sendAt: 30},
+    // flash on a section change
+    {type: "flash", at: 270, dur: 10},
+  ],
+  sfx: [],
+};
+
+export const SayaKitMore: React.FC<SayaEditProps> = (props) => <SayaEdit {...props} />;

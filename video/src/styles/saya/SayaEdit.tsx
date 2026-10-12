@@ -4,11 +4,15 @@
 import {AbsoluteFill, Sequence, staticFile} from "remotion";
 import {SayaCaptions, type CaptionNote, type CaptionPlace, type Range} from "./Captions";
 import {SayaFootage, type PipPlace, type Zoom} from "./Footage";
+import {SayaBurst, SayaCurlyArrow, SayaMarkerCircle, SayaRedArrow, SayaScribbleOut, SayaSquiggle} from "./Doodles";
 import {FloatingWindow, GlassCard, InfoChip, PhoneMock, ScreenshotCard, SourceTag, TapPulse} from "./Inserts";
 import {LogoPop, LogoStack, type Logo} from "./Logos";
+import {NeonIconLabel, NeonIconPath, type NeonIconName} from "./Neon";
 import {BigWord, FeaturePill, FollowCta, SaveCta, StepPill} from "./Pills";
 import {SfxTrack, type SfxCue} from "./SfxTrack";
 import {srtToChunks} from "./srt";
+import {ListStage, NotificationBanner, PromptBox, RecFrame, StatCard, StrikeStage, type ListItem, type StrikeLine} from "./Stages";
+import {SayaFlash, SayaHookTitle, SectionNumber} from "./Titles";
 import {SAYA, SAYA_FPS} from "./tokens";
 
 type Timed = {at: number; dur: number};
@@ -27,6 +31,19 @@ export type SayaGraphic = Timed &
     | {type: "step"; text: string}
     | {type: "save"; text?: string; kind?: "save" | "share"; y?: number}
     | {type: "source"; text: string; y?: number}
+    // --- ported from ستايل 1–4 (see Titles / Doodles / Neon / Stages) ---
+    | {type: "title"; small?: string; big: string; y?: number; squiggle?: boolean}
+    | {type: "section"; text: string; y?: number}
+    | {type: "flash"}
+    | {type: "neonLabel"; icon: NeonIconName; label: string; top?: number}
+    | {type: "neonPath"; icons: NeonIconName[]; top?: number; stepFrames?: number}
+    | {type: "list"; items: ListItem[]}
+    | {type: "strike"; lines: StrikeLine[]; top?: number}
+    | {type: "stat"; value: number; suffix?: string; label?: string; centerY?: number}
+    | {type: "prompt"; text: string; placeholder?: string; sendAt?: number; centerY?: number}
+    | {type: "rec"}
+    | {type: "notification"; app: string; title: string; body: string; top?: number}
+    | {type: "doodle"; kind: "curlyArrow" | "circle" | "burst" | "squiggle" | "scribble" | "redArrow"; x: number; y: number; size?: number; w?: number; h?: number; flip?: boolean; color?: string; delay?: number}
   );
 
 export type SayaEditProps = {
@@ -55,7 +72,29 @@ export type SayaEditProps = {
 
 /** Graphics that stand in the caption's place hide the caption meanwhile. */
 const replacesCaption = (g: SayaGraphic) =>
-  g.type === "feature" || g.type === "bigWord" || (g.type === "logo" && (g.place ?? "caption") === "caption");
+  g.type === "feature" ||
+  g.type === "bigWord" ||
+  g.type === "list" ||
+  g.type === "strike" ||
+  (g.type === "logo" && (g.place ?? "caption") === "caption");
+
+/** Doodles are placed by their centre (x, y) in canvas pixels. */
+const Doodle: React.FC<{g: Extract<SayaGraphic, {type: "doodle"}>}> = ({g}) => {
+  const size = g.size ?? 200;
+  const w = g.w ?? 360;
+  const h = g.h ?? 160;
+  const box = g.kind === "circle" || g.kind === "scribble" ? {w: g.kind === "circle" ? w : 420, h: g.kind === "circle" ? h : 160} : g.kind === "squiggle" ? {w: g.w ?? 420, h: 60} : g.kind === "curlyArrow" ? {w: size, h: size * 1.4} : {w: size, h: size};
+  return (
+    <div style={{position: "absolute", left: g.x - box.w / 2, top: g.y - box.h / 2}}>
+      {g.kind === "curlyArrow" ? <SayaCurlyArrow size={size} flip={g.flip} color={g.color} delay={g.delay} /> : null}
+      {g.kind === "circle" ? <SayaMarkerCircle w={w} h={h} color={g.color} delay={g.delay} /> : null}
+      {g.kind === "burst" ? <SayaBurst size={size} color={g.color} delay={g.delay} /> : null}
+      {g.kind === "squiggle" ? <SayaSquiggle w={g.w ?? 420} color={g.color} delay={g.delay} /> : null}
+      {g.kind === "scribble" ? <SayaScribbleOut color={g.color} delay={g.delay} /> : null}
+      {g.kind === "redArrow" ? <SayaRedArrow size={size} flip={g.flip} delay={g.delay} /> : null}
+    </div>
+  );
+};
 
 const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
   switch (g.type) {
@@ -94,6 +133,30 @@ const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
       return <SaveCta text={g.text} duration={g.dur} kind={g.kind} y={g.y} />;
     case "source":
       return <SourceTag text={g.text} y={g.y} />;
+    case "title":
+      return <SayaHookTitle small={g.small} big={g.big} duration={g.dur} y={g.y} squiggle={g.squiggle} />;
+    case "section":
+      return <SectionNumber text={g.text} duration={g.dur} y={g.y} />;
+    case "flash":
+      return <SayaFlash />;
+    case "neonLabel":
+      return <NeonIconLabel icon={g.icon} label={g.label} duration={g.dur} top={g.top} />;
+    case "neonPath":
+      return <NeonIconPath icons={g.icons} duration={g.dur} top={g.top} stepFrames={g.stepFrames} />;
+    case "list":
+      return <ListStage items={g.items} duration={g.dur} />;
+    case "strike":
+      return <StrikeStage lines={g.lines} duration={g.dur} top={g.top} />;
+    case "stat":
+      return <StatCard value={g.value} suffix={g.suffix} label={g.label} duration={g.dur} centerY={g.centerY} />;
+    case "prompt":
+      return <PromptBox text={g.text} placeholder={g.placeholder} sendAt={g.sendAt} duration={g.dur} centerY={g.centerY} />;
+    case "rec":
+      return <RecFrame duration={g.dur} />;
+    case "notification":
+      return <NotificationBanner app={g.app} title={g.title} body={g.body} duration={g.dur} top={g.top} />;
+    case "doodle":
+      return <Doodle g={g} />;
   }
 };
 
