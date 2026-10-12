@@ -152,7 +152,7 @@ export const RemotionRoot: React.FC = () => {
           return {};
         }}
       />
-      {/* ستايل سايا — pieces learned from reference R6 + the cinema grade */}
+      {/* ستايل سايا — pieces learned from reference R6 */}
       <Composition
         id="SayaKitR6"
         component={SayaKitR6}

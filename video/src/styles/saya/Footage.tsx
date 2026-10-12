@@ -5,7 +5,6 @@
 // Colour: HOUSE_GRADE only (house rule 1).
 import {Video} from "@remotion/media";
 import {AbsoluteFill, Img, interpolate, spring, useCurrentFrame, useVideoConfig, Easing} from "remotion";
-import {CinemaGradeDefs, cinemaFilter} from "../shared/CinemaGrade";
 import {houseVignette} from "../shared/house";
 import type {Range} from "./Captions";
 import {clamp, SAYA} from "./tokens";
@@ -49,15 +48,10 @@ export const SayaFootage: React.FC<{
   pipPlace?: PipPlace;
   /** Frames where a whip happens (directional blur ±4 frames). */
   whips?: number[];
-  /** "house" (default, near-neutral) or "cinema" — only after the user approves it. */
-  grade?: "house" | "cinema";
-  /** Cinema grade strength 0–1 (default 0.5, gentle). */
-  gradeIntensity?: number;
-}> = ({src, isImage, trimBefore, zooms = [], face = {x: 540, y: 620, w: 430}, blur = [], pip = [], pipPlace = PIP_DEFAULT, whips = [], grade = "house", gradeIntensity = 0.5}) => {
+}> = ({src, isImage, trimBefore, zooms = [], face = {x: 540, y: 620, w: 430}, blur = [], pip = [], pipPlace = PIP_DEFAULT, whips = []}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const zoom = zoomAt(frame, zooms);
-  const gradeCss = grade === "cinema" ? cinemaFilter(gradeIntensity) : SAYA.grade;
 
   // PiP progress (spring in, spring out)
   let pipP = 0;
@@ -94,11 +88,10 @@ export const SayaFootage: React.FC<{
 
   return (
     <AbsoluteFill style={{background: "#000", overflow: "hidden"}}>
-      {grade === "cinema" ? <CinemaGradeDefs intensity={gradeIntensity} /> : null}
       {/* blurred backdrop (under graphics and behind the PiP) */}
       {blurA > 0 ? (
         <AbsoluteFill style={{opacity: blurA}}>
-          {media({filter: `${gradeCss} blur(${SAYA.blurPx * blurA}px)`, transform: `scale(${zoom * 1.06})`, transformOrigin: origin}, true)}
+          {media({filter: `${SAYA.grade} blur(${SAYA.blurPx * blurA}px)`, transform: `scale(${zoom * 1.06})`, transformOrigin: origin}, true)}
         </AbsoluteFill>
       ) : null}
       {/* sharp shot / PiP bubble */}
@@ -126,7 +119,7 @@ export const SayaFootage: React.FC<{
                 filter: whip > 0 ? `blur(${whip * 14}px)` : undefined,
               }}
             >
-              {media({filter: gradeCss}, false)}
+              {media({filter: SAYA.grade}, false)}
             </div>
           </div>
         </div>

@@ -122,8 +122,7 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
 | `Stages.tsx` | `ListStage` (glossy chips, each item its own icon and tone), `StrikeStage` (paper card, red marker strike), `StatCard` (counting number), `PromptBox` (typed prompt), `RecFrame`, `NotificationBanner` | ستايل 2 / 1 / shared |
 | `Stickers.tsx` | `SketchIcons` (white hand-drawn "?" cloud, bulb with rays, sparkle, "!" around the head), `Sticker` (any imported icon or image popping and floating) | R6 |
 | `Screens.tsx` | `DesktopCard` (desktop screenshot / screen recording in a glowing white card, optional scroll; pair with `pip` so Saya sits in the bubble at its corner), `ChatExchange` (prompt types into a frosted bubble, the answer builds and scrolls in a frosted panel; pair with `pip`) | R6 |
-| `../shared/CinemaGrade.tsx` | optional gentle cinematic grade (`grade: "cinema"`, `gradeIntensity` 0–1) — **ask the user first** | colour ref (man) |
-| `SayaEdit.tsx` | renders a whole edit from one timeline object (`SayaEditProps`); graphic types: logo, logoStack, phone, screenshot, floating, follow, glass, chip, feature, bigWord, step, save, source, **title, section, flash, neonLabel, neonPath, list, strike, stat, prompt, rec (+ timecode), notification, doodle, sketch, sticker, desktop, chat**; footage `grade` | — |
+| `SayaEdit.tsx` | renders a whole edit from one timeline object (`SayaEditProps`); graphic types: logo, logoStack, phone, screenshot, floating, follow, glass, chip, feature, bigWord, step, save, source, **title, section, flash, neonLabel, neonPath, list, strike, stat, prompt, rec (+ timecode), notification, doodle, sketch, sticker, desktop, chat** | — |
 
 ## Working agreement with the user (always)
 
@@ -139,7 +138,8 @@ measured numbers. Then read `sfx.md`: the sound library (56 sounds) and when to 
    recordings and screenshots of the apps (never mock them), personal photos,
    numbers you must not guess, and the SRT. Illustrations that no library has
    can be generated with `tools/gemini_image.py` only after the user approves
-   the cost. Also ask here whether the footage should get the cinematic grade.
+   the cost. If the footage looks like it needs a colour change, say so here
+   and let the user decide (house rule 1); never grade on your own.
    Do not start editing with gaps.
 2. **While editing: if something is missing, pause and ask.** Say exactly what
    is needed and where it goes (timestamp + purpose). Never fill the gap with a

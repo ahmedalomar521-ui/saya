@@ -162,8 +162,8 @@ export const SayaKitMore: React.FC<SayaEditProps> = (props) => <SayaEdit {...pro
 
 // ---------------------------------------------------------------------------
 // Third gallery: pieces learned from reference R6 (sketch icons, imported
-// stickers, desktop card + PiP, chat exchange, viewfinder timecode) and the
-// optional cinema grade. kit-desktop.jpg = any landscape screenshot.
+// stickers, desktop card + PiP, chat exchange, viewfinder timecode).
+// kit-desktop.jpg = any landscape screenshot.
 export const SAYA_KIT_R6_FRAMES = 450;
 
 export const sayaKitR6Props: SayaEditProps = {
@@ -187,8 +187,6 @@ export const sayaKitR6Props: SayaEditProps = {
 5
 00:00:13,000 --> 00:00:15,000
 وهيك صوّرتها`,
-  grade: "cinema",
-  gradeIntensity: 0.5,
   zooms: [{at: 0, scale: 1}],
   pip: [[180, 300], [320, 405]],
   pipPlace: {x: 70, y: 250, d: 230},

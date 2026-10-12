@@ -58,10 +58,6 @@ export type SayaEditProps = {
   footage: string;
   isImage?: boolean;
   face?: {x: number; y: number; w: number};
-  /** Footage grade: "house" (default) or "cinema" (gentle cinematic look; only
-   *  after the user approves it for this video). */
-  grade?: "house" | "cinema";
-  gradeIntensity?: number;
   srt: string;
   zooms?: Zoom[];
   blur?: Range[];
@@ -190,7 +186,7 @@ export const SayaEdit: React.FC<SayaEditProps> = (p) => {
   return (
     <AbsoluteFill style={{background: layer === "all" || layer === "base" ? "#000" : "transparent"}}>
       {show("base") ? (
-        <SayaFootage src={staticFile(p.footage)} isImage={p.isImage} face={p.face} zooms={p.zooms} blur={p.blur} pip={p.pip} pipPlace={p.pipPlace} whips={p.whips} grade={p.grade} gradeIntensity={p.gradeIntensity} />
+        <SayaFootage src={staticFile(p.footage)} isImage={p.isImage} face={p.face} zooms={p.zooms} blur={p.blur} pip={p.pip} pipPlace={p.pipPlace} whips={p.whips} />
       ) : null}
       {graphics.map((g, i) =>
         show(i) ? (
