@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Saya carousel — أكواد ChatGPT</title>
+<style>
+  /* Saya identity (same palette as the reels): navy, neon blue, sky, amber for one hot word. Font: Cairo. */
+  :root {
+    --navy: #0B1B3F;
+    --navy-2: #0F2552;
+    --neon: #1E90FF;
+    --sky: #8FD3FF;
+    --amber: #FFB020;
+    --paper: #F5F8FF;
+    --beige: #EEF3FB;
+    --ink: #0B1B3F;
+    --pad: 76px;
+  }
+  @font-face { font-family: 'SayaAr'; src: url('fonts/cairo-arabic-700-normal.woff2') format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'SayaAr'; src: url('fonts/cairo-arabic-800-normal.woff2') format('woff2'); font-weight: 800; }
+  @font-face { font-family: 'SayaAr'; src: url('fonts/cairo-arabic-900-normal.woff2') format('woff2'); font-weight: 900; }
+  @font-face { font-family: 'SayaLat'; src: url('fonts/cairo-latin-700-normal.woff2') format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'SayaLat'; src: url('fonts/cairo-latin-900-normal.woff2') format('woff2'); font-weight: 900; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #222; display: flex; flex-direction: column; gap: 40px; align-items: center; padding: 40px 0; }
+
+  .slide {
+    width: 1080px; height: 1350px; position: relative; overflow: hidden;
+    font-family: 'SayaLat', 'SayaAr', sans-serif; font-weight: 800;
+    padding: 110px var(--pad) 150px; display: flex; flex-direction: column; justify-content: center; gap: 34px;
+    color: var(--paper); background: var(--navy);
+  }
+  .slide.alt   { background: var(--navy-2); }
+  .slide.light { background: var(--beige); color: var(--ink); }
+  .slide.brand { background: radial-gradient(110% 80% at 85% 5%, #1B4FA0 0%, var(--navy) 62%); }
+  /* faint hexagon wall, like Saya's studio */
+  .slide::before {
+    content: ""; position: absolute; inset: 0; opacity: .10; pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'><path d='M30 2h60l30 50-30 50H30L0 52z' fill='none' stroke='%238FD3FF' stroke-width='3'/></svg>");
+    background-size: 180px 156px;
+  }
+  .light::before { opacity: .06; }
+  .slide > * { position: relative; }
+
+  .kicker { font-size: 36px; color: var(--sky); font-weight: 800; }
+  .light .kicker { color: var(--neon); }
+  h1 { font-size: 118px; line-height: 1.12; font-weight: 900; }
+  h2 { font-size: 80px; line-height: 1.2; font-weight: 900; }
+  p  { font-size: 44px; line-height: 1.55; font-weight: 700; opacity: .93; }
+  .hot { color: var(--amber); }
+  .light .hot { color: var(--neon); }
+
+  /* tool slides */
+  .head { display: flex; align-items: center; gap: 30px; }
+  .num { flex: none; width: 128px; height: 128px; border-radius: 34px; background: var(--neon); color: #fff;
+         display: flex; align-items: center; justify-content: center; font-size: 76px; font-weight: 900;
+         box-shadow: 0 0 40px rgba(30,144,255,.55); }
+  .name { direction: ltr; font-size: 64px; font-weight: 900; color: #fff; line-height: 1.1; }
+  .what { font-size: 34px; color: var(--sky); font-weight: 800; }
+  .try { font-size: 38px; line-height: 1.5; padding: 26px 34px; border-radius: 28px; background: rgba(143,211,255,.10);
+         border: 3px solid rgba(143,211,255,.55); }
+  .try b { color: var(--amber); }
+  .tags { display: flex; gap: 18px; flex-wrap: wrap; }
+  .tag { font-size: 30px; padding: 10px 26px; border-radius: 99px; background: rgba(255,255,255,.10); font-weight: 800; }
+  .tag.free { background: var(--amber); color: var(--navy); }
+  .url { direction: ltr; text-align: right; font-size: 32px; opacity: .7; font-weight: 700; }
+  .next { font-size: 32px; color: var(--sky); opacity: .9; }
+
+  .warn { font-size: 42px; line-height: 1.5; padding: 30px 36px; border-radius: 28px; background: #fff; border-right: 12px solid #FF5A5F; color: var(--ink); }
+  .warn b { color: #E5383B; }
+
+  .avatar { width: 300px; height: 300px; border-radius: 50%; object-fit: cover; border: 8px solid var(--neon);
+            box-shadow: 0 0 60px rgba(30,144,255,.6); align-self: center; }
+  .avatar.small { width: 150px; height: 150px; border-width: 5px; }
+  .handle { direction: ltr; font-size: 44px; color: var(--sky); font-weight: 900; }
+  .center { text-align: center; align-items: center; }
+
+  .progress { position: absolute; left: var(--pad); right: var(--pad); bottom: 60px; display: flex; align-items: center; gap: 20px; direction: ltr; }
+  .progress .track { flex: 1; height: 8px; border-radius: 4px; background: rgba(255,255,255,.14); overflow: hidden; }
+  .progress .fill  { height: 100%; background: var(--sky); border-radius: 4px; }
+  .progress .count { font-family: 'SayaLat'; font-size: 28px; opacity: .6; }
+  .light .progress .track { background: rgba(11,27,63,.12); }
+  .light .progress .fill  { background: var(--neon); }
+  .arrow { position: absolute; top: 0; bottom: 0; right: 0; width: 92px; display: flex; align-items: center; justify-content: center;
+           background: linear-gradient(to right, transparent, rgba(255,255,255,.07)); color: #fff; }
+  .light .arrow { background: linear-gradient(to right, transparent, rgba(11,27,63,.06)); color: var(--ink); }
+  .arrow svg { width: 50px; height: 50px; }
+</style>
+<style>
+  .code { direction: ltr; align-self: flex-start; font-family: 'SayaLat'; font-weight: 900; font-size: 92px; letter-spacing: 2px;
+          color: #fff; background: var(--neon); padding: 4px 40px 10px; border-radius: 26px; box-shadow: 0 0 50px rgba(30,144,255,.6); }
+  .chat { display: flex; flex-direction: column; gap: 22px; }
+  .me, .bot { max-width: 88%; font-size: 36px; line-height: 1.5; padding: 22px 30px; border-radius: 30px; font-weight: 700; }
+  .me  { align-self: flex-start; background: #1E90FF; color: #fff; border-bottom-right-radius: 8px; }
+  .me .c { display: block; direction: ltr; text-align: right; font-weight: 900; color: #FFE08A; font-size: 40px; }
+  .bot { align-self: flex-end; background: #fff; color: var(--ink); border-bottom-left-radius: 8px; }
+  .bot.bad { background: rgba(255,255,255,.12); color: var(--paper); text-decoration: line-through; text-decoration-color: #FF5A5F; opacity: .8; }
+  .label { font-size: 28px; opacity: .7; }
+  .chips { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; direction: ltr; }
+  .chips span { font-family: 'SayaLat'; font-weight: 900; font-size: 44px; padding: 6px 28px 10px; border-radius: 20px;
+                background: rgba(143,211,255,.14); border: 3px solid rgba(143,211,255,.6); color: #fff; }
+  .chips span.on { background: var(--amber); border-color: var(--amber); color: var(--navy); }
+  .mini { direction: rtl; border-collapse: collapse; font-size: 32px; width: 100%; background: #fff; color: var(--ink); border-radius: 22px; overflow: hidden; }
+  .mini td, .mini th { padding: 12px 18px; border-bottom: 2px solid #E3EAF5; text-align: right; }
+  .mini th { background: #DCEBFF; }
+</style>
+</head>
+<body>
+
+<!-- 1. Cover -->
+<section class="slide brand center">
+  <img class="avatar small" src="saya.jpg" alt="">
+  <div class="chips"><span>/human</span><span class="on">ELI5</span><span>/brief</span><span>/mindmap</span><span>/table</span><span>/critic</span></div>
+  <h1>6 أكواد بتغيّر<br><span class="hot">ردود ChatGPT</span></h1>
+  <p>والسر الحقيقي ورا الأكواد… بآخر شريحة 👀</p>
+</section>
+
+<!-- 2. Second hook -->
+<section class="slide alt">
+  <h2>ردود ChatGPT طويلة وشكلها روبوت؟</h2>
+  <p>المشكلة مش فيه. ناقصه <span class="hot">كلمة وحدة</span> قبل سؤالك.</p>
+  <p class="next">اكتب الكود بأول الرسالة، وبعده سؤالك أو نصك. هيك بس.</p>
+</section>
+
+<!-- 3. /human -->
+<section class="slide">
+  <div class="what">1 · كلام طبيعي مش روبوت</div>
+  <div class="code">/human</div>
+  <h2>بيعيد كتابة النص <span class="hot">متل البشر</span></h2>
+  <div class="chat">
+    <div class="me"><span class="c">/human</span>الصق نصك هون</div>
+    <div class="bot bad">بالتأكيد! يسعدني جداً مساعدتك في هذا الموضوع الرائع…</div>
+    <div class="bot">تمام، هي الفكرة باختصار…</div>
+  </div>
+</section>
+
+<!-- 4. ELI5 -->
+<section class="slide alt">
+  <div class="what">2 · شرح لأي حدا</div>
+  <div class="code">ELI5</div>
+  <h2>«اشرحلي كأني عمري <span class="hot">5 سنين</span>»</h2>
+  <div class="chat">
+    <div class="me"><span class="c">ELI5</span> شو هو الـ VPN؟</div>
+    <div class="bot">متل نفق سري بين جوالك والإنترنت، اللي برّا ما بيشوف شو عم تعمل جوّاته.</div>
+  </div>
+</section>
+
+<!-- 5. /brief -->
+<section class="slide">
+  <div class="what">3 · بلا مقدمات</div>
+  <div class="code">/brief</div>
+  <h2>الجواب بس، <span class="hot">بلا حكي زيادة</span></h2>
+  <div class="chat">
+    <div class="me"><span class="c">/brief</span> الفرق بين الرام والتخزين؟</div>
+    <div class="bot">الرام: ذاكرة الشغل هلق. التخزين: مكان ملفاتك الدائم.</div>
+  </div>
+</section>
+
+<!-- 6. /mindmap -->
+<section class="slide alt">
+  <div class="what">4 · لخّص أي موضوع</div>
+  <div class="code">/mindmap</div>
+  <h2>أي كتاب أو درس بيصير <span class="hot">خريطة ذهنية</span></h2>
+  <div class="chat">
+    <div class="me"><span class="c">/mindmap</span>الصق الدرس أو اكتب اسم الكتاب</div>
+    <div class="bot">الفكرة الأساسية ← 3 فروع ← نقطتين تحت كل فرع</div>
+  </div>
+  <p class="next">بتنفع للدراسة والمراجعة قبل الامتحان.</p>
+</section>
+
+<!-- 7. /table -->
+<section class="slide">
+  <div class="what">5 · قارن بثانية</div>
+  <div class="code">/table</div>
+  <h2>أي مقارنة بتصير <span class="hot">جدول</span></h2>
+  <div class="chat">
+    <div class="me"><span class="c">/table</span> قطار ولا طيارة ولا سيارة للسفر؟</div>
+  </div>
+  <table class="mini">
+    <tr><th></th><th>السعر</th><th>الوقت</th><th>الراحة</th></tr>
+    <tr><td>قطار</td><td>متوسط</td><td>متوسط</td><td>عالية</td></tr>
+    <tr><td>طيارة</td><td>غالي</td><td>أسرع</td><td>متوسطة</td></tr>
+    <tr><td>سيارة</td><td>أرخص</td><td>أبطأ</td><td>حسب الطريق</td></tr>
+  </table>
+</section>
+
+<!-- 8. /critic -->
+<section class="slide alt">
+  <div class="what">6 · رأي صريح</div>
+  <div class="code">/critic</div>
+  <h2>بينقد شغلك <span class="hot">بلا مجاملة</span></h2>
+  <div class="chat">
+    <div class="me"><span class="c">/critic</span>الصق سيرتك الذاتية أو بوستك</div>
+    <div class="bot">3 نقاط ضعف، وكيف تصلّح كل وحدة.</div>
+  </div>
+  <p class="next">وهلق السر اللي وعدتك فيه… 👉</p>
+</section>
+
+<!-- 9. Reveal -->
+<section class="slide light">
+  <div class="kicker">🔓 السر</div>
+  <h2>ما في ولا <span class="hot">كود سري</span></h2>
+  <p>ChatGPT ما عنده أكواد مخفية. هو بيفهم الكلمة نفسها كأمر، لهيك بتشتغل.</p>
+  <p>يعني فيك تخترع كودك:</p>
+  <div class="warn" style="border-right-color: var(--neon)"><b dir="ltr" style="color: var(--neon); unicode-bidi: isolate">/saya</b> = «اشرحلي بالشامي وبمثال من الحياة»</div>
+  <p style="font-size: 36px">حطه مرة وحدة بـ<b>الإعدادات ← التخصيص</b>، وبيصير يشتغل بكل محادثة.</p>
+</section>
+
+<!-- 10. CTA -->
+<section class="slide brand center" data-last>
+  <h2>كلمة وحدة…<br>بتغيّر <span class="hot">الجواب كله</span></h2>
+  <p>احفظ البوست، وجرّب <b dir="ltr">/human</b> هلق.</p>
+  <img class="avatar small" src="saya.jpg" alt="">
+  <div class="handle">@saya_.tech</div>
+</section>
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const arrow = `<svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/></svg>`;
+  slides.forEach((s, i) => {
+    const pct = ((i + 1) / slides.length) * 100;
+    s.insertAdjacentHTML('beforeend',
+      `<div class="progress"><div class="track"><div class="fill" style="width:${pct}%"></div></div><span class="count">${i + 1}/${slides.length}</span></div>`);
+    if (i < slides.length - 1) s.insertAdjacentHTML('beforeend', `<div class="arrow">${arrow}</div>`);
+  });
+</script>
+</body>
+</html>
