@@ -1,4 +1,4 @@
-import {Composition} from "remotion";
+import {Composition, Still} from "remotion";
 import {FPS, TOTAL_FRAMES} from "./edit";
 import {Reel} from "./Reel";
 import {fontsLoaded} from "./theme";
@@ -15,6 +15,7 @@ import {SayaDuckAi, SAYA_DUCK_FRAMES, sayaDuckProps} from "./videos/SayaDuckAi";
 import {SayaChrome, SAYA_CHROME_FRAMES, sayaChromeProps} from "./videos/SayaChrome";
 import {SayaPassword, SAYA_PASSWORD_FRAMES, sayaPasswordProps} from "./videos/SayaPassword";
 import {SayaPubler, SAYA_PUBLER_FRAMES, sayaPublerProps} from "./videos/SayaPubler";
+import {SayaPublerCover} from "./videos/SayaPublerCover";
 import {sayaFonts, SAYA_FPS as SAYA_STYLE_FPS} from "./styles/saya/tokens";
 import {InstaShareMix, MIX_FPS, MIX_FRAMES} from "./videos/InstaShareMix";
 import {SoundTypeMix, ST_FPS, ST_FRAMES} from "./videos/SoundTypeMix";
@@ -219,6 +220,17 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={sayaPublerProps}
+        calculateMetadata={async () => {
+          await sayaFonts;
+          return {};
+        }}
+      />
+      <Still
+        id="SayaPublerCover"
+        component={SayaPublerCover}
+        width={1080}
+        height={1920}
+        defaultProps={{line1: "نزّل أي فيديو", line2: "بلا علامة مائية"}}
         calculateMetadata={async () => {
           await sayaFonts;
           return {};
