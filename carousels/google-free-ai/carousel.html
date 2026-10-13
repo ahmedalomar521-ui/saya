@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>Saya carousel — أدوات جوجل المجانية</title>
+<style>
+  /* Saya identity (same palette as the reels): navy, neon blue, sky, amber for one hot word. Font: Cairo. */
+  :root {
+    --navy: #0B1B3F;
+    --navy-2: #0F2552;
+    --neon: #1E90FF;
+    --sky: #8FD3FF;
+    --amber: #FFB020;
+    --paper: #F5F8FF;
+    --beige: #EEF3FB;
+    --ink: #0B1B3F;
+    --pad: 76px;
+  }
+  @font-face { font-family: 'SayaAr'; src: url('fonts/cairo-arabic-700-normal.woff2') format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'SayaAr'; src: url('fonts/cairo-arabic-800-normal.woff2') format('woff2'); font-weight: 800; }
+  @font-face { font-family: 'SayaAr'; src: url('fonts/cairo-arabic-900-normal.woff2') format('woff2'); font-weight: 900; }
+  @font-face { font-family: 'SayaLat'; src: url('fonts/cairo-latin-700-normal.woff2') format('woff2'); font-weight: 700; }
+  @font-face { font-family: 'SayaLat'; src: url('fonts/cairo-latin-900-normal.woff2') format('woff2'); font-weight: 900; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #222; display: flex; flex-direction: column; gap: 40px; align-items: center; padding: 40px 0; }
+
+  .slide {
+    width: 1080px; height: 1350px; position: relative; overflow: hidden;
+    font-family: 'SayaLat', 'SayaAr', sans-serif; font-weight: 800;
+    padding: 110px var(--pad) 150px; display: flex; flex-direction: column; justify-content: center; gap: 34px;
+    color: var(--paper); background: var(--navy);
+  }
+  .slide.alt   { background: var(--navy-2); }
+  .slide.light { background: var(--beige); color: var(--ink); }
+  .slide.brand { background: radial-gradient(110% 80% at 85% 5%, #1B4FA0 0%, var(--navy) 62%); }
+  /* faint hexagon wall, like Saya's studio */
+  .slide::before {
+    content: ""; position: absolute; inset: 0; opacity: .10; pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='104' viewBox='0 0 120 104'><path d='M30 2h60l30 50-30 50H30L0 52z' fill='none' stroke='%238FD3FF' stroke-width='3'/></svg>");
+    background-size: 180px 156px;
+  }
+  .light::before { opacity: .06; }
+  .slide > * { position: relative; }
+
+  .kicker { font-size: 36px; color: var(--sky); font-weight: 800; }
+  .light .kicker { color: var(--neon); }
+  h1 { font-size: 118px; line-height: 1.12; font-weight: 900; }
+  h2 { font-size: 80px; line-height: 1.2; font-weight: 900; }
+  p  { font-size: 44px; line-height: 1.55; font-weight: 700; opacity: .93; }
+  .hot { color: var(--amber); }
+  .light .hot { color: var(--neon); }
+
+  /* tool slides */
+  .head { display: flex; align-items: center; gap: 30px; }
+  .num { flex: none; width: 128px; height: 128px; border-radius: 34px; background: var(--neon); color: #fff;
+         display: flex; align-items: center; justify-content: center; font-size: 76px; font-weight: 900;
+         box-shadow: 0 0 40px rgba(30,144,255,.55); }
+  .name { direction: ltr; font-size: 64px; font-weight: 900; color: #fff; line-height: 1.1; }
+  .what { font-size: 34px; color: var(--sky); font-weight: 800; }
+  .try { font-size: 38px; line-height: 1.5; padding: 26px 34px; border-radius: 28px; background: rgba(143,211,255,.10);
+         border: 3px solid rgba(143,211,255,.55); }
+  .try b { color: var(--amber); }
+  .tags { display: flex; gap: 18px; flex-wrap: wrap; }
+  .tag { font-size: 30px; padding: 10px 26px; border-radius: 99px; background: rgba(255,255,255,.10); font-weight: 800; }
+  .tag.free { background: var(--amber); color: var(--navy); }
+  .url { direction: ltr; text-align: right; font-size: 32px; opacity: .7; font-weight: 700; }
+  .next { font-size: 32px; color: var(--sky); opacity: .9; }
+
+  .warn { font-size: 42px; line-height: 1.5; padding: 30px 36px; border-radius: 28px; background: #fff; border-right: 12px solid #FF5A5F; color: var(--ink); }
+  .warn b { color: #E5383B; }
+
+  .avatar { width: 300px; height: 300px; border-radius: 50%; object-fit: cover; border: 8px solid var(--neon);
+            box-shadow: 0 0 60px rgba(30,144,255,.6); align-self: center; }
+  .avatar.small { width: 150px; height: 150px; border-width: 5px; }
+  .handle { direction: ltr; font-size: 44px; color: var(--sky); font-weight: 900; }
+  .center { text-align: center; align-items: center; }
+
+  .progress { position: absolute; left: var(--pad); right: var(--pad); bottom: 60px; display: flex; align-items: center; gap: 20px; direction: ltr; }
+  .progress .track { flex: 1; height: 8px; border-radius: 4px; background: rgba(255,255,255,.14); overflow: hidden; }
+  .progress .fill  { height: 100%; background: var(--sky); border-radius: 4px; }
+  .progress .count { font-family: 'SayaLat'; font-size: 28px; opacity: .6; }
+  .light .progress .track { background: rgba(11,27,63,.12); }
+  .light .progress .fill  { background: var(--neon); }
+  .arrow { position: absolute; top: 0; bottom: 0; right: 0; width: 92px; display: flex; align-items: center; justify-content: center;
+           background: linear-gradient(to right, transparent, rgba(255,255,255,.07)); color: #fff; }
+  .light .arrow { background: linear-gradient(to right, transparent, rgba(11,27,63,.06)); color: var(--ink); }
+  .arrow svg { width: 50px; height: 50px; }
+</style>
+</head>
+<body>
+
+<!-- 1. Cover -->
+<section class="slide brand center">
+  <img class="avatar" src="saya.jpg" alt="">
+  <div class="kicker">وفّر مصاري اشتراكاتك 💸</div>
+  <h1>لا تدفع <span class="hot">ولا قرش</span><br>على AI</h1>
+  <p>قبل ما تجرّب 6 أدوات ببلاش من جوجل</p>
+</section>
+
+<!-- 2. Second hook (works without slide 1) -->
+<section class="slide alt">
+  <h2>كل أداة ذكاء اصطناعي بتطلب اشتراك؟</h2>
+  <p>جوجل عندها 6 أدوات بتعمل الشغل ببلاش، وكل وحدة إلها <span class="hot">شغلة</span>.</p>
+  <p class="next">وبآخر شريحة: أداة لسا الكل بينصح فيها… وهي انقفلت 👀</p>
+</section>
+
+<!-- 3. NotebookLM -->
+<section class="slide">
+  <div class="head"><div class="num">1</div><div><div class="what">لخّص أي ملف</div><div class="name">NotebookLM</div></div></div>
+  <h2>ملفاتك بتصير <span class="hot">بودكاست</span> بالعربي</h2>
+  <p>ارفع PDF أو رابط، وبيعملّك ملخص وحلقة صوتية تسمعها بالطريق.</p>
+  <div class="try">جرّبها: ارفع محاضرة واضغط <b>Audio Overview</b></div>
+  <div class="tags"><span class="tag free">ببلاش</span><span class="tag">فيه حد يومي</span></div>
+  <div class="url">notebooklm.google.com</div>
+</section>
+
+<!-- 4. Flow -->
+<section class="slide alt">
+  <div class="head"><div class="num">2</div><div><div class="what">فيديو بالذكاء الاصطناعي</div><div class="name">Flow</div></div></div>
+  <h2>اكتب جملة… <span class="hot">بيطلع فيديو</span></h2>
+  <p>كل يوم بتاخد رصيد ببلاش لتولّد فيديوهات قصيرة بموديل Veo.</p>
+  <div class="try">جرّبها: «قطة بتشرب قهوة بمقهى بالشام»</div>
+  <div class="tags"><span class="tag free">رصيد يومي ببلاش</span><span class="tag">عليه علامة مائية</span></div>
+  <div class="url">labs.google/flow</div>
+</section>
+
+<!-- 5. Gemini Deep Research -->
+<section class="slide">
+  <div class="head"><div class="num">3</div><div><div class="what">بحث كامل بدقايق</div><div class="name">Deep Research</div></div></div>
+  <h2>بتبحث عنك وبتعطيك <span class="hot">تقرير</span></h2>
+  <p>اسأل سؤال كبير، وبتقرا عشرات المواقع وبترجعلك تقرير مرتّب مع المصادر.</p>
+  <div class="try">جرّبها: «قارنلي بين أرخص 3 جوالات للتصوير»</div>
+  <div class="tags"><span class="tag free">ببلاش</span><span class="tag">جوا Gemini</span><span class="tag">عدد محدود</span></div>
+  <div class="url">gemini.google.com</div>
+</section>
+
+<!-- 6. Stitch -->
+<section class="slide alt">
+  <div class="head"><div class="num">4</div><div><div class="what">صمّم تطبيق</div><div class="name">Stitch</div></div></div>
+  <h2>عندك فكرة تطبيق؟ <span class="hot">بيصممها</span></h2>
+  <p>من وصف أو رسمة على ورقة، بيطلّعلك شاشات التطبيق جاهزة مع الكود.</p>
+  <div class="try">جرّبها: «تطبيق بيرتّبلي مصروفي الشهري»</div>
+  <div class="tags"><span class="tag free">ببلاش</span><span class="tag">تجريبي</span></div>
+  <div class="url">stitch.withgoogle.com</div>
+</section>
+
+<!-- 7. Opal -->
+<section class="slide">
+  <div class="head"><div class="num">5</div><div><div class="what">أداة بلا كود</div><div class="name">Opal</div></div></div>
+  <h2>اعمل أداتك الخاصة <span class="hot">بالكلام</span></h2>
+  <p>بتوصف شو بدك، وبيركّبلك أداة صغيرة بتشغّلها وبتشاركها، بلا ولا سطر برمجة.</p>
+  <div class="try">جرّبها: «أداة بتكتبلي كابشن لكل صورة»</div>
+  <div class="tags"><span class="tag free">ببلاش</span><span class="tag">بأكتر من 160 دولة</span></div>
+  <div class="url">opal.withgoogle.com</div>
+</section>
+
+<!-- 8. Little Language Lessons -->
+<section class="slide alt">
+  <div class="head"><div class="num">6</div><div><div class="what">تعلّم لغة</div><div class="name">Little Language Lessons</div></div></div>
+  <h2>دروس لغة <span class="hot">على قد موقفك</span></h2>
+  <p>اكتب الموقف (مطعم، مطار، فندق)، وبتعطيك الكلمات والجمل اللي بتحتاجها.</p>
+  <div class="try">جرّبها: «بدي احجز غرفة بفندق بالإسباني»</div>
+  <div class="tags"><span class="tag free">ببلاش</span><span class="tag">Google Labs</span></div>
+  <div class="url">labs.google/lll</div>
+</section>
+
+<!-- 9. Bonus: the promised reveal -->
+<section class="slide light">
+  <div class="kicker">⚠️ قبل ما تدوّر</div>
+  <h2>انتبه من القوايم <span class="hot">القديمة</span></h2>
+  <div class="warn"><b>Whisk</b> انقفلت بـ30 نيسان 2026، وصارت جوا Flow.</div>
+  <div class="warn"><b>Pomelli</b> لسا مش متوفرة ببلادنا.</div>
+  <p>فإذا شفتهم بقايمة تانية، وفّر وقتك.</p>
+</section>
+
+<!-- 10. Takeaway + CTA -->
+<section class="slide brand center" data-last>
+  <h2>6 أدوات…<br>و<span class="hot">0</span> اشتراكات</h2>
+  <p>احفظ البوست، رح تحتاج وحدة منهم هالأسبوع.</p>
+  <img class="avatar small" src="saya.jpg" alt="">
+  <div class="handle">@saya_.tech</div>
+</section>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const arrow = `<svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity=".6"/></svg>`;
+  slides.forEach((s, i) => {
+    const pct = ((i + 1) / slides.length) * 100;
+    s.insertAdjacentHTML('beforeend',
+      `<div class="progress"><div class="track"><div class="fill" style="width:${pct}%"></div></div><span class="count">${i + 1}/${slides.length}</span></div>`);
+    if (i < slides.length - 1) s.insertAdjacentHTML('beforeend', `<div class="arrow">${arrow}</div>`);
+  });
+</script>
+</body>
+</html>
