@@ -31,24 +31,27 @@ try {
   const browser = await chromium.launch(
     process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {}
   );
-  const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
-  await page.goto('file://' + html);
-  // Wait for web fonts: a slide shot before the Arabic font loads falls back
-  // to the system font with no error.
-  await page.evaluate(() => document.fonts.ready);
-
-  const slides = await page.$$('.slide');
-  if (!slides.length) {
+  const count = await (async () => {
+    const p = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
+    await p.goto('file://' + html);
+    const n = await p.evaluate(() => document.querySelectorAll('.slide').length);
+    await p.close();
+    return n;
+  })();
+  if (!count) {
     console.error('No .slide elements found.');
     process.exit(1);
   }
-  for (let i = 0; i < slides.length; i++) {
-    const box = await slides[i].boundingBox();
-    if (Math.round(box.width) !== width || Math.round(box.height) !== height) {
-      console.warn(`slide ${i + 1}: ${box.width}x${box.height}, expected ${width}x${height}`);
-    }
+  // One fresh page per slide: headless Chromium sometimes paints a grey block
+  // when several tall slides are shot from the same page.
+  for (let i = 0; i < count; i++) {
+    const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: 1 });
+    await page.goto('file://' + html);
+    await page.evaluate(() => document.fonts.ready);
+    await page.evaluate((k) => document.querySelectorAll('.slide').forEach((el, j) => { if (j !== k) el.remove(); }), i);
     const file = path.join(out, `slide-${String(i + 1).padStart(2, '0')}.png`);
-    await slides[i].screenshot({ path: file });
+    await page.locator('.slide').screenshot({ path: file });
+    await page.close();
     console.log(file);
   }
   await browser.close();
