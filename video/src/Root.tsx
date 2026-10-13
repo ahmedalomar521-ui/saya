@@ -14,6 +14,7 @@ import {SayaKitMore, SAYA_KIT_MORE_FRAMES, SayaKitPreview, SayaKitR6, SAYA_KIT_F
 import {SayaDuckAi, SAYA_DUCK_FRAMES, sayaDuckProps} from "./videos/SayaDuckAi";
 import {SayaChrome, SAYA_CHROME_FRAMES, sayaChromeProps} from "./videos/SayaChrome";
 import {SayaPassword, SAYA_PASSWORD_FRAMES, sayaPasswordProps} from "./videos/SayaPassword";
+import {SayaPubler, SAYA_PUBLER_FRAMES, sayaPublerProps} from "./videos/SayaPubler";
 import {sayaFonts, SAYA_FPS as SAYA_STYLE_FPS} from "./styles/saya/tokens";
 import {InstaShareMix, MIX_FPS, MIX_FRAMES} from "./videos/InstaShareMix";
 import {SoundTypeMix, ST_FPS, ST_FRAMES} from "./videos/SoundTypeMix";
@@ -204,6 +205,20 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={sayaPasswordProps}
+        calculateMetadata={async () => {
+          await sayaFonts;
+          return {};
+        }}
+      />
+      {/* سايا — download any video in 3 steps (Publer) */}
+      <Composition
+        id="SayaPubler"
+        component={SayaPubler}
+        durationInFrames={SAYA_PUBLER_FRAMES}
+        fps={SAYA_STYLE_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={sayaPublerProps}
         calculateMetadata={async () => {
           await sayaFonts;
           return {};

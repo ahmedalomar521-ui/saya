@@ -30,7 +30,7 @@ export type SayaGraphic = Timed &
     | {type: "chip"; title: string; label?: string; icon?: string; y?: number}
     | {type: "feature"; text: string; y?: number}
     | {type: "bigWord"; text: string}
-    | {type: "step"; text: string}
+    | {type: "step"; text: string; x?: number; y?: number}
     | {type: "save"; text?: string; kind?: "save" | "share"; y?: number}
     | {type: "source"; text: string; y?: number}
     // --- ported from ستايل 1–4 (see Titles / Doodles / Neon / Stages) ---
@@ -136,7 +136,7 @@ const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
     case "bigWord":
       return <BigWord text={g.text} duration={g.dur} />;
     case "step":
-      return <StepPill text={g.text} duration={g.dur} />;
+      return <StepPill text={g.text} duration={g.dur} x={g.x} y={g.y} />;
     case "save":
       return <SaveCta text={g.text} duration={g.dur} kind={g.kind} y={g.y} />;
     case "source":
