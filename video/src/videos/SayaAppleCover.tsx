@@ -5,16 +5,15 @@ import {AbsoluteFill, Img, staticFile} from "remotion";
 import {HOUSE_GRADE} from "../styles/shared/house";
 import {neonGlow, SAYA} from "../styles/saya/tokens";
 
-export type AppleCoverProps = {line1: string; line2: string};
+export type AppleCoverProps = {line1: string; line2: string; frame?: string; face?: {x: number; y: number}};
 
-const FACE = {x: 572, y: 675}; // face centre in the frame
 const ZOOM = 2.0;
 const AT = {x: 470, y: 1150}; // where the face lands on the cover
 
-export const SayaAppleCover: React.FC<AppleCoverProps> = ({line1, line2}) => (
+export const SayaAppleCover: React.FC<AppleCoverProps> = ({line1, line2, frame = "footage/apple/cover-frame.png", face: FACE = {x: 572, y: 675}}) => (
   <AbsoluteFill style={{background: SAYA.color.navy, overflow: "hidden"}}>
     <Img
-      src={staticFile("footage/apple/cover-frame.png")}
+      src={staticFile(frame)}
       style={{position: "absolute", left: AT.x - FACE.x * ZOOM, top: AT.y - FACE.y * ZOOM, width: 1080 * ZOOM, height: 1920 * ZOOM, filter: HOUSE_GRADE}}
     />
     <AbsoluteFill style={{background: "linear-gradient(180deg, rgba(11,27,63,.9) 0%, rgba(11,27,63,.6) 30%, rgba(11,27,63,0) 46%)"}} />
