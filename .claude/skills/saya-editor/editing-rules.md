@@ -187,3 +187,26 @@ The project has `public/sfx/`: `whoosh`, `pop`, `click`, `ding`, `boom`.
   Tell the user the timestamp so they can set it as the reel cover.
 - **Ending:** hold the CTA until the end. A last line that leads back into the
   hook makes the reel loop cleanly.
+
+## 8. Reel inside a reel (Edits link) — learned from رواء الجلاد, 2026-10-15
+
+Instagram's **Edits** app can put a link to another reel inside a clip. The
+viewer then sees a "Watch full reel >" chip and a tappable preview card of that
+reel. We render the montage; the user adds the link in Edits before posting.
+What the reference does, and what we copy:
+- **The chip** sits at the top, above the head (~y 280–380 of 1920). Keep the
+  top band y 0–400 free of titles while the link is on screen.
+- **The card** is a small portrait 9:16 card with a thin white border and
+  rounded corners, centred on the chest between her hands (~x 360–720,
+  y 950–1590). Her face stays fully visible above it.
+- **Captions** are hidden while the card is up (the card speaks). For a long
+  card stretch, move them up under the chin with `places` instead of hiding.
+- **Captions elsewhere:** one short line, small white text, no box, on the
+  chest centre (~y 1110).
+- **Timing:** the card shows for ~3 s on the line that names the reel ("لو
+  كبست هلا"), with a hand gesture pointing at it, and then goes.
+- **Our side:** reserve the card rectangle (`EDITS_CARD` below), or show the
+  same footage ourselves in a card of exactly that size, so the Edits element
+  can be dropped on top. Always tell the user the exact rectangle and the
+  seconds.
+  `EDITS_CARD = {x: 340, y: 900, w: 400, h: 711}` (1080×1920).
