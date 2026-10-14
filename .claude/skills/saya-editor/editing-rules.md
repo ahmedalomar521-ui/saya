@@ -212,3 +212,17 @@ What the reference does, and what we copy:
   can be dropped on top. Always tell the user the exact rectangle and the
   seconds.
   `EDITS_CARD = {x: 340, y: 900, w: 400, h: 711}` (1080×1920).
+
+## 9. Caption look "nicolas" — learned from AJ+ عربي (نيكولاس), 2026-10-15
+
+Set `captionLook: "nicolas"` on the edit. The user picked it for serious or
+emotional reels (first used on the Gaza reel).
+- **Phrases:** one whole phrase of up to ~6 words on two lines, centred low on
+  the chest (y ≈ 1330).
+- **Text:** white extra-bold Cairo with a dark 7px outline and a soft shadow,
+  no pop-in. The spoken word stays light blue (house rule 2).
+- **Footage-first opening:** the reference opens with one hook line, then
+  ~18 s of the raw footage, full screen, with its shouts subtitled the same
+  way. The presenter explains only after that.
+- **Sensitive words:** write them with an asterisk in captions (الشه*يد) so
+  Instagram's filters do not limit reach. The voice still says the word.

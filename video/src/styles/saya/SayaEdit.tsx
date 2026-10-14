@@ -2,7 +2,7 @@
 // footage moves, always-on captions, graphics and sounds. A new video is just
 // a new timeline object (see videos/SayaKitPreview.tsx for every piece).
 import {AbsoluteFill, Sequence, staticFile} from "remotion";
-import {SayaCaptions, type CaptionNote, type CaptionPlace, type Range} from "./Captions";
+import {CAPTION_LOOKS, SayaCaptions, type CaptionLook, type CaptionNote, type CaptionPlace, type Range} from "./Captions";
 import {SayaFootage, type PipPlace, type Zoom} from "./Footage";
 import {SayaBurst, SayaCurlyArrow, SayaMarkerCircle, SayaRedArrow, SayaScribbleOut, SayaSquiggle} from "./Doodles";
 import {FloatingWindow, GlassCard, InfoChip, PhoneMock, ScreenshotCard, SourceTag, TapPulse} from "./Inserts";
@@ -17,7 +17,7 @@ import {ListStage, NotificationBanner, PromptBox, RecFrame, StatCard, StrikeStag
 import {SayaFlash, SayaHookTitle, SectionNumber} from "./Titles";
 import {SplitStage, type SplitItem} from "./Split";
 import {EditsSlot, EDITS_CARD} from "./EditsSlot";
-import {SAYA, SAYA_FPS} from "./tokens";
+import {SAYA_FPS} from "./tokens";
 
 type Timed = {at: number; dur: number};
 export type SayaGraphic = Timed &
@@ -74,6 +74,9 @@ export type SayaEditProps = {
   places?: CaptionPlace[];
   notes?: CaptionNote[];
   onLight?: Range[];
+  /** Caption look: "saya" = 2–3 words, chest (default); "nicolas" = the AJ+
+   *  نيكولاس reference (2026-10-15): one whole phrase on two lines, outlined. */
+  captionLook?: CaptionLook;
   hide?: Range[];
   graphics?: SayaGraphic[];
   sfx?: SfxCue[];
@@ -188,7 +191,10 @@ const Graphic: React.FC<{g: SayaGraphic; footage: string; face?: {x: number; y: 
   }
 };
 
-export const sayaChunks = (p: SayaEditProps) => srtToChunks(p.srt, SAYA_FPS, SAYA.caption.maxWords, SAYA.caption.maxChars);
+export const sayaChunks = (p: SayaEditProps) => {
+  const look = CAPTION_LOOKS[p.captionLook ?? "saya"];
+  return srtToChunks(p.srt, SAYA_FPS, look.maxWords, look.maxChars);
+};
 
 export const SayaEdit: React.FC<SayaEditProps> = (p) => {
   const layer = p.layer ?? "all";
@@ -208,7 +214,7 @@ export const SayaEdit: React.FC<SayaEditProps> = (p) => {
           </Sequence>
         ) : null,
       )}
-      {show("captions") ? <SayaCaptions chunks={chunks} hide={hide} places={p.places} notes={p.notes} onLight={p.onLight} /> : null}
+      {show("captions") ? <SayaCaptions chunks={chunks} hide={hide} places={p.places} notes={p.notes} onLight={p.onLight} look={p.captionLook} /> : null}
       {layer === "all" ? <SfxTrack cues={p.sfx ?? []} /> : null}
     </AbsoluteFill>
   );

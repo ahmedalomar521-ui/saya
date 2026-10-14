@@ -18,7 +18,7 @@ const SRT = `1
 
 2
 00:00:05,250 --> 00:00:07,480
-أخو الصحفي الشهيد صالح الجعفراوي
+أخو الصحفي الشه*يد صالح الجعفراوي
 
 3
 00:00:08,180 --> 00:00:10,210
@@ -106,6 +106,8 @@ const SRT = `1
 `;
 
 const G = "footage/gaza/";
+// a little lower and smaller than EDITS_CARD: room for two caption lines above it
+export const GAZA_CARD = {x: 371, y: 1000, w: 338, h: 601};
 const CARD_IN = 24; // she has lowered her eyes (Pollo intro, 0.8 s)
 const CARD_OUT = 650; // end of "وطلّعوه عالإسعاف"
 
@@ -113,6 +115,8 @@ export const sayaGazaProps: SayaEditProps = {
   footage: G + "saya.mp4",
   face: {x: 568, y: 700, w: 250},
   srt: SRT,
+  // writing in the نيكولاس (AJ+) caption look the user picked, 2026-10-15
+  captionLook: "nicolas",
   zooms: [
     // no zoom while the card is up: the chin–card gap holds the captions
     {at: 0, scale: 1},
@@ -124,12 +128,12 @@ export const sayaGazaProps: SayaEditProps = {
     {at: 1521, scale: 1.12}, // "شاركوا"
   ],
   places: [
-    {at: 0, y: 915}, // between the chin and the card
-    {at: CARD_OUT, y: 1270},
+    {at: 0, y: 878}, // two lines between the chin and the card
+    {at: CARD_OUT, y: 1330},
     {at: 1500, y: 1180}, // make room for the share pill
   ],
   graphics: [
-    {type: "editsSlot", at: CARD_IN, dur: CARD_OUT - CARD_IN, label: "علي الجعفراوي"},
+    {type: "editsSlot", at: CARD_IN, dur: CARD_OUT - CARD_IN, label: "علي الجعفراوي", rect: GAZA_CARD},
     {type: "bigWord", at: 909, dur: 28, text: "التصعيد"},
     {type: "bigWord", at: 957, dur: 28, text: "القصف"},
     {type: "bigWord", at: 992, dur: 32, text: "الحصار"},

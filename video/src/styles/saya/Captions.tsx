@@ -13,6 +13,15 @@ export type CaptionPlace = {at: number; y: number};
 /** Small grey context line under the caption (R3), e.g. "ديمو رسمي · تنفيذ المهام". */
 export type CaptionNote = {from: number; to: number; text: string};
 
+/** Caption looks. "nicolas" (AJ+ عربي reference, 2026-10-15): a whole phrase
+ *  (up to ~6 words) on two lines, low on the chest, white with a dark outline,
+ *  no pop. The spoken word stays light blue (house rule 2). */
+export type CaptionLook = "saya" | "nicolas";
+export const CAPTION_LOOKS: Record<CaptionLook, {maxWords: number; maxChars: number; size: number; y: number}> = {
+  saya: {maxWords: SAYA.caption.maxWords, maxChars: SAYA.caption.maxChars, size: SAYA.caption.size, y: SAYA.caption.chestY},
+  nicolas: {maxWords: 6, maxChars: 30, size: 84, y: 1330},
+};
+
 const inRange = (f: number, rs: Range[]) => rs.some(([a, b]) => f >= a && f < b);
 
 export const captionYAt = (frame: number, places: CaptionPlace[], fallback: number = SAYA.caption.chestY) => {
@@ -33,7 +42,11 @@ export const SayaCaptions: React.FC<{
   /** Ranges over light UI (phone, white card): add a navy outline. */
   onLight?: Range[];
   size?: number;
-}> = ({chunks, hide = [], places = [], notes = [], onLight = [], size = SAYA.caption.size}) => {
+  look?: CaptionLook;
+}> = ({chunks, hide = [], places = [], notes = [], onLight = [], size: sizeProp, look = "saya"}) => {
+  const L = CAPTION_LOOKS[look];
+  const size = sizeProp ?? L.size;
+  const nic = look === "nicolas";
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
 
@@ -49,9 +62,9 @@ export const SayaCaptions: React.FC<{
 
   const t = frame - c.start;
   const pop = spring({frame: t, fps, config: SAYA.spring.pop});
-  const scale = interpolate(pop, [0, 1], [0.86, 1]);
-  const opacity = interpolate(t, [0, 3], [0, 1], clamp);
-  const y = captionYAt(frame, places);
+  const scale = nic ? 1 : interpolate(pop, [0, 1], [0.86, 1]);
+  const opacity = interpolate(t, [0, nic ? 2 : 3], [0, 1], clamp);
+  const y = captionYAt(frame, places, L.y);
   const light = inRange(frame, onLight);
   const note = notes.find((n) => frame >= n.from && frame < n.to);
 
@@ -69,10 +82,10 @@ export const SayaCaptions: React.FC<{
         fontFamily: SAYA.font,
         fontWeight: 900,
         fontSize: size,
-        lineHeight: 1.25,
+        lineHeight: nic ? 1.32 : 1.25,
         color: SAYA.color.white,
-        textShadow: SAYA.textShadow,
-        WebkitTextStroke: light ? `3px ${SAYA.color.navy}` : undefined,
+        textShadow: nic ? "0 4px 14px rgba(0,0,0,0.6)" : SAYA.textShadow,
+        WebkitTextStroke: nic ? "7px #111" : light ? `3px ${SAYA.color.navy}` : undefined,
         paintOrder: "stroke fill",
       }}
     >
