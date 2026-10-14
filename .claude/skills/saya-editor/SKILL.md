@@ -271,3 +271,13 @@ starts from it. Newer rules override older ones and the principles above
    hook, keep it soft and tied to the visual (e.g. a light whoosh under the
    title). (SayaPassword had `fuhh` at frame 0; the user chose to leave that
    video as is.)
+5. **Saya in a framed card, shape picked per need (2026-10-14, ريل أبل).** The
+   user liked the `split` layout (`SplitStage`, learned from the رواء الجلاد
+   reference): the subject in a glowing card on top, Saya in a big rounded
+   rectangle below, over her blurred shot. Saya's card shape is chosen per
+   video or beat: `shape: "rect"` (default, the one he approved), `"circle"`,
+   `"pill"`. Prefer this over a hard half/half screen split. Use the top card
+   for real visuals (official product images, ad clips) with a `source` pill.
+6. **HeyGen pacing (2026-10-14).** HeyGen's own speed setting changed nothing.
+   Cut pauses to ~0.12 s and speed the whole clip ×1.15 (video and audio
+   together, pitch kept) when a script runs long; the user approved this.

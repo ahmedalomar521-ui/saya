@@ -35,6 +35,7 @@ user's own words).
   | a desktop site or app | `desktop` + `pip` (scroll a long page) |
   | asking an AI and its answer | `chat` + `pip` (or `prompt` for the question alone) |
   | behind the scenes / "this is how I filmed it" | `rec` with `timecode` |
+  | a product / news item with real visuals (ad clip, official images) | `split` (subject card on top, Saya in a `rect`/`circle`/`pill` card below, `tag` number, `source` pill) |
 
 - **Icon style: line-drawn icons first (user preference, 2026-10-12).** For
   ideas, objects and feelings use the line-drawn look (thin strokes, glow), in

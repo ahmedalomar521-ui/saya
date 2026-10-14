@@ -33,6 +33,9 @@ export type SplitStageProps = {
   source?: string;
   /** Face centre in source pixels, for framing her card. */
   face?: {x: number; y: number};
+  /** Shape of Saya's card (user, 2026-10-14: pick the shape per video/beat):
+   *  "rect" = the big rounded rectangle (default), "circle", "pill". */
+  shape?: "rect" | "circle" | "pill";
 };
 
 const CARD = {x: 60, w: 960, topY: 290, topH: 560, botY: 880, botH: 540, r: 40};
@@ -46,7 +49,7 @@ const cardFrame = (p: number): React.CSSProperties => ({
   opacity: p,
 });
 
-export const SplitStage: React.FC<SplitStageProps> = ({footage, start, duration, items, tag, source, face = {x: 572, y: 660}}) => {
+export const SplitStage: React.FC<SplitStageProps> = ({footage, start, duration, items, tag, source, face = {x: 572, y: 660}, shape = "rect"}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const inP = spring({frame, fps, config: SAYA.spring.rise});
@@ -58,6 +61,13 @@ export const SplitStage: React.FC<SplitStageProps> = ({footage, start, duration,
   const k = 1.12;
   const bx = CARD.w / 2 - face.x * k;
   const by = CARD.botH * 0.42 - face.y * k;
+
+  const sayaBox: React.CSSProperties =
+    shape === "circle"
+      ? {left: 540 - 270, top: CARD.botY, width: 540, height: 540, borderRadius: 270}
+      : shape === "pill"
+        ? {left: 540 - 380, top: CARD.botY, width: 760, height: CARD.botH, borderRadius: 270}
+        : {left: CARD.x, top: CARD.botY, width: CARD.w, height: CARD.botH};
 
   // current top media + crossfade from the previous one
   const sorted = [...items].sort((a, b) => a.at - b.at);
@@ -106,8 +116,8 @@ export const SplitStage: React.FC<SplitStageProps> = ({footage, start, duration,
       </div>
 
       {/* bottom card: Saya, in sync with the base layer */}
-      <div style={{...cardFrame(p), left: CARD.x, top: CARD.botY, width: CARD.w, height: CARD.botH, transform: `translateY(${(1 - inP) * 60}px)`}}>
-        <div style={{position: "absolute", left: bx, top: by, width: 1080 * k, height: 1920 * k}}>
+      <div style={{...cardFrame(p), ...sayaBox, transform: `translateY(${(1 - inP) * 60}px)`}}>
+        <div style={{position: "absolute", left: bx - (sayaBox.left as number) + CARD.x, top: by + (shape === "rect" ? 0 : CARD.botH * 0.08), width: 1080 * k, height: 1920 * k}}>
           <Video src={src} muted trimBefore={start} objectFit="cover" style={{width: "100%", height: "100%", filter: SAYA.grade}} />
         </div>
       </div>

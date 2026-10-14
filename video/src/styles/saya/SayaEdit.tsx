@@ -53,7 +53,7 @@ export type SayaGraphic = Timed &
     | {type: "tap"; x: number; y: number}
     | {type: "chat"; prompt: string; answer: string[]; side?: "left" | "right" | "center"; answerAt?: number}
     // --- learned from the رواء الجلاد reference (Split) ---
-    | {type: "split"; items: SplitItem[]; tag?: string; source?: string}
+    | {type: "split"; items: SplitItem[]; tag?: string; source?: string; shape?: "rect" | "circle" | "pill"}
     | {type: "doodle"; kind: "curlyArrow" | "circle" | "burst" | "squiggle" | "scribble" | "redArrow"; x: number; y: number; size?: number; w?: number; h?: number; flip?: boolean; color?: string; delay?: number}
   );
 
@@ -179,7 +179,7 @@ const Graphic: React.FC<{g: SayaGraphic; footage: string; face?: {x: number; y: 
     case "doodle":
       return <Doodle g={g} />;
     case "split":
-      return <SplitStage footage={footage} start={g.at} duration={g.dur} items={g.items} tag={g.tag} source={g.source} face={face} />;
+      return <SplitStage footage={footage} start={g.at} duration={g.dur} items={g.items} tag={g.tag} source={g.source} face={face} shape={g.shape} />;
   }
 };
 
