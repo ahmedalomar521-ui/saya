@@ -15,6 +15,7 @@ import {ChatExchange, DesktopCard} from "./Screens";
 import {SketchIcons, Sticker, type SketchKind} from "./Stickers";
 import {ListStage, NotificationBanner, PromptBox, RecFrame, StatCard, StrikeStage, type ListItem, type StrikeLine} from "./Stages";
 import {SayaFlash, SayaHookTitle, SectionNumber} from "./Titles";
+import {SplitStage, type SplitItem} from "./Split";
 import {SAYA, SAYA_FPS} from "./tokens";
 
 type Timed = {at: number; dur: number};
@@ -51,6 +52,8 @@ export type SayaGraphic = Timed &
     | {type: "desktop"; src: string; isVideo?: boolean; trimBefore?: number; playbackRate?: number; aspect?: number; scroll?: boolean; height?: number; top?: number; width?: number}
     | {type: "tap"; x: number; y: number}
     | {type: "chat"; prompt: string; answer: string[]; side?: "left" | "right" | "center"; answerAt?: number}
+    // --- learned from the رواء الجلاد reference (Split) ---
+    | {type: "split"; items: SplitItem[]; tag?: string; source?: string}
     | {type: "doodle"; kind: "curlyArrow" | "circle" | "burst" | "squiggle" | "scribble" | "redArrow"; x: number; y: number; size?: number; w?: number; h?: number; flip?: boolean; color?: string; delay?: number}
   );
 
@@ -104,7 +107,7 @@ const Doodle: React.FC<{g: Extract<SayaGraphic, {type: "doodle"}>}> = ({g}) => {
   );
 };
 
-const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
+const Graphic: React.FC<{g: SayaGraphic; footage: string; face?: {x: number; y: number}}> = ({g, footage, face}) => {
   switch (g.type) {
     case "logo":
       return <LogoPop logo={g.logo} duration={g.dur} place={g.place} size={g.size} />;
@@ -175,6 +178,8 @@ const Graphic: React.FC<{g: SayaGraphic}> = ({g}) => {
       return <NotificationBanner app={g.app} title={g.title} body={g.body} duration={g.dur} top={g.top} />;
     case "doodle":
       return <Doodle g={g} />;
+    case "split":
+      return <SplitStage footage={footage} start={g.at} duration={g.dur} items={g.items} tag={g.tag} source={g.source} face={face} />;
   }
 };
 
@@ -194,7 +199,7 @@ export const SayaEdit: React.FC<SayaEditProps> = (p) => {
       {graphics.map((g, i) =>
         show(i) ? (
           <Sequence key={i} from={g.at} durationInFrames={g.dur} name={`${g.type} ${i}`}>
-            <Graphic g={g} />
+            <Graphic g={g} footage={p.footage} face={p.face} />
           </Sequence>
         ) : null,
       )}

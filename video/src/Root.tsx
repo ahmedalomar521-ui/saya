@@ -16,6 +16,7 @@ import {SayaChrome, SAYA_CHROME_FRAMES, sayaChromeProps} from "./videos/SayaChro
 import {SayaPassword, SAYA_PASSWORD_FRAMES, sayaPasswordProps} from "./videos/SayaPassword";
 import {SayaPubler, SAYA_PUBLER_FRAMES, sayaPublerProps} from "./videos/SayaPubler";
 import {SayaPublerCover} from "./videos/SayaPublerCover";
+import {SayaAppleHome, SAYA_APPLE_FRAMES, sayaAppleProps} from "./videos/SayaAppleHome";
 import {sayaFonts, SAYA_FPS as SAYA_STYLE_FPS} from "./styles/saya/tokens";
 import {InstaShareMix, MIX_FPS, MIX_FRAMES} from "./videos/InstaShareMix";
 import {SoundTypeMix, ST_FPS, ST_FRAMES} from "./videos/SoundTypeMix";
@@ -220,6 +221,20 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={sayaPublerProps}
+        calculateMetadata={async () => {
+          await sayaFonts;
+          return {};
+        }}
+      />
+      {/* سايا — Apple HomeView + Apple TV + HomePod mini 2 (split-screen) */}
+      <Composition
+        id="SayaAppleHome"
+        component={SayaAppleHome}
+        durationInFrames={SAYA_APPLE_FRAMES}
+        fps={SAYA_STYLE_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={sayaAppleProps}
         calculateMetadata={async () => {
           await sayaFonts;
           return {};
