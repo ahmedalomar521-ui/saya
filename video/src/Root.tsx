@@ -17,6 +17,7 @@ import {SayaPassword, SAYA_PASSWORD_FRAMES, sayaPasswordProps} from "./videos/Sa
 import {SayaPubler, SAYA_PUBLER_FRAMES, sayaPublerProps} from "./videos/SayaPubler";
 import {SayaPublerCover} from "./videos/SayaPublerCover";
 import {SayaAppleHome, SAYA_APPLE_FRAMES, sayaAppleProps} from "./videos/SayaAppleHome";
+import {SayaGaza, SAYA_GAZA_FRAMES, sayaGazaProps} from "./videos/SayaGaza";
 import {SayaAppleCover} from "./videos/SayaAppleCover";
 import {sayaFonts, SAYA_FPS as SAYA_STYLE_FPS} from "./styles/saya/tokens";
 import {InstaShareMix, MIX_FPS, MIX_FRAMES} from "./videos/InstaShareMix";
@@ -222,6 +223,20 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={sayaPublerProps}
+        calculateMetadata={async () => {
+          await sayaFonts;
+          return {};
+        }}
+      />
+      {/* سايا — غزة: علي الجعفراوي (reel inside a reel, Edits slot) */}
+      <Composition
+        id="SayaGaza"
+        component={SayaGaza}
+        durationInFrames={SAYA_GAZA_FRAMES}
+        fps={SAYA_STYLE_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={sayaGazaProps}
         calculateMetadata={async () => {
           await sayaFonts;
           return {};

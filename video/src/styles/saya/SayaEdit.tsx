@@ -16,6 +16,7 @@ import {SketchIcons, Sticker, type SketchKind} from "./Stickers";
 import {ListStage, NotificationBanner, PromptBox, RecFrame, StatCard, StrikeStage, type ListItem, type StrikeLine} from "./Stages";
 import {SayaFlash, SayaHookTitle, SectionNumber} from "./Titles";
 import {SplitStage, type SplitItem} from "./Split";
+import {EditsSlot, EDITS_CARD} from "./EditsSlot";
 import {SAYA, SAYA_FPS} from "./tokens";
 
 type Timed = {at: number; dur: number};
@@ -54,6 +55,8 @@ export type SayaGraphic = Timed &
     | {type: "chat"; prompt: string; answer: string[]; side?: "left" | "right" | "center"; answerAt?: number}
     // --- learned from the رواء الجلاد reference (Split) ---
     | {type: "split"; items: SplitItem[]; tag?: string; source?: string; shape?: "rect" | "circle" | "pill"}
+    // reel-inside-a-reel slot for the Edits link element (editing-rules §8)
+    | {type: "editsSlot"; rect?: typeof EDITS_CARD; label?: string}
     | {type: "doodle"; kind: "curlyArrow" | "circle" | "burst" | "squiggle" | "scribble" | "redArrow"; x: number; y: number; size?: number; w?: number; h?: number; flip?: boolean; color?: string; delay?: number}
   );
 
@@ -180,6 +183,8 @@ const Graphic: React.FC<{g: SayaGraphic; footage: string; face?: {x: number; y: 
       return <Doodle g={g} />;
     case "split":
       return <SplitStage footage={footage} start={g.at} duration={g.dur} items={g.items} tag={g.tag} source={g.source} face={face} shape={g.shape} />;
+    case "editsSlot":
+      return <EditsSlot duration={g.dur} rect={g.rect} label={g.label} />;
   }
 };
 
