@@ -194,8 +194,8 @@ export const sayaAppleProps: SayaEditProps = {
         {at: 0, src: AD, isVideo: true, from: 40.0},
         {at: 40, src: AD, isVideo: true, from: 42.6},
         {at: 73, src: AD, isVideo: true, from: 22.2},
-        {at: 158, src: AD, isVideo: true, from: 14.6},
-        {at: 215, src: A + "17-homeview-six-profiles.jpg", fit: "contain", bg: "#FFFFFF"},
+        {at: 158, src: AD, isVideo: true, from: 15.2, pos: "15% 50%"},
+        {at: 215, src: A + "17-homeview-six-profiles.jpg", fit: "cover", pos: "75% 45%"},
       ],
     },
     // 2 — Apple TV

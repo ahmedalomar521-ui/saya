@@ -4,7 +4,7 @@
 // darkened copy of her shot. The top card can change its media on cue (items)
 // without the cards re-entering. Footage colour: HOUSE_GRADE only.
 import {Video} from "@remotion/media";
-import {AbsoluteFill, Img, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig} from "remotion";
+import {AbsoluteFill, Img, interpolate, Sequence, spring, staticFile, useCurrentFrame, useVideoConfig} from "remotion";
 import {clamp, SAYA} from "./tokens";
 
 export type SplitItem = {
@@ -72,8 +72,11 @@ export const SplitStage: React.FC<SplitStageProps> = ({footage, start, duration,
     const style: React.CSSProperties = {position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: fit, objectPosition: it.pos ?? "50% 50%", opacity: op, background: it.bg ?? (fit === "contain" ? "#F5F5F7" : "#000")};
     // slow push on stills so the card never feels frozen
     const push = it.isVideo ? 1 : interpolate(local, [0, 120], [1.0, 1.06], clamp);
+    // a clip plays from `from` at the moment it appears (its own Sequence clock)
     return it.isVideo ? (
-      <Video key={i} src={staticFile(it.src)} muted trimBefore={Math.round((it.from ?? 0) * fps)} objectFit={fit} style={style} />
+      <Sequence key={i} from={it.at} layout="none">
+        <Video src={staticFile(it.src)} muted trimBefore={Math.round((it.from ?? 0) * fps)} objectFit={fit} style={style} />
+      </Sequence>
     ) : (
       <Img key={i} src={staticFile(it.src)} style={{...style, transform: `scale(${push})`}} />
     );
