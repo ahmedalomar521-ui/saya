@@ -199,8 +199,10 @@ What the reference does, and what we copy:
 - **The card** is a small portrait 9:16 card with a thin white border and
   rounded corners, centred on the chest between her hands (~x 360–720,
   y 950–1590). Her face stays fully visible above it.
-- **Captions** are hidden while the card is up (the card speaks). For a long
-  card stretch, move them up under the chin with `places` instead of hiding.
+- **Captions are never hidden for the card (user, 2026-10-15): move them.**
+  While the card is up, place them clear of it with `places` (above it, under
+  the chin, or beside it), then return them to the chest when it goes. The
+  reference hides them; we do not.
 - **Captions elsewhere:** one short line, small white text, no box, on the
   chest centre (~y 1110).
 - **Timing:** the card shows for ~3 s on the line that names the reel ("لو
