@@ -17,6 +17,7 @@ import {SayaPassword, SAYA_PASSWORD_FRAMES, sayaPasswordProps} from "./videos/Sa
 import {SayaPubler, SAYA_PUBLER_FRAMES, sayaPublerProps} from "./videos/SayaPubler";
 import {SayaPublerCover} from "./videos/SayaPublerCover";
 import {SayaAppleHome, SAYA_APPLE_FRAMES, sayaAppleProps} from "./videos/SayaAppleHome";
+import {SayaAppleCover} from "./videos/SayaAppleCover";
 import {sayaFonts, SAYA_FPS as SAYA_STYLE_FPS} from "./styles/saya/tokens";
 import {InstaShareMix, MIX_FPS, MIX_FRAMES} from "./videos/InstaShareMix";
 import {SoundTypeMix, ST_FPS, ST_FRAMES} from "./videos/SoundTypeMix";
@@ -235,6 +236,17 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={sayaAppleProps}
+        calculateMetadata={async () => {
+          await sayaFonts;
+          return {};
+        }}
+      />
+      <Still
+        id="SayaAppleCover"
+        component={SayaAppleCover}
+        width={1080}
+        height={1920}
+        defaultProps={{line1: "أبل نزّلت", line2: "3 أجهزة للبيت"}}
         calculateMetadata={async () => {
           await sayaFonts;
           return {};
