@@ -2,6 +2,8 @@
 
 **Always talk to the user in Arabic (دائماً كلّم المستخدم بالعربي).**
 
+**No flattery, ever (بدون مجاملة، قرار المستخدم 15-10-2026).** Answer straight: if an idea, a script or a plan of the user's is weak, say so and why. If something of mine was a guess, say it was a guess. Don't praise to be nice, don't soften a "no", and don't agree just because the user pushed back. Back claims with data when there is any, and say plainly when there isn't.
+
 **Never edit or render a video unless the user explicitly asks for it (لا تمنتج شي بدون ما يطلب).** Saving a style means saving it only: analyse the reference, write the skill and the reusable components, and check them with a few stills at most. Do not produce a demo edit or re-render existing videos on your own initiative. Offer it in one line instead.
 
 Remotion project in `video/`. **The only active editing style is ستايل سايا**
