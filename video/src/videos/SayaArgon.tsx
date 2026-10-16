@@ -14,7 +14,7 @@ export const SAYA_ARGON_FRAMES = 1290; // 43.0 s
 // Timed on the speech segments between silences of the joined footage.
 const SRT = `1
 00:00:00,120 --> 00:00:02,050
-إذا مفكر جيميناي صار قديم…
+إذا مفكر Gemini صار قديم…
 
 2
 00:00:02,480 --> 00:00:02,770
@@ -22,7 +22,7 @@ const SRT = `1
 
 3
 00:00:03,400 --> 00:00:05,430
-جوجل نزّلت جيميناي فور أرغون…
+Google نزّلت Gemini فور أرغون…
 
 4
 00:00:05,820 --> 00:00:07,510
@@ -42,7 +42,7 @@ const SRT = `1
 
 8
 00:00:12,260 --> 00:00:16,440
-جوجل بتقول إنو أقوى نماذجها، ومصمم للمهام المعقدة.
+Google بتقول إنو أقوى نماذجها، ومصمم للمهام المعقدة.
 
 9
 00:00:16,650 --> 00:00:18,460
@@ -50,7 +50,7 @@ const SRT = `1
 
 10
 00:00:18,880 --> 00:00:23,380
-إنو هلق الموديل متاح بتطبيق جيميناي بس لمشتركي برو وألترا.
+إنو هلق الموديل متاح بتطبيق Gemini بس لمشتركي Pro وUltra.
 
 11
 00:00:23,840 --> 00:00:24,670
@@ -93,7 +93,7 @@ export const sayaArgonProps: SayaEditProps = {
   face: {x: 640, y: 470, w: 215},
   srt: SRT,
   // captions sit over the bright desk: dark outline all through (no colour change to the footage)
-  places: [{at: 0, y: 1500}],
+  places: [{at: 0, y: 1360}], // the lowest the safe zone allows
   onLight: [[0, SAYA_ARGON_FRAMES]],
   zooms: [
     {at: 0, scale: 1.1},
@@ -112,7 +112,7 @@ export const sayaArgonProps: SayaEditProps = {
     {at: 1150, scale: 1.1},
   ],
   graphics: [
-    {type: "title", at: 5, dur: 85, small: "جوجل نزّلت جيميناي 4", big: "أرغون", y: 175, squiggle: true},
+    {type: "title", at: 5, dur: 85, small: "Google نزّلت Gemini 4", big: "أرغون", y: 175, squiggle: true},
     // "مصمم للمهام المعقدة" — Google's own ad
     {type: "split", at: 368, dur: 125, source: "Google", items: [{at: 0, src: AD, isVideo: true, from: 16.5}]},
     // "متاح بس لمشتركي برو وألترا" — the ad's own end card says it
