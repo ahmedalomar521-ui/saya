@@ -19,6 +19,7 @@ import {SayaPublerCover} from "./videos/SayaPublerCover";
 import {SayaAppleHome, SAYA_APPLE_FRAMES, sayaAppleProps} from "./videos/SayaAppleHome";
 import {SayaGaza, SAYA_GAZA_FRAMES, sayaGazaProps} from "./videos/SayaGaza";
 import {SayaGaza2, SAYA_GAZA2_FRAMES, sayaGaza2Props} from "./videos/SayaGaza2";
+import {SayaArgon, SAYA_ARGON_FRAMES, sayaArgonProps} from "./videos/SayaArgon";
 import {SayaAppleCover} from "./videos/SayaAppleCover";
 import {sayaFonts, SAYA_FPS as SAYA_STYLE_FPS} from "./styles/saya/tokens";
 import {InstaShareMix, MIX_FPS, MIX_FRAMES} from "./videos/InstaShareMix";
@@ -266,6 +267,19 @@ export const RemotionRoot: React.FC = () => {
         width={1080}
         height={1920}
         defaultProps={sayaAppleProps}
+        calculateMetadata={async () => {
+          await sayaFonts;
+          return {};
+        }}
+      />
+      <Composition
+        id="SayaArgon"
+        component={SayaArgon}
+        durationInFrames={SAYA_ARGON_FRAMES}
+        fps={SAYA_STYLE_FPS}
+        width={1080}
+        height={1920}
+        defaultProps={sayaArgonProps}
         calculateMetadata={async () => {
           await sayaFonts;
           return {};
