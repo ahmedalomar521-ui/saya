@@ -38,7 +38,36 @@ def bg_svg():
  <g stroke="#fff" stroke-width="1.8" opacity=".95">{glow_top}{glow_bot}</g>
 </g></svg>'''
 
+def build_studio(spec):
+    """Rawaa-style grid cover (user decision 2026-10-17): full-bleed Saya photo (generated expression),
+    two-tier hook title at the top, 2-4 floating glass cards with line icons. One fixed template."""
+    b64 = lambda p: base64.b64encode(open(HERE / "fonts" / p, "rb").read()).decode()
+    pb = base64.b64encode(open(spec["photo"], "rb").read()).decode()
+    cards = ""
+    # card slots (left/right of her, inside the grid band y 240..1680, clear of the face)
+    slots = [(60, 930, -7), (810, 880, 6), (50, 1290, 5), (820, 1260, -6)]
+    for i, ic in enumerate(spec.get("icons", [])[:4]):
+        x, y, r = slots[i]
+        cards += f'<div class="gc" style="left:{x}px;top:{y}px;transform:rotate({r}deg)"><svg viewBox="0 0 120 120">{ICONS[ic]}</svg></div>'
+    return f'''<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><style>
+@font-face{{font-family:SayaAr;src:url(data:font/woff2;base64,{b64("cairo-arabic-900-normal.woff2")});font-weight:900}}
+@font-face{{font-family:SayaLat;src:url(data:font/woff2;base64,{b64("cairo-latin-900-normal.woff2")});font-weight:900}}
+*{{box-sizing:border-box;margin:0;padding:0}}
+body{{width:1080px;height:1920px;overflow:hidden}}
+.cv{{width:1080px;height:1920px;position:relative;direction:rtl;font-family:SayaLat,SayaAr,sans-serif;background:#0A1533}}
+.ph{{position:absolute;left:0;top:{spec.get("shift", 250)}px;width:1080px;height:1920px;background:url(data:image/png;base64,{pb}) center/cover no-repeat;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 160px);mask-image:linear-gradient(180deg,transparent 0,#000 160px)}}
+.top{{position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,16,44,.55) 0%,rgba(7,16,44,.25) 18%,rgba(7,16,44,0) 32%)}}
+.t{{position:absolute;left:0;right:0;top:{spec.get("top", 250)}px;text-align:center;z-index:3}}
+.t1{{font-size:{spec.get("h1", 104)}px;font-weight:900;color:#fff;line-height:1.1;text-shadow:0 6px 24px rgba(0,0,0,.65)}}
+.t2{{font-size:{spec.get("h2", 120)}px;font-weight:900;line-height:1.1;color:#8FD3FF;text-shadow:0 0 28px rgba(30,144,255,.75),0 6px 24px rgba(0,0,0,.6)}}
+.gc{{position:absolute;width:210px;height:210px;border-radius:52px;background:linear-gradient(145deg,rgba(143,211,255,.30),rgba(30,144,255,.14));border:3px solid rgba(143,211,255,.75);box-shadow:0 0 40px rgba(30,144,255,.55),inset 0 0 30px rgba(255,255,255,.12);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;z-index:3}}
+.gc svg{{width:120px;height:120px;fill:none;stroke:#fff;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 14px rgba(143,211,255,.95))}}
+</style></head><body><div class="cv"><div class="ph"></div><div class="top"></div>
+<div class="t"><div class="t1">{spec["line1"]}</div><div class="t2">{spec["line2"]}</div></div>{cards}</div></body></html>'''
+
 def build(spec):
+    if spec.get("style") == "studio":
+        return build_studio(spec)
     b64 = lambda p: base64.b64encode(open(HERE / "fonts" / p, "rb").read()).decode()
     icon = ICONS[spec.get("icon", "spark")]
     chips = spec.get("chips", [])

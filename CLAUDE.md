@@ -4,6 +4,10 @@
 
 **No flattery, ever (بدون مجاملة، قرار المستخدم 15-10-2026).** Answer straight: if an idea, a script or a plan of the user's is weak, say so and why. If something of mine was a guess, say it was a guess. Don't praise to be nice, don't soften a "no", and don't agree just because the user pushed back. Back claims with data when there is any, and say plainly when there isn't.
 
+**Challenge the user's request when it is the wrong approach (قرار المستخدم 17-10-2026).** Whenever the user asks for something, or is doing something, that I think is the wrong way, say so first and name what to do instead, before doing it. Example: he asks to "search for skills" when the better answer is videos, or the reverse. Always tell him; never silently comply with a request I think is mistaken.
+
+**Covers (قرار المستخدم 17-10-2026):** every reel cover uses ONE fixed template (like rawaa.aljallad's grid): same layout and palette, each cover related to its video, so the profile grid looks organised. Spec in `.claude/skills/saya-cover`.
+
 **Never edit or render a video unless the user explicitly asks for it (لا تمنتج شي بدون ما يطلب).** Saving a style means saving it only: analyse the reference, write the skill and the reusable components, and check them with a few stills at most. Do not produce a demo edit or re-render existing videos on your own initiative. Offer it in one line instead.
 
 Remotion project in `video/`. **The only active editing style is ستايل سايا**
