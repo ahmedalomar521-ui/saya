@@ -79,7 +79,7 @@ const SRT = `1
 `;
 
 const H = "footage/hide/";
-const PHONE = {at: 289, dur: 324, width: 540, top: 290};
+const PHONE = {at: 289, dur: 324, width: 620, top: 290};
 // recording (1080×2340) → canvas: inner screen of the card, cover-fit of the cropped 1080×2240 video
 const bez = PHONE.width * 0.035;
 const x0 = 540 - PHONE.width / 2 + bez;
@@ -113,10 +113,10 @@ export const sayaHideProps: SayaEditProps = {
   onLight: [[0, SAYA_HIDE_FRAMES]], // the desk behind the captions is light
   // Saya stays visible as a circle (top left) while the phone card shows the screen
   pip: [[PHONE.at, PHONE.at + PHONE.dur]],
-  pipPlace: {x: 30, y: 290, d: 220, fill: 0.44}, // zoomed out so the hijab and face details show
+  pipPlace: {x: 20, y: 290, d: 190, fill: 0.44}, // zoomed out so the hijab and face details show
   graphics: [
     {type: "title", at: 5, dur: 85, small: "كيف بتخبّي", big: "إنك أونلاين؟", y: 300, squiggle: true},
-    {type: "save", at: 193, dur: 76, text: "احفظ الريل", y: 1180}, // on "احفظ الريل"; above the captions (y 1360)
+    {type: "save", at: 193, dur: 76, big: true}, // big white bookmark on the chest (reference m.3d3), on "احفظ الريل"
     {type: "phone", at: PHONE.at, dur: PHONE.dur, src: H + "screen.mp4", isVideo: true, width: PHONE.width, top: PHONE.top, taps: TAPS},
     {type: "follow", at: 798, dur: 156, avatar: "footage/apple/avatar.jpg", handle: "saya_.tech", y: 1230, pressAt: 22},
   ],

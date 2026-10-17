@@ -327,3 +327,21 @@ correct `ding` / `idea-ding`, CTA `blink-bell`, shock `impact-deep`, important i
 - **Test each file by ear, then record rejects.** A sound can fit its name and still be
   too sharp, cartoonish, or have a long tail (`impact-deep` 1.9 s, `keyboard` 3.5 s,
   `blink-bell` 1.5 s). Rejected sounds go in `video/MECHANISMS.md` under "Rejected".
+
+## 13. Phone card and save graphic — learned from m.3d3 (user reference, 2026-10-17)
+
+User notes on ep 1, checked against his reference video (a phone explainer by m.3d3):
+
+- **The phone is big.** In the reference the phone is ~60% of the frame width (~620 px of 1080)
+  and ~66% of the height. `phone` graphic: `width` ≥ 620, `top` ≈ 290. Tap circles follow the
+  size automatically (they are computed from `width`/`top`).
+- **Saya stays visible as a circle at the phone's top-left corner**, outside the screen (the ☰ tap and
+  the toggle sit at the top-left of the recording, so the circle must not cover the screen).
+  `pipPlace` e.g. `{x: 20, y: 290, d: 190, fill: 0.44}`; `fill` = how much of the circle the face takes
+  (lower = zoomed out, shows the beret and hijab).
+- **Save graphic = a big white bookmark on the chest, no pill and no text**, outline first, then it fills
+  white (reference: ~200 px wide, centre y ≈ 1030). `{type: "save", big: true}` at the moment of "احفظ".
+  The older pill (`text`, y 1330) stays available for other videos.
+- **Open question, not decided:** the reference shows NO captions while the phone is on screen. A big
+  phone leaves no free area for the caption (phone bottom ≈ 1567, caption y ≤ 1360), and caption text lands
+  on the screen's own text. Waiting for the user's decision: hide captions during the phone card, or keep.

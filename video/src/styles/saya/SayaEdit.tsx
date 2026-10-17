@@ -34,7 +34,7 @@ export type SayaGraphic = Timed &
     | {type: "feature"; text: string; y?: number}
     | {type: "bigWord"; text: string}
     | {type: "step"; text: string; x?: number; y?: number}
-    | {type: "save"; text?: string; kind?: "save" | "share"; y?: number}
+    | {type: "save"; text?: string; kind?: "save" | "share"; y?: number; big?: boolean}
     | {type: "source"; text: string; y?: number}
     // --- ported from ستايل 1–4 (see Titles / Doodles / Neon / Stages) ---
     | {type: "title"; small?: string; big: string; y?: number; squiggle?: boolean}
@@ -151,7 +151,7 @@ const Graphic: React.FC<{g: SayaGraphic; footage: string; face?: {x: number; y: 
     case "step":
       return <StepPill text={g.text} duration={g.dur} x={g.x} y={g.y} />;
     case "save":
-      return <SaveCta text={g.text} duration={g.dur} kind={g.kind} y={g.y} />;
+      return <SaveCta text={g.text} duration={g.dur} kind={g.kind} y={g.y} big={g.big} />;
     case "source":
       return <SourceTag text={g.text} y={g.y} />;
     case "title":

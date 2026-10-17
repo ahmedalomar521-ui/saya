@@ -94,10 +94,22 @@ export const StepPill: React.FC<{text: string; duration: number; x?: number; y?:
 
 /** Save CTA (R2-f): bookmark icon that fills, with "احفظ الفيديو". */
 /** `kind: "share"` swaps the bookmark for a paper plane (send to a friend). */
-export const SaveCta: React.FC<{text?: string; duration: number; fillAt?: number; y?: number; kind?: "save" | "share"}> = ({text = "احفظ الفيديو", duration, fillAt = 12, y = 1330, kind = "save"}) => {
+/** `big` (user reference m.3d3, 2026-10-17): no pill and no text, just a large white icon on the
+ *  chest (outline first, then it fills white). Default y 1030, size 200. */
+export const SaveCta: React.FC<{text?: string; duration: number; fillAt?: number; y?: number; kind?: "save" | "share"; big?: boolean}> = ({text = "احفظ الفيديو", duration, fillAt = 12, y, kind = "save", big = false}) => {
   const {frame, p, out} = usePop(duration);
   const fill = interpolate(frame, [fillAt, fillAt + 6], [0, 1], clamp);
   const bump = 1 + 0.18 * Math.sin(Math.min(1, Math.max(0, (frame - fillAt) / 8)) * Math.PI);
+  if (big) {
+    return (
+      <div style={{position: "absolute", left: 540, top: y ?? 1030, transform: `translate(-50%, -50%) scale(${interpolate(p, [0, 1], [0.6, 1]) * bump})`, opacity: Math.min(p, out), filter: "drop-shadow(0 8px 24px rgba(0,0,0,0.45))"}}>
+        <svg width={200} height={260} viewBox="0 0 24 24">
+          <path d={kind === "share" ? "M21 3 3 10.5l7 2.5 2.5 7Z" : "M6 3h12v18l-6-4.5L6 21Z"} fill={SAYA.color.white} fillOpacity={fill} stroke={SAYA.color.white} strokeWidth={1.4} strokeLinejoin="round" />
+        </svg>
+      </div>
+    );
+  }
+  y = y ?? 1330;
   return (
     <div style={{position: "absolute", left: 540, top: y, transform: `translate(-50%, -50%) scale(${interpolate(p, [0, 1], [0.6, 1])})`, opacity: Math.min(p, out), display: "flex", alignItems: "center", gap: 18, direction: "rtl", padding: "18px 34px", borderRadius: 99, ...navyGlass()}}>
       <svg width={58} height={58} viewBox="0 0 24 24" style={{transform: `scale(${bump})`, filter: fill > 0 ? neonGlow(SAYA.color.neon, 0.5) : undefined}}>
