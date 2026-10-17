@@ -245,9 +245,16 @@ them. If the user asks for a change, he tells me; do not re-introduce a new tran
 on my own. Note: Apple's emphasis cuts were also instant, so "too fast" may not be about the
 zoom itself; ask which moment felt fast before changing anything else.
 
-**Tutorial layout:** do not hide Saya under a phone card for 10 s (she looked absent). Keep her
-visible as a circle (`pip`, top corner) while the screen recording shows in a portrait
-rectangle; the shapes rule (§11) is about the shape of her card or the content card.
+**Tutorial layout and the shapes rule (user, 2026-10-17):** the shape of the content follows
+what the content IS, and Saya's card follows the content:
+- **A phone screen recording (portrait):** show it inside a phone frame (`phone`, with the touch
+  circles) and keep Saya visible in a **circle** (`pip`, top corner). A phone frame is right for
+  a phone recording.
+- **A landscape clip** (a laptop screen, a presentation slide, a wide scene): show it in a
+  **rectangle** and Saya in a **rectangle** (`split`, `shape: "rect"`).
+- **A short clip or an app icon:** a pill or a circle (`split`, `shape: "pill" | "circle"`).
+- **Never leave Saya hidden.** Hiding her under a card for 10 s was the mistake in
+  `SayaHideStatus` v1 (the phone shape itself was fine).
 
 ## 10. Zoom system — adopted 2026-10-17 (code: `video/src/styles/saya/zoomSystem.ts`) — PAUSED, see §10-bis
 
@@ -290,9 +297,10 @@ These do not change from video to video:
 - **Hook title:** the `title` graphic above the head in the first ~3 s.
 - **Graphics are line-drawn** (thin strokes, glow, sky/neon/white). Real photos,
   clips and screens are content, not graphics.
-- **Insert shapes follow the need:** a rectangle for a screen or an ad, a circle
-  for a face or an app icon, a pill for a short clip (`SplitStage` `shape`). Any
-  other shape has to be built first; ask.
+- **Insert shapes follow the content (§10-bis):** a phone recording in a phone frame with
+  Saya in a circle; a landscape clip in a rectangle with Saya in a rectangle; a pill or a
+  circle for a short clip or an icon (`SplitStage` `shape`). Any other shape has to be built
+  first; ask.
 - **External clips and screens:** the `split` stage (card on top, Saya below) with
   the source pill. Full screen only for raw news footage.
 - **Tutorials:** a phone card with the screen recording and the touch dots.
