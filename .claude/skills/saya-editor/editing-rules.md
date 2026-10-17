@@ -135,8 +135,10 @@ The project has `public/sfx/`: `whoosh`, `pop`, `click`, `ding`, `boom`.
   A whoosh lands on the visual move it belongs to.
 - **Repeated items get one sound each:** five chips = five pops, each on its
   own entry frame.
-- **Effects sit under her voice:** peaks around 6–7 dB above her speech level,
-  not louder. Volumes 0.25–0.45 in the existing videos are the reference.
+- **Effects sit BEHIND her voice, never above it (user, 2026-10-17).** Her voice
+  stays clear and comfortable. Effects are about 10–14 dB under it (the generator
+  in `sfxKit.ts` uses 0.26). The old line "peaks 6–7 dB above her speech level"
+  contradicted `sfx.ts` and is removed. Judge the mix on a phone speaker.
 - **No music unless the user asks and supplies or approves it.** If there is
   "no music", sounds with a melody or a riser read as music too.
 - **Avoid sounds that read as childish or harsh:** risers, clocks, knocks,
@@ -282,3 +284,23 @@ These do not change from video to video:
 - **Ending:** `follow` CTA. **Sounds:** the small set in `public/sfx/`, same ones.
 - **Font:** Cairo (Arabic and Latin). **Colours:** footage with `HOUSE_GRADE` only.
 - **Covers:** one fixed template (`.claude/skills/saya-cover`, studio style).
+
+## 12. Sound kit "B" — adopted 2026-10-17 (code: `video/src/styles/saya/sfxKit.ts`)
+
+13 sounds, one family, chosen by the user from `out/sfx-audition-B.m4a`: punch `whoosh-1` /
+`robot-zoom` (alternate), join `whoosh-pack-1`, card in `small-swoosh`, tap `ui-select`,
+correct `ding` / `idea-ding`, CTA `blink-bell`, shock `impact-deep`, important info
+`stamp`, image in `camera-shutter`, typing `keyboard`, notification `notification`.
+- `sfxFromZoomMap(zoomMap)` makes the cues for punches, joins and ratchets, so the sound
+  lands on the same frame as the move. The return to the base and Ken Burns are silent.
+- **Timing beats the name.** Put the sound on the moment of the move or the element's
+  entrance, start it exactly there (`SfxTrack` leads by 2 frames).
+- **Not every word and not every zoom.** At least 1 s between effects; a short reel
+  (30 s) has about 8–10.
+- **One sound family; no background music** just to fill a gap (the original audio and
+  precise effects are enough).
+- **The 55-sound library stays as a reserve.** A sound enters a video outside the kit only
+  when the user approves that case (e.g. `badum-tss` for a joke).
+- **Test each file by ear, then record rejects.** A sound can fit its name and still be
+  too sharp, cartoonish, or have a long tail (`impact-deep` 1.9 s, `keyboard` 3.5 s,
+  `blink-bell` 1.5 s). Rejected sounds go in `video/MECHANISMS.md` under "Rejected".
