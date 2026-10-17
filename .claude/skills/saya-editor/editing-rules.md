@@ -49,9 +49,12 @@ user's own words).
   for four different things read as "nobody thought about it".
 - **Three abstract graphics in a row feel empty.** One concrete graphic is
   enough; her face talking in between is content, not a gap.
-- **No mechanism twice in one video, and none from the previous two videos.**
+- **The container is fixed (§11); the content varies (user, 2026-10-17).** Each
+  video may change WHAT is shown (clips, images, one accent graphic) but not the
+  frame it is shown in. Do not repeat the same accent graphic twice in one video.
   Read `video/MECHANISMS.md` before mapping beats, and add this video's line
-  after it is approved.
+  after it is approved. (The old "none from the previous two videos" rule is
+  dropped: it made every video look different.)
 
 ## 2. Timing a graphic
 
@@ -108,9 +111,12 @@ user's own words).
   live in the headroom above her head only. Measure that space per clip (it
   changes with framing); the margin above the hair is about twice the margin
   under the chin.
-- **Safe zone (1080×1920):** no text in the top 150 px or the bottom 300 px
-  (caution band from y 1500), and keep the right 180 px clear between
-  y 1100 and 1750 (like, comment, share buttons).
+- **Safe zone (ONE definition, 2026-10-17):** text and key graphics live in
+  x 65–1080, y 280–1400. Keep the right 190 px clear between y 1100 and 1750
+  (like / comment / share buttons). The profile grid crops the centre 1080×1440
+  (y 240–1680). This is the same as `SAYA.safe`. Platform ad specs are stricter
+  (Instagram ~270 top / ~670 bottom, TikTok 240 / 660, Shorts 241–288 / 381–672);
+  they are for ads. If the user ever runs ads, redo the placement.
 - **Full-screen white flashes** are allowed only at real section changes
   (budget: 3–4 per minute).
 
@@ -180,8 +186,7 @@ The project has `public/sfx/`: `whoosh`, `pop`, `click`, `ding`, `boom`.
 - **Transitions:** hard cuts, punch-ins, whip pans and the `flash` graphic. No
   cross-dissolves or fades to black between beats. The only fade is the ending
   after the follow CTA. At most 3–4 flashes a minute, only at real section changes.
-- **Safe zone:** Saya's zone is x 80–940, y 280–1400 (`SAYA.safe`); it already
-  respects Instagram's top bar, bottom caption area and right-hand buttons.
+- **Safe zone:** see §4 (one definition). Do not restate numbers elsewhere.
 - **Cover frame:** pick a frame with Saya's face and the hook title, both
   inside the centre 1080×1080 square, because the profile grid crops the rest.
   Tell the user the timestamp so they can set it as the reel cover.
@@ -226,3 +231,54 @@ emotional reels (first used on the Gaza reel).
   way. The presenter explains only after that.
 - **Sensitive words:** write them with an asterisk in captions (الشه*يد) so
   Instagram's filters do not limit reach. The voice still says the word.
+
+## 10. Zoom system — adopted 2026-10-17 (code: `video/src/styles/saya/zoomSystem.ts`)
+
+Why: the old zooms were eased ramps to random values (1.12, 1.18, 1.22, 1.24,
+1.25, 1.26, 1.3, 1.32 across three videos) and they floated instead of cutting.
+Sources: the add-zooms skill (github.com/louisedesadeleer/add-zooms) and editing
+guides (Jupitrr, PremiumBeat, cut.pro). The numbers below are ours; the shape of
+the system comes from the skill.
+
+| Move | When | Value | Shape |
+|---|---|---|---|
+| **base** | most of the time | 1.10 | still |
+| **punch** | an emphasis word, a number, a question, the last word of a contrast, shock | 1.25 (never above 1.30) | HARD CUT in, hold 12 frames (0.4 s), HARD CUT back to the base |
+| **join** | every cut between two HeyGen parts | 1.25 | a punch placed on the cut, hides the join |
+| **ratchet** | a list of 2–4 items | 1.16 → 1.25, evenly stepped | each item hard-cuts one level up, then back to the base |
+| **kenburns** | a thesis line, and the CTA | 1.10 → 1.14 | slow LINEAR push across the line, 0.5 s release. The only smooth move |
+
+- **"Zoom out" = the return to the base.** Nothing goes below the base. No
+  eased fast/slow ramps any more (`mode: "fast" | "slow"` stays only for videos
+  already made).
+- **Anchor to the word:** the event frame is the first frame of the word
+  (the helper subtracts 2 frames, ≈0.05 s). Never "phrase start + a constant".
+- **Ration:** at most ~6 punches per minute (joins and ratchets count), at most 2
+  Ken Burns pushes per video, events at least 1.5 s apart. Long stretches stay at
+  the base; filler and personal asides get no zoom. Run `checkZoomMap()` on the
+  map before every render.
+- **Use it:** `zoomMap: [{type: "join", at: 497}, {type: "punch", at: 236}, ...]`
+  on `SayaEditProps` (it wins over `zooms`). The 1.10 base is for HeyGen's wide
+  shots; set `zoomBase` for a different framing.
+- No test renders were run for this system when it was adopted (user, 2026-10-17):
+  judge it on the next real video.
+
+## 11. Locked identity — the container is fixed (user, 2026-10-17)
+
+These do not change from video to video:
+- **Captions:** look `saya` (2–3 words), Cairo 900, one height (`SAYA.caption.chestY`
+  clamped to the safe zone), the house light-blue spoken word, a dark outline when
+  the footage behind is light. `nicolas` is allowed ONLY for serious or emotional
+  reels, and the user decides each time.
+- **Hook title:** the `title` graphic above the head in the first ~3 s.
+- **Graphics are line-drawn** (thin strokes, glow, sky/neon/white). Real photos,
+  clips and screens are content, not graphics.
+- **Insert shapes follow the need:** a rectangle for a screen or an ad, a circle
+  for a face or an app icon, a pill for a short clip (`SplitStage` `shape`). Any
+  other shape has to be built first; ask.
+- **External clips and screens:** the `split` stage (card on top, Saya below) with
+  the source pill. Full screen only for raw news footage.
+- **Tutorials:** a phone card with the screen recording and the touch dots.
+- **Ending:** `follow` CTA. **Sounds:** the small set in `public/sfx/`, same ones.
+- **Font:** Cairo (Arabic and Latin). **Colours:** footage with `HOUSE_GRADE` only.
+- **Covers:** one fixed template (`.claude/skills/saya-cover`, studio style).

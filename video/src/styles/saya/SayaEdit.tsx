@@ -4,6 +4,7 @@
 import {AbsoluteFill, Sequence, staticFile} from "remotion";
 import {CAPTION_LOOKS, SayaCaptions, type CaptionLook, type CaptionNote, type CaptionPlace, type Range} from "./Captions";
 import {SayaFootage, type PipPlace, type Zoom} from "./Footage";
+import {buildZooms, type ZoomEvent} from "./zoomSystem";
 import {SayaBurst, SayaCurlyArrow, SayaMarkerCircle, SayaRedArrow, SayaScribbleOut, SayaSquiggle} from "./Doodles";
 import {FloatingWindow, GlassCard, InfoChip, PhoneMock, ScreenshotCard, SourceTag, TapPulse} from "./Inserts";
 import {LogoPop, LogoStack, type Logo} from "./Logos";
@@ -67,6 +68,9 @@ export type SayaEditProps = {
   face?: {x: number; y: number; w: number};
   srt: string;
   zooms?: Zoom[];
+  /** The Saya zoom system (zoomSystem.ts): punch / ratchet / kenburns / join. Wins over `zooms`. */
+  zoomMap?: ZoomEvent[];
+  zoomBase?: number;
   blur?: Range[];
   pip?: Range[];
   pipPlace?: PipPlace;
@@ -205,7 +209,7 @@ export const SayaEdit: React.FC<SayaEditProps> = (p) => {
   return (
     <AbsoluteFill style={{background: layer === "all" || layer === "base" ? "#000" : "transparent"}}>
       {show("base") ? (
-        <SayaFootage src={staticFile(p.footage)} isImage={p.isImage} face={p.face} zooms={p.zooms} blur={p.blur} pip={p.pip} pipPlace={p.pipPlace} whips={p.whips} />
+        <SayaFootage src={staticFile(p.footage)} isImage={p.isImage} face={p.face} zooms={p.zoomMap ? buildZooms(p.zoomMap, p.zoomBase) : p.zooms} blur={p.blur} pip={p.pip} pipPlace={p.pipPlace} whips={p.whips} />
       ) : null}
       {graphics.map((g, i) =>
         show(i) ? (

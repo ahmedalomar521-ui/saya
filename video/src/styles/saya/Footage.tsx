@@ -11,7 +11,7 @@ import {clamp, SAYA} from "./tokens";
 
 /** Zoom keyframe: from `at`, scale goes to `scale` — instantly ("cut", a
  *  punch-in on a jump cut), over `dur` frames ("slow"), or fast ("fast", 7f). */
-export type Zoom = {at: number; scale: number; mode?: "cut" | "slow" | "fast"; dur?: number};
+export type Zoom = {at: number; scale: number; mode?: "cut" | "slow" | "fast" | "linear"; dur?: number};
 
 export const zoomAt = (frame: number, zooms: Zoom[]) => {
   let s = 1;
@@ -21,7 +21,8 @@ export const zoomAt = (frame: number, zooms: Zoom[]) => {
     if (mode === "cut") s = z.scale;
     else {
       const dur = z.dur ?? (mode === "fast" ? 7 : 60);
-      const ease = mode === "fast" ? Easing.out(Easing.cubic) : Easing.inOut(Easing.sin);
+      // "linear" = Ken Burns of the zoom system (zoomSystem.ts): the only smooth move
+      const ease = mode === "linear" ? Easing.linear : mode === "fast" ? Easing.out(Easing.cubic) : Easing.inOut(Easing.sin);
       s = interpolate(frame, [z.at, z.at + dur], [s, z.scale], {...clamp, easing: ease});
     }
   }

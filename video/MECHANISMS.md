@@ -16,3 +16,14 @@ The always-on base layer (Style 2 captions, jump cuts, `S1Title` hook title,
 ## Rejected (do not reuse)
 
 Add mechanisms the user rejected, with the reason, here.
+
+## Update 2026-10-17
+
+Rule change: the container is fixed, only the content varies (`editing-rules.md` §11),
+and the old "none from the previous two videos" rule is dropped. Videos made in the
+Saya style (not in the table above):
+
+| Video | Composition | Content mechanisms (the container is the fixed one) |
+|---|---|---|
+| غزة: علي الجعفراوي | `SayaGaza2` | full-screen raw footage + shout subtitles (`nicolas` look), `source` tag, `floating` photos x2, `title`, `save` share pill |
+| جيميناي 4 أرغون | `SayaArgon` | hook `title`, `split` with Google's ad x2, `bigWord`, `follow`; zooms in the OLD style (before the zoom system) |
