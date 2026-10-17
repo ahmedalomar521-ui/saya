@@ -234,7 +234,22 @@ emotional reels (first used on the Gaza reel).
 - **Sensitive words:** write them with an asterisk in captions (الشه*يد) so
   Instagram's filters do not limit reach. The voice still says the word.
 
-## 10. Zoom system — adopted 2026-10-17 (code: `video/src/styles/saya/zoomSystem.ts`)
+## 10-bis. Transitions are back to the ORIGINAL Saya style, locked (user, 2026-10-17, evening)
+
+The first video on the zoom system (§10, `SayaHideStatus`) was judged bad by the user: the
+transitions were far too fast. Until he says "change", use the original Saya transitions:
+`zooms: Zoom[]` with the old modes (`cut`, `fast`, `slow`) exactly as in `SayaAppleHome`
+(base 1.12; emphasis cuts to 1.24–1.32 held ~28 frames, then cut back; a slow push 1.22 over
+90 frames at the end). `zoomMap` / `zoomSystem.ts` stay in the code but are PAUSED: do not use
+them. If the user asks for a change, he tells me; do not re-introduce a new transition style
+on my own. Note: Apple's emphasis cuts were also instant, so "too fast" may not be about the
+zoom itself; ask which moment felt fast before changing anything else.
+
+**Tutorial layout:** do not hide Saya under a phone card for 10 s (she looked absent). Keep her
+visible as a circle (`pip`, top corner) while the screen recording shows in a portrait
+rectangle; the shapes rule (§11) is about the shape of her card or the content card.
+
+## 10. Zoom system — adopted 2026-10-17 (code: `video/src/styles/saya/zoomSystem.ts`) — PAUSED, see §10-bis
 
 Why: the old zooms were eased ramps to random values (1.12, 1.18, 1.22, 1.24,
 1.25, 1.26, 1.3, 1.32 across three videos) and they floated instead of cutting.
