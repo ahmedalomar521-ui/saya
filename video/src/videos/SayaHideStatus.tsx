@@ -86,6 +86,7 @@ const x0 = 540 - PHONE.width / 2 + bez;
 const y0 = PHONE.top + bez;
 const sc = (PHONE.width * 2.06 - 2 * bez) / 2240;
 const tap = (xr: number, yr: number) => ({x: Math.round(x0 + xr * sc - (2240 * sc * (1080 / 2240) - (PHONE.width - 2 * bez)) / 2), y: Math.round(y0 + (yr - 100) * sc)});
+const MARK = "#1E90FF"; // marker colour on the white phone screen (palette neon)
 const TAPS = [
   {at: 41, ...tap(86, 151)}, // the three lines
   {at: 185, ...tap(800, 1469)}, // الرسائل والردود على القصص
@@ -109,15 +110,29 @@ export const sayaHideProps: SayaEditProps = {
     {at: 665, scale: 1.12},
     {at: 829, scale: 1.22, mode: "slow", dur: 100}, // the call to action
   ],
-  places: [{at: 0, y: 1360}], // the lowest the safe zone allows
+  places: [{at: 0, y: 1040}], // like رواء الجلاد: the caption sits at ~54% of the height, also over the phone (user 2026-10-17)
   onLight: [[0, SAYA_HIDE_FRAMES]], // the desk behind the captions is light
+  hide: [[193, 223]], // the bookmark says "احفظ" in the caption's place
   // Saya stays visible as a circle (top left) while the phone card shows the screen
   pip: [[PHONE.at, PHONE.at + PHONE.dur]],
   pipPlace: {x: 25, y: 275, d: 250, fill: 0.55}, // zoomed out so the hijab and face details show
   graphics: [
     {type: "title", at: 5, dur: 85, small: "كيف بتخبّي", big: "إنك أونلاين؟", y: 300, squiggle: true},
-    {type: "save", at: 193, dur: 76, big: true}, // big white bookmark on the chest (reference m.3d3), on "احفظ الريل"
+    {type: "save", at: 193, dur: 30, big: true, y: 1030}, // big white bookmark on the chest (reference m.3d3), on "احفظ الريل"
+    // illustrative icons next to the words (user rule 2026-10-17: always an illustrative graphic)
+    {type: "sticker", at: 57, dur: 40, src: "assets/icons/instagram-tile.svg", x: 830, y: 520, size: 150, glow: true, rot: 6},
+    {type: "sticker", at: 748, dur: 44, src: "assets/icons/lucide-eye.svg", x: 830, y: 520, size: 150, glow: true, rot: -6},
     {type: "phone", at: PHONE.at, dur: PHONE.dur, src: H + "screen.mp4", isVideo: true, width: PHONE.width, top: PHONE.top, taps: TAPS},
+    // key words = a big label in the caption's place + a marker on the same option in the screen
+    {type: "feature", at: 289, dur: 45, text: "ملفك الشخصي", y: 1040},
+    {type: "feature", at: 338, dur: 42, text: "الثلاث خطوط", y: 1040},
+    {type: "feature", at: 391, dur: 83, text: "الرسائل والردود على القصص", y: 860}, // above its row, which sits at y≈1066
+    {type: "feature", at: 473, dur: 55, text: "حالة النشاط", y: 1040},
+    {type: "feature", at: 530, dur: 70, text: "عرض حالة النشاط", y: 1040},
+    {type: "doodle", kind: "circle", at: 300, dur: 45, x: TAPS[0].x, y: TAPS[0].y, w: 120, h: 120, color: MARK},
+    {type: "doodle", kind: "circle", at: 400, dur: 76, x: tap(740, 1469).x, y: tap(740, 1469).y, w: 520, h: 120, color: MARK},
+    {type: "doodle", kind: "circle", at: 482, dur: 45, x: tap(740, 853).x, y: tap(740, 853).y, w: 520, h: 120, color: MARK},
+    {type: "doodle", kind: "circle", at: 540, dur: 50, x: TAPS[3].x, y: TAPS[3].y, w: 150, h: 110, color: MARK},
     {type: "follow", at: 798, dur: 156, avatar: "footage/apple/avatar.jpg", handle: "saya_.tech", y: 1230, pressAt: 22},
   ],
   sfx: [

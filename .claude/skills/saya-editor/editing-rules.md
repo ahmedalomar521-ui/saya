@@ -342,6 +342,17 @@ User notes on ep 1, checked against his reference video (a phone explainer by m.
 - **Save graphic = a big white bookmark on the chest, no pill and no text**, outline first, then it fills
   white (reference: ~200 px wide, centre y ≈ 1030). `{type: "save", big: true}` at the moment of "احفظ".
   The older pill (`text`, y 1330) stays available for other videos.
-- **Open question, not decided:** the reference shows NO captions while the phone is on screen. A big
-  phone leaves no free area for the caption (phone bottom ≈ 1567, caption y ≤ 1360), and caption text lands
-  on the screen's own text. Waiting for the user's decision: hide captions during the phone card, or keep.
+- **Shapes follow need (user, 2026-10-17):** not "always rect" or "always circle". Where a rectangle is
+  needed, use a rectangle; where a circle is needed, a circle; where something else is needed, something else.
+- **Where Saya's circle goes:** (1) on a phone card (dynamic island in the middle) → the top-LEFT corner of the
+  phone; (2) if the middle is free → the middle; (3) if neither is free → the right, as needed.
+- **Caption position = رواء الجلاد:** ~54% of the height (`places: [{at: 0, y: 1040}]`), also while the phone shows
+  (the caption stays on). Where a graphic says the words (save bookmark), hide the caption meanwhile.
+- **Key words get a big label** (`feature` pill in the caption's place, ✦ + glow): the options we must tap to navigate,
+  site/app names, anything central. Place it so it never covers its own target (move it above the row if needed).
+- **Every label comes with an indicator on the same item in the screen recording:** a marker oval/ring
+  (`doodle` kind `circle`, colour `#1E90FF` on white screens), an arrow or another shape. Row text is right-aligned
+  in Arabic UIs: centre the oval around x≈740 of the recording, not the row centre. Graphics array order matters:
+  put labels and markers AFTER the `phone` graphic or they render behind it.
+- **Always an illustrative graphic (user: "I told you more than once"):** small icons next to the words that name
+  something (Instagram tile on "إنستغرام", an eye on "نشاط", the bookmark on "احفظ"), plus the label + indicator above.
