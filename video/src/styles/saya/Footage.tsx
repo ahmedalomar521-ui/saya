@@ -33,7 +33,8 @@ export const zoomAt = (frame: number, zooms: Zoom[]) => {
 export const rangeAmount = (frame: number, ranges: Range[], ramp = 7) =>
   Math.max(0, ...ranges.map(([a, b]) => interpolate(frame, [a - ramp, a, b, b + ramp], [0, 1, 1, 0], clamp)));
 
-export type PipPlace = {x: number; y: number; d: number};
+/** `fill`: how much of the circle's width the face takes (default 0.92; lower = zoomed out, more hijab). */
+export type PipPlace = {x: number; y: number; d: number; fill?: number};
 const PIP_DEFAULT: PipPlace = {x: 90, y: 300, d: 230};
 
 export const SayaFootage: React.FC<{
@@ -83,7 +84,7 @@ export const SayaFootage: React.FC<{
   const ch = interpolate(pipP, [0, 1], [1920, d]);
   const cx = interpolate(pipP, [0, 1], [0, pipPlace.x]);
   const cy = interpolate(pipP, [0, 1], [0, pipPlace.y]);
-  const k = interpolate(pipP, [0, 1], [1, (d * 0.92) / face.w]);
+  const k = interpolate(pipP, [0, 1], [1, (d * (pipPlace.fill ?? 0.92)) / face.w]);
   const offX = interpolate(pipP, [0, 1], [0, cw / 2 - face.x * k]);
   const offY = interpolate(pipP, [0, 1], [0, ch / 2 - face.y * k]);
 
