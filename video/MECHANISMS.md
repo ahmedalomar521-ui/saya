@@ -27,3 +27,4 @@ Saya style (not in the table above):
 |---|---|---|
 | غزة: علي الجعفراوي | `SayaGaza2` | full-screen raw footage + shout subtitles (`nicolas` look), `source` tag, `floating` photos x2, `title`, `save` share pill |
 | جيميناي 4 أرغون | `SayaArgon` | hook `title`, `split` with Google's ad x2, `bigWord`, `follow`; zooms in the OLD style (before the zoom system) |
+| كيف تخبّي إنك أونلاين (نصائح إنستغرام 1) | `SayaHideStatus` | hook `title`, `phone` card with a re-timed screen recording + 4 touch circles (`TapPulse`), `follow`; first video on the zoom system (punch x3, Ken Burns x2) and sound kit B |

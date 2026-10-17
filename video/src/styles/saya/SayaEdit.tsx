@@ -25,7 +25,7 @@ export type SayaGraphic = Timed &
   (
     | {type: "logo"; logo: Logo; place?: "caption" | {x: number; y: number}; size?: number}
     | {type: "logoStack"; items: {logo: Logo; at: number}[]; focus?: {index: number; at: number}}
-    | {type: "phone"; src?: string; isVideo?: boolean; trimBefore?: number; playbackRate?: number; taps?: {at: number; x: number; y: number}[]}
+    | {type: "phone"; src?: string; isVideo?: boolean; trimBefore?: number; playbackRate?: number; width?: number; top?: number; taps?: {at: number; x: number; y: number}[]}
     | {type: "screenshot"; src: string; aspect?: number; centerY?: number}
     | {type: "floating"; src: string; aspect?: number; width?: number; top?: number; x?: number; label?: string}
     | {type: "follow"; avatar: string; handle: string; text?: string; y?: number; pressAt?: number}
@@ -126,7 +126,7 @@ const Graphic: React.FC<{g: SayaGraphic; footage: string; face?: {x: number; y: 
     case "phone":
       return (
         <>
-          <PhoneMock duration={g.dur} src={g.src ? staticFile(g.src) : undefined} isVideo={g.isVideo} trimBefore={g.trimBefore} playbackRate={g.playbackRate} />
+          <PhoneMock duration={g.dur} src={g.src ? staticFile(g.src) : undefined} isVideo={g.isVideo} trimBefore={g.trimBefore} playbackRate={g.playbackRate} width={g.width} top={g.top} />
           {(g.taps ?? []).map((t, i) => (
             <Sequence key={i} from={t.at} durationInFrames={16} layout="none">
               <TapPulse x={t.x} y={t.y} />
