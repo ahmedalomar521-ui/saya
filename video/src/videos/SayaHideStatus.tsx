@@ -113,7 +113,7 @@ export const sayaHideProps: SayaEditProps = {
   onLight: [[0, SAYA_HIDE_FRAMES]], // the desk behind the captions is light
   // Saya stays visible as a circle (top left) while the phone card shows the screen
   pip: [[PHONE.at, PHONE.at + PHONE.dur]],
-  pipPlace: {x: 20, y: 290, d: 190, fill: 0.44}, // zoomed out so the hijab and face details show
+  pipPlace: {x: 25, y: 275, d: 250, fill: 0.55}, // zoomed out so the hijab and face details show
   graphics: [
     {type: "title", at: 5, dur: 85, small: "كيف بتخبّي", big: "إنك أونلاين؟", y: 300, squiggle: true},
     {type: "save", at: 193, dur: 76, big: true}, // big white bookmark on the chest (reference m.3d3), on "احفظ الريل"

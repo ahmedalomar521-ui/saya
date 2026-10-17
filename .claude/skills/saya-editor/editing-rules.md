@@ -337,7 +337,7 @@ User notes on ep 1, checked against his reference video (a phone explainer by m.
   size automatically (they are computed from `width`/`top`).
 - **Saya stays visible as a circle at the phone's top-left corner**, outside the screen (the ☰ tap and
   the toggle sit at the top-left of the recording, so the circle must not cover the screen).
-  `pipPlace` e.g. `{x: 20, y: 290, d: 190, fill: 0.44}`; `fill` = how much of the circle the face takes
+  `pipPlace` e.g. `{x: 25, y: 275, d: 250, fill: 0.55}` (user 2026-10-17: "natural size", overlapping the phone's corner a little; Rawaa's circle is ~27% of the width); `fill` = how much of the circle the face takes
   (lower = zoomed out, shows the beret and hijab).
 - **Save graphic = a big white bookmark on the chest, no pill and no text**, outline first, then it fills
   white (reference: ~200 px wide, centre y ≈ 1030). `{type: "save", big: true}` at the moment of "احفظ".
