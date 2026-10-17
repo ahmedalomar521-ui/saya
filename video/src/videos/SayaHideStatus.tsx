@@ -79,6 +79,7 @@ const SRT = `1
 `;
 
 const H = "footage/hide/";
+const icon = (n: string) => `assets/icons/lu-${n}.svg`;
 const PHONE = {at: 289, dur: 324, width: 620, top: 290};
 // recording (1080×2340) → canvas: inner screen of the card, cover-fit of the cropped 1080×2240 video
 const bez = PHONE.width * 0.035;
@@ -119,9 +120,18 @@ export const sayaHideProps: SayaEditProps = {
   graphics: [
     {type: "title", at: 5, dur: 85, small: "كيف بتخبّي", big: "إنك أونلاين؟", y: 300, squiggle: true},
     {type: "save", at: 193, dur: 30, big: true, y: 1030}, // big white bookmark on the chest (reference m.3d3), on "احفظ الريل"
+    // illustrative icons next to the words (user rule 2026-10-17: anything that is said gets a graphic; see iconMap.ts)
+    {type: "sticker", at: 3, dur: 44, src: icon("eye-off"), x: 175, y: 560, size: 190, glow: true, rot: -6}, // "تخبّي"
+    {type: "sticker", at: 57, dur: 40, src: "assets/icons/instagram-tile.svg", x: 930, y: 540, size: 180, glow: true, rot: 6}, // "الإنستغرام"
+    {type: "sticker", at: 100, dur: 30, src: icon("users"), x: 175, y: 560, size: 190, glow: true, rot: -6}, // "بتتابعهم"
+    {type: "sticker", at: 134, dur: 37, src: icon("message-circle"), x: 930, y: 560, size: 180, glow: true, rot: 6}, // "بتراسلهم"
+    {type: "sticker", at: 684, dur: 35, src: icon("settings"), x: 175, y: 560, size: 190, glow: true, rot: -6}, // "الخيار"
+    {type: "sticker", at: 748, dur: 44, src: icon("eye"), x: 930, y: 540, size: 180, glow: true, rot: -6}, // "نشاط"
+    {type: "sticker", at: 829, dur: 44, src: icon("lightbulb"), x: 930, y: 560, size: 180, glow: true, rot: 6}, // "نصائح"
+    {type: "save", at: 193, dur: 30, big: true, y: 1030}, // big white bookmark on the chest (reference m.3d3), on "احفظ الريل"
     // illustrative icons next to the words (user rule 2026-10-17: always an illustrative graphic)
-    {type: "sticker", at: 57, dur: 40, src: "assets/icons/instagram-tile.svg", x: 830, y: 520, size: 150, glow: true, rot: 6},
-    {type: "sticker", at: 748, dur: 44, src: "assets/icons/lucide-eye.svg", x: 830, y: 520, size: 150, glow: true, rot: -6},
+    {type: "sticker", at: 57, dur: 40, src: "assets/icons/instagram-tile.svg", x: 930, y: 540, size: 180, glow: true, rot: 6},
+    {type: "sticker", at: 748, dur: 44, src: "assets/icons/lucide-eye.svg", x: 930, y: 540, size: 180, glow: true, rot: -6},
     {type: "phone", at: PHONE.at, dur: PHONE.dur, src: H + "screen.mp4", isVideo: true, width: PHONE.width, top: PHONE.top, taps: TAPS},
     // key words = a big label in the caption's place + a marker on the same option in the screen
     {type: "feature", at: 289, dur: 45, text: "ملفك الشخصي", y: 1040},

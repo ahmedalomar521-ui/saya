@@ -354,5 +354,12 @@ User notes on ep 1, checked against his reference video (a phone explainer by m.
   (`doodle` kind `circle`, colour `#1E90FF` on white screens), an arrow or another shape. Row text is right-aligned
   in Arabic UIs: centre the oval around x≈740 of the recording, not the row centre. Graphics array order matters:
   put labels and markers AFTER the `phone` graphic or they render behind it.
-- **Always an illustrative graphic (user: "I told you more than once"):** small icons next to the words that name
-  something (Instagram tile on "إنستغرام", an eye on "نشاط", the bookmark on "احفظ"), plus the label + indicator above.
+- **Always an illustrative graphic, for EVERYTHING that is said (user, 2026-10-17: "anything mentioned has a graphic").**
+  Examples he gave: a question → "?"; a surprise → "!"; a lamp / an idea / light → a bulb; a sound → a volume icon;
+  the sun → a sun; the moon → a moon; and so on for anything else named. Code: `video/src/styles/saya/iconMap.ts`
+  (60 white line icons in `public/assets/icons/lu-*.svg`, lucide, MIT; `ICON_RULES` maps Arabic stems to icons;
+  `iconFor(text)`; `suggestIcons(srt, fps, {skip})` proposes stickers per cue). Procedure per video:
+  1. Run `suggestIcons` on the SRT (skip the phone card, labels and the bookmark), 2. add what it missed
+  (a brand/logo goes in as its own file, e.g. the Instagram tile), 3. curate: one icon at a time, ~1–1.5 s each,
+  beside the head (x≈175 or 930, y≈560), never on the face, alternate sides, 4. check stills at zoom 1.28 (icons
+  must not touch the beret). A word with no icon in the map: add a rule to `ICON_RULES` and the file.
