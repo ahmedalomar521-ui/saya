@@ -6,6 +6,8 @@
 
 **Challenge the user's request when it is the wrong approach (قرار المستخدم 17-10-2026).** Whenever the user asks for something, or is doing something, that I think is the wrong way, say so first and name what to do instead, before doing it. Example: he asks to "search for skills" when the better answer is videos, or the reverse. Always tell him; never silently comply with a request I think is mistaken.
 
+**Saya is human-like (قرار المستخدم 17-10-2026):** her outfit and the things on the desk change from video to video, like a real person. Fixed: face, glasses, hijab design, the studio's core (hexagon wall, neon bolt, shelves, YouTube plaque, window + softbox, rug, mesh chair). Details in `skill-upgrades/camera-ai/references/studio.md`. Within one video, the outfit and desk stay the same.
+
 **Covers (قرار المستخدم 17-10-2026):** every reel cover uses ONE fixed template (like rawaa.aljallad's grid): same layout and palette, each cover related to its video, so the profile grid looks organised. Spec in `.claude/skills/saya-cover`.
 
 **Never edit or render a video unless the user explicitly asks for it (لا تمنتج شي بدون ما يطلب).** Saving a style means saving it only: analyse the reference, write the skill and the reusable components, and check them with a few stills at most. Do not produce a demo edit or re-render existing videos on your own initiative. Offer it in one line instead.
