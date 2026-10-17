@@ -116,6 +116,7 @@ export const sayaHideProps: SayaEditProps = {
   pipPlace: {x: 25, y: 330, d: 230, fill: 0.44}, // zoomed out so the hijab and face details show
   graphics: [
     {type: "title", at: 5, dur: 85, small: "كيف بتخبّي", big: "إنك أونلاين؟", y: 300, squiggle: true},
+    {type: "save", at: 193, dur: 76, text: "احفظ الريل", y: 1180}, // on "احفظ الريل"; above the captions (y 1360)
     {type: "phone", at: PHONE.at, dur: PHONE.dur, src: H + "screen.mp4", isVideo: true, width: PHONE.width, top: PHONE.top, taps: TAPS},
     {type: "follow", at: 798, dur: 156, avatar: "footage/apple/avatar.jpg", handle: "saya_.tech", y: 1230, pressAt: 22},
   ],
